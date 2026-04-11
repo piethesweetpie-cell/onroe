@@ -549,9 +549,9 @@ export default function StudioRoePage() {
               </label>
               {submitError ? <p className="mt-3 text-sm text-red-300">{submitError}</p> : null}
               {submitSuccess ? (
-                <p className="mt-3 text-sm text-[#6b9fff]">
+                <p className="mt-3 text-sm" style={{ color: "#6b9fff" }}>
                   {submitSuccess.split("\n").map((line, i) => (
-                    <span key={i} className={i === 0 ? "block font-bold" : "block"}>{line}</span>
+                    <span key={i} style={{ display: "block", fontWeight: i === 0 ? 700 : 400 }}>{line}</span>
                   ))}
                 </p>
               ) : null}
