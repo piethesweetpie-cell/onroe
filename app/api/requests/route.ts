@@ -68,50 +68,17 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(mailConfig.apiKey)
-    const warnings: string[] = []
 
     try {
-      const { error: adminEmailError } = await resend.emails.send({
+      await resend.emails.send({
         from: mailConfig.adminFrom,
         to: [mailConfig.adminTo],
         subject: `[${getServiceName(serviceType)}] 새 디자인 의뢰 - ${payload.title}`,
         html: buildOrderEmailHtml(payload, serviceType, mailConfig.adminTo),
         text: buildOrderEmailText(payload, serviceType),
       })
-
-      if (adminEmailError) {
-        warnings.push(`관리자 알림 메일 전송에 실패했습니다. ${adminEmailError.message}`)
-      }
-    } catch (emailError) {
-      const message = emailError instanceof Error ? emailError.message : "unknown error"
-      warnings.push(`관리자 알림 메일 전송에 실패했습니다. ${message}`)
-    }
-
-    try {
-      const { error: clientEmailError } = await resend.emails.send({
-        from: mailConfig.clientFrom,
-        to: [payload.client_email],
-        subject: `[${getServiceName(serviceType)}] 의뢰가 접수되었습니다 - ${payload.title}`,
-        html: buildClientConfirmationEmailHtml(payload, serviceType, mailConfig.adminTo, mailConfig.clientUrl),
-        text: buildClientConfirmationEmailText(payload, serviceType, mailConfig.clientUrl),
-      })
-
-      if (clientEmailError) {
-        warnings.push(`작성자 확인 메일 전송에 실패했습니다. ${clientEmailError.message}`)
-      }
-    } catch (emailError) {
-      const message = emailError instanceof Error ? emailError.message : "unknown error"
-      warnings.push(`작성자 확인 메일 전송에 실패했습니다. ${message}`)
-    }
-
-    if (warnings.length > 0) {
-      return NextResponse.json(
-        {
-          warning: `요청은 저장되었지만 메일 전송에 일부 실패했습니다. ${warnings.join(" / ")}`,
-          id: data.id,
-        },
-        { status: 200 }
-      )
+    } catch {
+      // 관리자 메일 실패해도 접수는 성공으로 처리
     }
 
     return NextResponse.json({ id: data.id }, { status: 200 })
