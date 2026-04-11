@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .inner-shadow-field {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  }
+  
+  .bg-glass {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+.submit-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  filter: brightness(1.1);
+}
+
+.submit-btn:active {
+  transform: scale(0.95);
+}
+
+.submit-btn:hover .send-icon {
+  transform: translateX(4px);
+}
+
+.send-icon {
+  transition: transform 0.2s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes book-float {
+  0%,
+  100% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  25% {
+    transform: translate3d(0, -12px, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+.book-float {
+  animation: book-float 6.8s ease-in-out infinite;
+}
+
+.text-primary {
+  color: #207fc5 !important;
+}
+
+.bg-primary {
+  background-color: #207fc5 !important;
+}
+
+.border-primary {
+  border-color: #207fc5 !important;
+}
+
+.ring-primary {
+  --tw-ring-color: rgb(32 127 197 / var(--tw-ring-opacity, 1)) !important;
+}
+
+.bg-primary\/5 {
+  background-color: rgb(32 127 197 / 0.05) !important;
+}
+
+.bg-primary\/10 {
+  background-color: rgb(32 127 197 / 0.1) !important;
+}
+
+.bg-primary\/15 {
+  background-color: rgb(32 127 197 / 0.15) !important;
+}
+
+.bg-primary\/20 {
+  background-color: rgb(32 127 197 / 0.2) !important;
+}
+
+.border-primary\/20 {
+  border-color: rgb(32 127 197 / 0.2) !important;
+}
+
+.border-primary\/30 {
+  border-color: rgb(32 127 197 / 0.3) !important;
+}
+
+.hover\:bg-primary\/10:hover {
+  background-color: rgb(32 127 197 / 0.1) !important;
+}
+
+.hover\:bg-primary\/90:hover {
+  background-color: rgb(32 127 197 / 0.9) !important;
+}
+
+.hover\:border-primary:hover {
+  border-color: #207fc5 !important;
+}
+
+.hover\:border-primary\/40:hover {
+  border-color: rgb(32 127 197 / 0.4) !important;
+}
+
+.hover\:border-primary\/50:hover {
+  border-color: rgb(32 127 197 / 0.5) !important;
+}
+
+.hover\:text-primary:hover {
+  color: #207fc5 !important;
+}
+
+.group:hover .group-hover\:text-primary {
+  color: #207fc5 !important;
+}
+
+.focus\:border-primary:focus {
+  border-color: #207fc5 !important;
+}
+
+.focus\:ring-primary:focus {
+  --tw-ring-color: rgb(32 127 197 / var(--tw-ring-opacity, 1)) !important;
+}
+
+.peer:checked ~ .peer-checked\:border-primary {
+  border-color: #207fc5 !important;
+}
