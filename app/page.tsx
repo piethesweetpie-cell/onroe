@@ -542,14 +542,14 @@ export default function StudioRoePage() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#2054dc] opacity-10 blur-[80px] pointer-events-none" />
             <div className="mb-6 md:mb-0">
               <h4 className="text-2xl font-headline font-bold mb-1">총 결제 금액 {formatKrw(totalPrice)}</h4>
-              <p className="text-zinc-400">제출하기를 누르면 AI 비주얼 연출 요청이 접수됩니다.</p>
+              <p className="text-sm text-zinc-400">제출하기를 누르면 AI 비주얼 연출 요청이 접수됩니다.</p>
               <label className="flex items-center gap-3 cursor-pointer mt-4">
                 <input type="checkbox" className="w-5 h-5 text-[#2054dc] rounded border-[#2054dc]/30 focus:ring-[#2054dc]" checked={agreeTerms} onChange={(event) => setAgreeTerms(event.target.checked)} />
                 <span className="text-sm font-medium">작업 전 취소 시 전액 환불 가능, 1차 시안 전달 후에는 환불이 어렵습니다.</span>
               </label>
               {submitError ? <p className="mt-3 text-sm text-red-300">{submitError}</p> : null}
               {submitSuccess ? (
-                <p className="mt-3" style={{ color: "#6b9fff" }}>
+                <p className="mt-3 text-sm" style={{ color: "#6b9fff" }}>
                   {submitSuccess.split("\n").map((line, i) => (
                     <span key={i} style={{ display: "block", fontWeight: i === 0 ? 700 : 400 }}>{line}</span>
                   ))}
