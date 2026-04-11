@@ -291,7 +291,11 @@ export default function StudioRoePage() {
       setIsSubmitting(false)
       if (!response.ok) return setSubmitError(`제출에 실패했습니다. ${result.error ?? "알 수 없는 오류"}`)
       resetForm()
-      setSubmitSuccess("요청이 정상적으로 접수되었습니다. 입력하신 이메일과 비밀번호로 Client 페이지에서 진행 상태를 확인해 주세요.")
+      if (result.warning) {
+        setSubmitSuccess(`요청이 접수되었습니다. (알림: ${result.warning})`)
+      } else {
+        setSubmitSuccess("요청이 정상적으로 접수되었습니다.\n입력하신 이메일과 비밀번호로 Client 페이지에서 진행 상태를 확인해 주세요.")
+      }
     } catch (error) {
       setIsSubmitting(false)
       setSubmitError(`제출에 실패했습니다. ${formatClientError(error)}`)
@@ -544,7 +548,13 @@ export default function StudioRoePage() {
                 <span className="text-sm font-medium">작업 전 취소 시 전액 환불 가능, 1차 시안 전달 후에는 환불이 어렵습니다.</span>
               </label>
               {submitError ? <p className="mt-3 text-sm text-red-300">{submitError}</p> : null}
-              {submitSuccess ? <p className="mt-3 text-sm text-[#2054dc]/80">{submitSuccess}</p> : null}
+              {submitSuccess ? (
+                <p className="mt-3 text-sm text-[#6b9fff]">
+                  {submitSuccess.split("\n").map((line, i) => (
+                    <span key={i} className={i === 0 ? "block font-bold" : "block"}>{line}</span>
+                  ))}
+                </p>
+              ) : null}
             </div>
             <div className="w-full md:w-auto">
               <button type="submit" disabled={isSubmitting || isUploading} className="w-full md:w-auto px-12 py-5 text-white font-headline font-extrabold rounded-full flex items-center justify-center gap-3 bg-[#2054dc] hover:bg-[#2054dc]/90 shadow-xl transition-all">
