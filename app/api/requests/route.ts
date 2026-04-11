@@ -128,7 +128,7 @@ function getMailConfig(serviceType: "onsu" | "studio_roe") {
       adminFrom: process.env.ORDER_MAIL_FROM_STUDIO_ROE ?? "STUDIO ROE <onboarding@resend.dev>",
       adminTo: process.env.ORDER_NOTIFICATION_TO_STUDIO_ROE ?? "onroeway@gmail.com",
       clientFrom: process.env.CLIENT_CONFIRMATION_MAIL_FROM_STUDIO_ROE ?? "STUDIO ROE <onboarding@resend.dev>",
-      clientUrl: process.env.CLIENT_CONFIRMATION_URL_STUDIO_ROE ?? "https://ooonsuuu.vercel.app/studio-roe",
+      clientUrl: process.env.CLIENT_CONFIRMATION_URL_STUDIO_ROE ?? "https://onroe.vercel.app/client",
     }
   }
 

@@ -1,4 +1,4 @@
-# onsu-studio
+# onroe
 
 STUDIO ROE 전용 독립 Next.js 프로젝트입니다.
 
@@ -37,11 +37,9 @@ npm run dev
 
 ## Deploy
 
-1. GitHub에 새 레포 `onsu-studio` 생성
-2. 이 폴더를 새 레포에 push
-3. Vercel에서 해당 레포를 연결
-4. Vercel Environment Variables에 `.env.example` 기준 값 입력
-5. 첫 배포 후 `ORDER_APP_URL`, `CLIENT_CONFIRMATION_URL_STUDIO_ROE`를 실제 도메인으로 맞춤
+1. GitHub 레포 `piethesweetpie-cell/onroe`를 Vercel에 연결
+2. Vercel Environment Variables에 `.env.example` 기준 값 입력
+3. 첫 배포 후 `ORDER_APP_URL`, `CLIENT_CONFIRMATION_URL_STUDIO_ROE`를 실제 도메인으로 맞춤
 
 ## Notes
 

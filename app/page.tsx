@@ -291,7 +291,7 @@ export default function StudioRoePage() {
       setIsSubmitting(false)
       if (!response.ok) return setSubmitError(`제출에 실패했습니다. ${result.error ?? "알 수 없는 오류"}`)
       resetForm()
-      setSubmitSuccess(result.warning ?? "STUDIO ROE 요청이 정상적으로 접수되었습니다.")
+      setSubmitSuccess("요청이 정상적으로 접수되었습니다. 입력하신 이메일과 비밀번호로 Client 페이지에서 진행 상태를 확인해 주세요.")
     } catch (error) {
       setIsSubmitting(false)
       setSubmitError(`제출에 실패했습니다. ${formatClientError(error)}`)

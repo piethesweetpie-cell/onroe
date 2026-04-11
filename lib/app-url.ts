@@ -1,4 +1,4 @@
-const fallbackAppUrl = "https://onsu-studio.vercel.app"
+const fallbackAppUrl = "https://onroe.vercel.app"
 
 export function getAppUrl() {
   const explicitUrl = process.env.ORDER_APP_URL?.trim()
