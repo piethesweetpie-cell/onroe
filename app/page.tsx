@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { extractStoragePath, formatKrw } from "@/lib/novelcraft"
+import { extractStoragePath } from "@/lib/novelcraft"
 
 type TrackType = "product" | "model"
 type PackageType = "starter" | "standard" | "brand-set" | "look" | "editorial" | "campaign"
@@ -80,42 +80,48 @@ const packageOptionsByTrack: Record<
     {
       id: "standard",
       title: "STANDARD",
-      price: "120,000원",
-      priceValue: 120000,
-      description: "4컷 구성, 상세페이지 활용 레이아웃 추천 포함",
-      bullets: ["4컷 구성", "활용 레이아웃 추천", "상품 상세페이지 연계"],
+      price: "110,000원",
+      priceValue: 110000,
+      description: "4컷 구성",
+      bullets: [
+        "1차. 컬러가 다른 시안 2종 제공, 이후 선택한 컬러로 4컷 제공",
+        "상세페이지에 바로 적용할 수 있는 제품의 무드를 적용한 컨셉 시안 제공",
+      ],
     },
     {
       id: "brand-set",
       title: "BRAND SET",
-      price: "220,000원",
-      priceValue: 220000,
-      description: "10컷 + 무드보드 + 브랜드 톤 고정 가이드",
-      bullets: ["10컷 구성", "무드보드 제공", "브랜드 톤 가이드"],
+      price: "180,000원",
+      priceValue: 180000,
+      description: "10컷",
+      bullets: [
+        "1차. 스타일이 다른 컨셉 2종 시안 제공, 택 1",
+        "상세페이지에 바로 적용할 수 있는 제품의 무드를 적용한 컨셉 시안 제공",
+      ],
     },
   ],
   model: [
     {
       id: "look",
       title: "LOOK",
-      price: "79,000원",
-      priceValue: 79000,
+      price: "35,000원",
+      priceValue: 35000,
       description: "인물 1컷, 무드/색상 설정",
       bullets: ["인물 1컷", "무드 설정", "색상 톤 제안"],
     },
     {
       id: "editorial",
       title: "EDITORIAL",
-      price: "150,000원",
-      priceValue: 150000,
+      price: "79,000원",
+      priceValue: 79000,
       description: "인물 3컷, 연출컷 포함, 스타일링 제안",
       bullets: ["인물 3컷", "연출컷 포함", "스타일링 제안"],
     },
     {
       id: "campaign",
       title: "CAMPAIGN",
-      price: "280,000원",
-      priceValue: 280000,
+      price: "129,000원",
+      priceValue: 129000,
       description: "5컷 + 제품 혼합 컷, 광고 소재 활용 가능",
       bullets: ["인물 5컷", "제품 혼합 컷", "광고 소재 활용"],
     },
@@ -244,10 +250,7 @@ export default function StudioRoePage() {
   const activePackage =
     activePackageOptions.find((option) => option.id === selectedPackage) ?? activePackageOptions[0]
   const optionMap = new Map(activeAdditionalOptions.map((option) => [option.id, option]))
-  const packageLabel = `${activeTrack.title} / ${activePackage.title} ${activePackage.price}`
-  const totalPrice =
-    activePackage.priceValue +
-    selectedOptions.reduce((sum, optionId) => sum + (optionMap.get(optionId)?.priceValue ?? 0), 0)
+  const packageLabel = `${selectedTrack === "product" ? "상품" : "모델"} | ${activePackage.title}`
   const isUploading = uploadingKinds.product || uploadingKinds.reference
 
   useEffect(() => {
@@ -862,11 +865,7 @@ export default function StudioRoePage() {
               <CenteredHeading
                 index="06"
                 title="추가 옵션"
-                body={
-                  selectedTrack === "product"
-                    ? "상품 비주얼 트랙은 상세페이지용 확장 컷과 동일 무드 추가컷을 옵션으로 붙일 수 있습니다."
-                    : "모델 비주얼 트랙은 현재 기본 패키지 기준으로 접수되며, 세부 확장은 요청사항에 함께 남겨 주세요."
-                }
+                body="구매시 옵션을 선택하지 않았다면 스킵하세요!"
                 badgeClassName="bg-[#f5e6e8] text-[#8b475d]"
               />
 
@@ -1019,8 +1018,8 @@ export default function StudioRoePage() {
 
                 <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div className="max-w-2xl">
-                    <p className="font-skin-serif text-3xl text-[#fdf8f5] md:text-4xl">
-                      총 결제 금액 {formatKrw(totalPrice)}
+                    <p className="font-skin-serif text-[18px] text-[#fdf8f5] md:text-[22px]">
+                      선택 패키지 {packageLabel}
                     </p>
                     <p className="mt-3 text-sm text-[#f5e6e8]/70">
                       제출하기를 누르면 AI 비주얼 연출 요청이 접수됩니다.
@@ -1074,7 +1073,7 @@ export default function StudioRoePage() {
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 md:flex-row">
           <span className="text-sm uppercase tracking-[0.24em] text-[#6b6b6b]">Studio Roe</span>
           <p className="text-sm text-[#6b6b6b]">
-            <Link href="/admin" className="transition-colors hover:text-[#b8967e]">
+            <Link href="/admin" className="cursor-default text-inherit focus:outline-none">
               ©
             </Link>{" "}
             {new Date().getFullYear()}{" "}

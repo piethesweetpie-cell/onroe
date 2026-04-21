@@ -498,7 +498,7 @@ export default function PortfolioPage() {
               type="button"
               onClick={handleEditButtonClick}
               aria-label={isAdminAuthenticated ? (editMode ? "편집 종료" : "편집 모드") : "관리자 로그인"}
-              className="text-xs text-[#a28e86] transition-colors hover:text-[#8f695d] focus:outline-none"
+              className="cursor-default text-xs text-[#a28e86] focus:outline-none"
             >
               ©
             </button>
