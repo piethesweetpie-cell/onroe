@@ -9,3 +9,7 @@ node_modules
 .env*.local
 .DS_Store
 .vercel
+backup/
+psd/
+.tmp_skin/
+studio-roe-backup.zip

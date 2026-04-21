@@ -58,6 +58,79 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.font-skin-serif {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-skin-sans {
+  font-family: var(--font-inter), var(--font-noto-sans-kr), sans-serif;
+}
+
+@keyframes hero-copy-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-logo-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes hero-logo-glow-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.92);
+  }
+
+  to {
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.hero-copy-enter {
+  opacity: 0;
+  animation: hero-copy-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-copy-enter-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.hero-copy-enter-delay-2 {
+  animation-delay: 0.18s;
+}
+
+.hero-copy-enter-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.hero-logo-enter {
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: hero-logo-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards;
+}
+
+.hero-logo-glow-enter {
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: hero-logo-glow-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
 @keyframes book-float {
   0%,
   100% {
