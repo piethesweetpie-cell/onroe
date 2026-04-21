@@ -49,17 +49,23 @@ export default function ClientLookupPage() {
 
   return (
     <DashboardShell
-      title="Client Lookup"
-      subtitle="주문 시 입력한 이메일로 현재 진행 중인 작업을 조회할 수 있습니다."
+      title="클라이언트 조회"
+      subtitle="주문 시 입력한 이메일과 확인용 비밀번호로 현재 진행 중인 작업을 확인할 수 있습니다."
     >
       <form
         onSubmit={(event) => {
           event.preventDefault()
           void handleLookup()
         }}
-        className="mx-auto max-w-xl rounded-[32px] border border-zinc-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)]"
+        className="mx-auto max-w-2xl rounded-[34px] border border-[#ead9cf] bg-white/92 p-8 shadow-[0_20px_44px_rgba(124,98,81,0.08)] md:p-10"
       >
-        <p className="mb-6 text-sm leading-7 text-zinc-600">
+        <div className="mb-8 rounded-[28px] border border-[#efe2db] bg-[#fbf4f0] px-5 py-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a48777]">Client Access</p>
+          <p className="mt-2 text-sm leading-7 text-[#6d5c58]">
+            접수 시 입력한 이메일과 비밀번호를 입력하면 작업 진행 상태와 전달된 시안을 확인할 수 있습니다.
+          </p>
+        </div>
+        <p className="mb-6 text-sm leading-7 text-[#6d5c58]">
           주문 시 입력한 이메일을 입력하면 작업 진행 상황을 확인할 수 있습니다.
         </p>
         <div className="space-y-4">
@@ -68,19 +74,19 @@ export default function ClientLookupPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="name@example.com"
-            className="w-full rounded-2xl border border-zinc-200 bg-[#fbfaf7] px-5 py-4 text-zinc-900 outline-none transition focus:border-teal-300"
+            className="w-full rounded-[24px] border border-[#e7d8cf] bg-[#fffdfa] px-5 py-4 text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
           />
           <input
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="작업 확인용 비밀번호"
-            className="w-full rounded-2xl border border-zinc-200 bg-[#fbfaf7] px-5 py-4 text-zinc-900 outline-none transition focus:border-teal-300"
+            className="w-full rounded-[24px] border border-[#e7d8cf] bg-[#fffdfa] px-5 py-4 text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
           />
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
           <button
             type="submit"
-            className="w-full rounded-2xl bg-teal-400 px-5 py-4 font-semibold text-white"
+            className="w-full rounded-[24px] bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-4 font-semibold text-white shadow-[0_16px_30px_rgba(185,134,119,0.24)]"
           >
             {isLoading ? "조회 중..." : "조회하기"}
           </button>

@@ -13,16 +13,16 @@ export function RequestProgress({ status }: { status: RequestStatus }) {
           <div
             key={step}
             className={cn(
-              "rounded-2xl border px-4 py-3 text-center text-sm font-medium",
+              "rounded-[24px] border px-4 py-3 text-center text-sm font-medium shadow-[0_10px_24px_rgba(124,98,81,0.05)]",
               completed
-                ? "border-teal-300 bg-teal-50 text-teal-700"
-                : "border-zinc-200 bg-white text-zinc-500"
+                ? "border-[#e3c5bd] bg-[#f4e3df] text-[#9f6f66]"
+                : "border-[#ead9cf] bg-white text-[#8a7670]"
             )}
           >
             <div
               className={cn(
                 "mx-auto mb-2 flex h-7 w-7 items-center justify-center rounded-full text-xs",
-                completed ? "bg-teal-400 text-white" : "bg-zinc-200 text-zinc-500"
+                completed ? "bg-[#b98677] text-white" : "bg-[#f5ebe6] text-[#8a7670]"
               )}
             >
               {index + 1}

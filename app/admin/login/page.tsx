@@ -59,15 +59,21 @@ function AdminLoginContent() {
   }
 
   return (
-    <DashboardShell title="Admin Login" subtitle="관리자 계정으로만 작업 요청 관리 화면에 접근할 수 있습니다.">
+    <DashboardShell title="관리자 로그인" subtitle="관리자 계정으로만 작업 요청 관리 화면에 접근할 수 있습니다.">
       <form
         onSubmit={(event) => {
           event.preventDefault()
           void handleLogin()
         }}
-        className="mx-auto max-w-xl rounded-[32px] border border-zinc-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)]"
+        className="mx-auto max-w-2xl rounded-[34px] border border-[#ead9cf] bg-white/92 p-8 shadow-[0_20px_44px_rgba(124,98,81,0.08)] md:p-10"
       >
-        <p className="mb-6 text-sm leading-7 text-zinc-600">
+        <div className="mb-8 rounded-[28px] border border-[#efe2db] bg-[#fbf4f0] px-5 py-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a48777]">Admin Access</p>
+          <p className="mt-2 text-sm leading-7 text-[#6d5c58]">
+            접수된 요청 관리, 시안 업로드, 댓글 전달, 상태 변경은 관리자 계정으로만 접근할 수 있습니다.
+          </p>
+        </div>
+        <p className="mb-6 text-sm leading-7 text-[#6d5c58]">
           관리자 아이디와 비밀번호를 입력해 주세요.
         </p>
         <div className="space-y-4">
@@ -76,19 +82,19 @@ function AdminLoginContent() {
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             placeholder="관리자 아이디"
-            className="w-full rounded-2xl border border-zinc-200 bg-[#fbfaf7] px-5 py-4 text-zinc-900 outline-none transition focus:border-teal-300"
+            className="w-full rounded-[24px] border border-[#e7d8cf] bg-[#fffdfa] px-5 py-4 text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
           />
           <input
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="관리자 비밀번호"
-            className="w-full rounded-2xl border border-zinc-200 bg-[#fbfaf7] px-5 py-4 text-zinc-900 outline-none transition focus:border-teal-300"
+            className="w-full rounded-[24px] border border-[#e7d8cf] bg-[#fffdfa] px-5 py-4 text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
           />
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
           <button
             type="submit"
-            className="w-full rounded-2xl bg-teal-400 px-5 py-4 font-semibold text-white"
+            className="w-full rounded-[24px] bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-4 font-semibold text-white shadow-[0_16px_30px_rgba(185,134,119,0.24)]"
           >
             {loading ? "로그인 중..." : "로그인"}
           </button>

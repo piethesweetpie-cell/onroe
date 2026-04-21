@@ -226,19 +226,19 @@ export default function PortfolioPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] text-zinc-900">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.92),_rgba(245,230,231,0.95)_42%,_rgba(244,234,228,1)_100%)] text-[#2c2c2c]">
       {/* Nav */}
-      <nav className="sticky top-0 z-30 border-b border-zinc-200/70 bg-white/88 backdrop-blur-xl">
+      <nav className="sticky top-0 z-30 border-b border-[#ead9cf]/80 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-[18px] md:px-12 lg:px-20">
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
+            <Link href="/" className="text-xs font-bold uppercase tracking-[0.2em] text-[#a48777] hover:text-[#2c2c2c] transition-colors">
               ← Studio Roe
             </Link>
-            <span className="h-4 w-px bg-zinc-200" />
-            <span className="text-xl font-extrabold tracking-[0] text-zinc-900 uppercase">Portfolio</span>
+            <span className="h-4 w-px bg-[#ead9cf]" />
+            <span className="font-skin-serif text-[24px] tracking-[0] text-[#2c2c2c]">Portfolio</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/" className="rounded-full bg-[#2054dc] px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#2054dc]/90 transition-colors">
+            <Link href="/" className="rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-white shadow-[0_14px_28px_rgba(185,134,119,0.20)] transition-colors hover:opacity-95">
               의뢰하기
             </Link>
           </div>
@@ -246,7 +246,7 @@ export default function PortfolioPage() {
       </nav>
 
       {editMode && (
-        <div className="bg-red-50 border-b border-red-200 px-6 py-3 text-center text-xs font-semibold text-red-600">
+        <div className="border-b border-red-200 bg-red-50 px-6 py-3 text-center text-xs font-semibold text-red-600">
           편집 모드 — 카테고리 탭에 마우스를 올리면 이름 수정·삭제 버튼이 나타납니다.
         </div>
       )}
@@ -258,18 +258,18 @@ export default function PortfolioPage() {
         onMouseMove={handleHeroPointerMove}
         onMouseLeave={handleHeroPointerLeave}
       >
-        <div className="absolute -top-24 -right-12 w-64 h-64 bg-[#2054dc]/5 rounded-full blur-3xl -z-10" />
+        <div className="absolute -top-24 -right-12 h-64 w-64 rounded-full bg-[#e9d4cf]/60 blur-3xl -z-10" />
         <div className="flex items-center justify-between gap-8">
           <div className="min-w-0 flex-1">
             <div className="mt-[10px] flex items-center gap-4 mb-3">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#2054dc] bg-[#2054dc]/10 px-3 py-1 rounded-full">AI Product Visual</span>
+              <span className="rounded-full border border-[#ead9cf] bg-[#f7ede7] px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[#9b7b68]">AI Product Visual</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-satoshi font-black text-zinc-900 tracking-[0] leading-tight">
+            <h1 className="font-skin-serif text-4xl leading-tight tracking-[0] text-[#2c2c2c] md:text-5xl">
               STUDIO ROE
               <br />
-              <span className="bg-gradient-to-r from-[#2f9cf3] to-[#2054dc] bg-clip-text text-transparent">PORTFOLIO</span>
+              <span className="bg-gradient-to-r from-[#b98677] to-[#8f695d] bg-clip-text text-transparent">PORTFOLIO</span>
             </h1>
-            <p className="mt-6 text-base text-zinc-500 max-w-xl leading-relaxed">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-[#6d5c58]">
               모든 이미지는 실제 브랜드 제품을 AI 합성한 샘플이며,
               <br />
               제품의 저작권은 해당 브랜드에 있습니다.
@@ -281,8 +281,8 @@ export default function PortfolioPage() {
                 { num: "AI", label: "Generated" },
               ].map(({ num, label }) => (
                 <div key={label} className="flex items-baseline gap-2">
-                  <span className="font-satoshi text-2xl font-black text-zinc-900">{num}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">{label}</span>
+                  <span className="text-2xl font-black text-[#2c2c2c]">{num}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#a28e86]">{label}</span>
                 </div>
               ))}
             </div>
@@ -292,7 +292,7 @@ export default function PortfolioPage() {
             <div className="book-float relative h-56 w-56 lg:h-64 lg:w-64 flex items-center justify-center">
               <div
                 ref={bookShadowRef}
-                className="absolute left-1/2 top-[72%] h-10 w-28 -translate-x-1/2 rounded-full bg-[#2054dc]/15 blur-2xl"
+                className="absolute left-1/2 top-[72%] h-10 w-28 -translate-x-1/2 rounded-full bg-[#b98677]/20 blur-2xl"
                 style={{ willChange: "transform, opacity" }}
               />
               <div
@@ -301,8 +301,8 @@ export default function PortfolioPage() {
                 style={{ willChange: "transform" }}
               >
                 <Image
-                  src="/images/item.png"
-                  alt="decorative item"
+                  src="/images/logo.png"
+                  alt="Studio Roe logo"
                   fill
                   className="object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
                   priority
@@ -314,7 +314,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Filter bar */}
-      <div className="sticky top-[61px] z-20 border-b border-zinc-200/70 bg-[#f9fafb]/95 backdrop-blur-xl">
+      <div className="sticky top-[61px] z-20 border-b border-[#ead9cf]/80 bg-[#fbf4f0]/92 backdrop-blur-xl">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-20">
           <div className="flex flex-wrap gap-1 py-3 items-center">
             {activeBrands.map((brand) => {
@@ -332,17 +332,17 @@ export default function PortfolioPage() {
                       onChange={(e) => setRenameValue(e.target.value)}
                       onBlur={commitRename}
                       onKeyDown={(e) => { if (e.key === "Enter") commitRename(); if (e.key === "Escape") setRenamingBrand(null) }}
-                      className="rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] bg-white border-2 border-[#2054dc] outline-none w-36"
+                      className="w-36 rounded-full border-2 border-[#b98677] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] outline-none"
                     />
                   ) : (
                     <button
                       onClick={() => { setActive(brand.id); setPage(1) }}
                       className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] transition-all ${
-                        active === brand.id ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-700"
+                        active === brand.id ? "border border-[#d9b8a6] bg-[#f4e3df] text-[#8f695d]" : "border border-[#ead9cf] bg-white text-[#7b675d] hover:bg-[#fbf4f0] hover:text-[#5d4c47]"
                       }`}
                     >
                       {isDeletingBrand ? (
-                        <span className="inline-block h-3 w-3 rounded-full border-2 border-zinc-400/40 border-t-zinc-400 animate-spin" />
+                        <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-[#cdb7ae]/50 border-t-[#a48777]" />
                       ) : (
                         <>
                           {label}
@@ -356,7 +356,7 @@ export default function PortfolioPage() {
                     <div className="absolute -top-1 -right-1 hidden group-hover/tab:flex gap-0.5">
                       <button
                         onClick={() => startRename(brand.id, label)}
-                        className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2054dc] text-white text-[9px] shadow hover:bg-[#1a44c2] transition-colors"
+                        className="flex h-5 w-5 items-center justify-center rounded-full bg-[#b98677] text-[9px] text-white shadow transition-colors hover:bg-[#a87567]"
                         title="이름 수정"
                       >✎</button>
                       <button
@@ -376,14 +376,14 @@ export default function PortfolioPage() {
       {/* Grid */}
       <main ref={mainRef} className="mx-auto max-w-5xl px-6 py-10 md:px-12 lg:px-20">
         {loading ? (
-          <div className="py-32 text-center text-zinc-300 text-sm">불러오는 중...</div>
+          <div className="py-32 text-center text-sm text-[#b7a59e]">불러오는 중...</div>
         ) : (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
             {paged.map((item) => (
               <div key={item.id} className="relative group">
                 <button
                   onClick={() => !editMode && setLightbox(item)}
-                  className={`relative block w-full overflow-hidden rounded-2xl bg-zinc-100 focus:outline-none border border-zinc-200/60 ${!editMode ? "cursor-pointer" : "cursor-default"}`}
+                  className={`relative block w-full overflow-hidden rounded-[24px] border border-[#ead9cf] bg-white/92 shadow-[0_16px_32px_rgba(124,98,81,0.08)] focus:outline-none ${!editMode ? "cursor-pointer" : "cursor-default"}`}
                 >
                   <Image
                     src={item.src}
@@ -394,9 +394,9 @@ export default function PortfolioPage() {
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   />
                   {!editMode && (
-                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <span className="mb-1 inline-block w-fit rounded-full bg-[#2054dc] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{item.tag}</span>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-white/60">{item.brandLabel}</p>
+                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[#4a332d]/80 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span className="mb-1 inline-block w-fit rounded-full bg-[#b98677] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{item.tag}</span>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-white/65">{item.brandLabel}</p>
                       <p className="mt-0.5 text-xs font-semibold text-white leading-tight">{item.alt}</p>
                     </div>
                   )}
@@ -413,7 +413,7 @@ export default function PortfolioPage() {
                         <span className="block h-3 w-3 rounded-full border-2 border-white/40 border-t-white animate-spin" />
                       ) : "✕"}
                     </button>
-                    <p className="mt-1 px-1 text-[10px] text-zinc-400 leading-tight truncate">{item.src.split("/").pop()}</p>
+                    <p className="mt-1 truncate px-1 text-[10px] leading-tight text-[#a28e86]">{item.src.split("/").pop()}</p>
                   </>
                 )}
               </div>
@@ -421,7 +421,7 @@ export default function PortfolioPage() {
           </div>
         )}
         {!loading && filtered.length === 0 && (
-          <div className="py-32 text-center text-zinc-300 text-sm">No items</div>
+          <div className="py-32 text-center text-sm text-[#b7a59e]">No items</div>
         )}
 
         {/* Pagination */}
@@ -430,7 +430,7 @@ export default function PortfolioPage() {
             <button
               onClick={() => { setPage((p) => Math.max(1, p - 1)); mainRef.current?.scrollIntoView({ behavior: "smooth" }) }}
               disabled={page === 1}
-              className="rounded-full px-4 py-2 text-xs font-bold text-zinc-400 hover:text-zinc-700 disabled:opacity-30 transition-colors"
+              className="rounded-full px-4 py-2 text-xs font-bold text-[#a28e86] transition-colors hover:text-[#5d4c47] disabled:opacity-30"
             >
               ← Prev
             </button>
@@ -442,14 +442,14 @@ export default function PortfolioPage() {
               const showDotsAfter = n === page + 3 && page + 3 < totalPages
               if (!show && !showDotsBefore && !showDotsAfter) return null
               if (showDotsBefore || showDotsAfter) return (
-                <span key={`dots-${n}`} className="px-1 text-zinc-300 text-sm">…</span>
+                <span key={`dots-${n}`} className="px-1 text-sm text-[#c8b7b0]">…</span>
               )
               return (
                 <button
                   key={n}
                   onClick={() => { setPage(n); mainRef.current?.scrollIntoView({ behavior: "smooth" }) }}
                   className={`min-w-[36px] rounded-full px-3 py-2 text-xs font-bold transition-all ${
-                    isActive ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200"
+                    isActive ? "border border-[#d9b8a6] bg-[#f4e3df] text-[#8f695d]" : "border border-[#ead9cf] bg-white text-[#7b675d] hover:bg-[#fbf4f0]"
                   }`}
                 >
                   {n}
@@ -460,7 +460,7 @@ export default function PortfolioPage() {
             <button
               onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); mainRef.current?.scrollIntoView({ behavior: "smooth" }) }}
               disabled={page === totalPages}
-              className="rounded-full px-4 py-2 text-xs font-bold text-zinc-400 hover:text-zinc-700 disabled:opacity-30 transition-colors"
+              className="rounded-full px-4 py-2 text-xs font-bold text-[#a28e86] transition-colors hover:text-[#5d4c47] disabled:opacity-30"
             >
               Next →
             </button>
@@ -469,20 +469,20 @@ export default function PortfolioPage() {
       </main>
 
       {/* CTA footer */}
-      <section className="border-t border-zinc-200/70 px-6 py-10 md:px-12 lg:px-20">
+      <section className="border-t border-[#ead9cf]/80 px-6 py-10 md:px-12 lg:px-20">
         <div className="mx-auto max-w-5xl">
-          <div className="rounded-3xl bg-white border border-zinc-200 px-10 py-5 shadow-[0_20px_60px_rgba(15,23,42,0.06)] md:px-16 md:py-8">
+          <div className="rounded-[34px] border border-[#ead9cf] bg-white/92 px-10 py-5 shadow-[0_20px_60px_rgba(124,98,81,0.08)] md:px-16 md:py-8">
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
               <div className="max-w-lg">
-                <h2 className="font-satoshi text-[24px] font-black leading-tight text-zinc-900 md:text-[30px]">
-                  브랜드 비주얼, <span className="bg-gradient-to-r from-[#2f9cf3] to-[#2054dc] bg-clip-text text-transparent">AI로 설계합니다.</span>
+                <h2 className="font-skin-serif text-[24px] leading-tight text-[#2c2c2c] md:text-[30px]">
+                  브랜드 비주얼, <span className="bg-gradient-to-r from-[#b98677] to-[#8f695d] bg-clip-text text-transparent">AI로 설계합니다.</span>
                 </h2>
-                <p className="mt-1 text-sm leading-relaxed text-zinc-500">
+                <p className="mt-1 text-sm leading-relaxed text-[#6d5c58]">
                   제품 단독 컷부터 모델 합성, 캠페인 비주얼까지
                 </p>
               </div>
               <div className="md:flex-shrink-0">
-                <Link href="/" className="inline-flex items-center justify-center rounded-full bg-[#2054dc] px-8 py-4 text-sm font-bold text-white shadow-xl shadow-[#2054dc]/20 hover:bg-[#2054dc]/90 transition-all">
+                <Link href="/" className="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-8 py-4 text-sm font-bold text-white shadow-xl shadow-[#b98677]/20 transition-all hover:opacity-95">
                   의뢰서 작성하기
                 </Link>
               </div>
@@ -492,13 +492,13 @@ export default function PortfolioPage() {
       </section>
 
       <footer className="px-6 pb-10 text-center md:px-12 lg:px-20">
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-[#a28e86]">
           {!checkingAdminSession ? (
             <button
               type="button"
               onClick={handleEditButtonClick}
               aria-label={isAdminAuthenticated ? (editMode ? "편집 종료" : "편집 모드") : "관리자 로그인"}
-              className="text-xs text-zinc-400 transition-colors hover:text-zinc-400 focus:outline-none"
+              className="text-xs text-[#a28e86] transition-colors hover:text-[#8f695d] focus:outline-none"
             >
               ©
             </button>
@@ -506,7 +506,7 @@ export default function PortfolioPage() {
             <span>©</span>
           )}{" "}
           2026{" "}
-          <a href="mailto:onroeway@gmail.com" className="transition-colors hover:text-zinc-700">
+          <a href="mailto:onroeway@gmail.com" className="transition-colors hover:text-[#5d4c47]">
             ONROE
           </a>
           . All rights reserved.
@@ -515,14 +515,14 @@ export default function PortfolioPage() {
 
       {/* Lightbox */}
       {lightbox && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/70 backdrop-blur-sm p-4" onClick={() => setLightbox(null)}>
-          <button className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-zinc-700 hover:bg-white transition-colors text-sm font-bold shadow" onClick={() => setLightbox(null)}>✕</button>
-          <div className="relative max-h-[90vh] max-w-3xl w-full overflow-hidden rounded-2xl bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a332d]/68 backdrop-blur-sm p-4" onClick={() => setLightbox(null)}>
+          <button className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#6d5c58] transition-colors hover:bg-white text-sm font-bold shadow" onClick={() => setLightbox(null)}>✕</button>
+          <div className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-[28px] border border-[#ead9cf] bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <Image src={lightbox.src} alt={lightbox.alt} width={1200} height={1200} className="w-full h-auto max-h-[80vh] object-contain" />
-            <div className="p-5 border-t border-zinc-100 flex items-center gap-3">
-              <span className="rounded-full bg-[#2054dc] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{lightbox.tag}</span>
-              <span className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-400">{lightbox.brandLabel}</span>
-              <span className="text-sm font-semibold text-zinc-700 truncate">{lightbox.alt}</span>
+            <div className="flex items-center gap-3 border-t border-[#efe2db] p-5">
+              <span className="rounded-full bg-[#b98677] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">{lightbox.tag}</span>
+              <span className="text-xs font-bold uppercase tracking-[0.1em] text-[#a28e86]">{lightbox.brandLabel}</span>
+              <span className="truncate text-sm font-semibold text-[#5d4c47]">{lightbox.alt}</span>
             </div>
           </div>
         </div>
@@ -530,17 +530,17 @@ export default function PortfolioPage() {
 
       {/* Confirm delete brand modal */}
       {confirmDeleteBrand && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4" onClick={() => setConfirmDeleteBrand(null)}>
-          <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a332d]/60 backdrop-blur-sm p-4" onClick={() => setConfirmDeleteBrand(null)}>
+          <div className="w-full max-w-sm rounded-[28px] border border-[#ead9cf] bg-white p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-500 mb-3">카테고리 전체 삭제</p>
-            <p className="text-base font-bold text-zinc-900 mb-2">
+            <p className="mb-2 text-base font-bold text-[#2c2c2c]">
               {getLabel(confirmDeleteBrand, brands.find((b) => b.id === confirmDeleteBrand)?.label ?? confirmDeleteBrand)}
             </p>
-            <p className="text-sm text-zinc-500 mb-6">
+            <p className="mb-6 text-sm text-[#6d5c58]">
               이 카테고리의 이미지 {items.filter((i) => i.brand === confirmDeleteBrand).length}장을 모두 삭제합니다. 복구할 수 없습니다.
             </p>
             <div className="flex gap-3">
-              <button onClick={() => setConfirmDeleteBrand(null)} className="flex-1 rounded-full border border-zinc-200 py-3 text-sm font-bold text-zinc-500 hover:bg-zinc-50 transition-colors">취소</button>
+              <button onClick={() => setConfirmDeleteBrand(null)} className="flex-1 rounded-full border border-[#ead9cf] py-3 text-sm font-bold text-[#6d5c58] transition-colors hover:bg-[#fbf4f0]">취소</button>
               <button
                 onClick={() => handleDeleteBrand(confirmDeleteBrand)}
                 disabled={deleting === `brand:${confirmDeleteBrand}`}

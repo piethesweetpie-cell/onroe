@@ -72,7 +72,7 @@ export default function ClientRequestDetailPage() {
       actions={
         <Link
           href={`/client/${encodeEmailPath(email)}`}
-          className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm text-zinc-600 transition hover:bg-zinc-50"
+          className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm text-[#6d5c58] transition hover:bg-[#fbf4f0]"
         >
           목록으로
         </Link>
@@ -87,13 +87,13 @@ export default function ClientRequestDetailPage() {
 
       {!loading && request ? (
         <div className="space-y-6">
-          <section className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-            <h2 className="mb-4 text-lg font-bold text-zinc-900">진행 상태</h2>
+          <section className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+            <h2 className="mb-4 font-skin-serif text-[24px] text-[#2c2c2c]">진행 상태</h2>
             <RequestProgress status={request.status} />
           </section>
 
           <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="space-y-6 rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+            <div className="space-y-6 rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
               <ClientField label="작품명" value={request.title} />
               <ClientField label="장르" value={request.genre} />
               <ClientField label="시안 방향" value={request.style_direction} />
@@ -108,10 +108,10 @@ export default function ClientRequestDetailPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-                <h2 className="mb-4 text-lg font-bold text-zinc-900">미리보기 이미지</h2>
+              <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+                <h2 className="mb-4 font-skin-serif text-[24px] text-[#2c2c2c]">미리보기 이미지</h2>
                 {previewImages.length === 0 ? (
-                  <div className="rounded-3xl border border-dashed border-zinc-200 p-5 text-sm text-zinc-500">
+                  <div className="rounded-3xl border border-dashed border-[#ead9cf] bg-[#fbf4f0] p-5 text-sm text-[#8a7670]">
                     아직 등록된 미리보기 이미지가 없습니다.
                   </div>
                 ) : (
@@ -121,7 +121,7 @@ export default function ClientRequestDetailPage() {
                         <img
                           src={image.url}
                           alt=""
-                          className="aspect-[4/5] w-full rounded-2xl object-cover"
+                          className="aspect-[4/5] w-full rounded-[22px] border border-[#ead9cf] object-cover shadow-[0_14px_28px_rgba(124,98,81,0.08)]"
                         />
                       </button>
                     ))}
@@ -129,24 +129,24 @@ export default function ClientRequestDetailPage() {
                 )}
               </div>
 
-              <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-                <h2 className="mb-4 text-lg font-bold text-zinc-900">댓글</h2>
+              <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+                <h2 className="mb-4 font-skin-serif text-[24px] text-[#2c2c2c]">댓글</h2>
                 <div className="space-y-3">
                   {safeArray(request.comments).length === 0 ? (
-                    <div className="rounded-3xl border border-dashed border-zinc-200 p-5 text-sm text-zinc-500">
+                    <div className="rounded-3xl border border-dashed border-[#ead9cf] bg-[#fbf4f0] p-5 text-sm text-[#8a7670]">
                       아직 전달된 댓글이 없습니다.
                     </div>
                   ) : (
                     safeArray(request.comments).map((comment) => (
-                      <div key={comment.id} className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-4">
-                        <div className="mb-2 text-xs text-zinc-500">{formatDate(comment.created_at)}</div>
-                        <p className="whitespace-pre-wrap text-sm leading-6 text-zinc-700">{comment.text}</p>
+                      <div key={comment.id} className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-4">
+                        <div className="mb-2 text-xs text-[#8a7670]">{formatDate(comment.created_at)}</div>
+                        <p className="whitespace-pre-wrap text-sm leading-6 text-[#5d4c47]">{comment.text}</p>
                         {comment.image_url ? (
                           <button type="button" onClick={() => setSelectedImage(comment.image_url!)}>
                             <img
                               src={comment.image_url}
                               alt=""
-                              className="mt-3 max-h-72 w-full rounded-2xl object-cover"
+                              className="mt-3 max-h-72 w-full rounded-[22px] border border-[#ead9cf] object-cover"
                             />
                           </button>
                         ) : null}
@@ -166,7 +166,7 @@ export default function ClientRequestDetailPage() {
             <button
               type="button"
               onClick={() => setSelectedImage(null)}
-              className="absolute -right-3 -top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg"
+              className="absolute -right-3 -top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2c2c2c] shadow-lg"
             >
               <span className="material-symbols-outlined">close</span>
             </button>
@@ -202,8 +202,8 @@ function ClientField({
 }) {
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{label}</p>
-      <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm leading-6 text-zinc-700 whitespace-pre-wrap">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">{label}</p>
+      <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm leading-6 text-[#5d4c47] whitespace-pre-wrap">
         {value || "없음"}
       </div>
     </div>
@@ -221,27 +221,27 @@ function ReferenceField({
 
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">참고 자료</p>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">참고 자료</p>
       {items.length === 0 ? (
-        <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm leading-6 text-zinc-700 whitespace-pre-wrap">
+        <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm leading-6 text-[#5d4c47] whitespace-pre-wrap">
           없음
         </div>
       ) : (
         <div className="space-y-3">
           {items.map((item) => (
-            <div key={`${item.label}:${item.value}`} className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-4">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{item.label}</p>
+            <div key={`${item.label}:${item.value}`} className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">{item.label}</p>
               <a
                 href={item.value}
                 target="_blank"
                 rel="noreferrer"
-                className="break-all text-sm text-teal-700 hover:underline"
+                className="break-all text-sm text-[#8f695d] hover:underline"
               >
                 {item.value}
               </a>
               {item.isImage ? (
                 <button type="button" onClick={() => onImageClick(item.value)} className="mt-3 block w-full">
-                  <img src={item.value} alt="" className="max-h-64 w-full rounded-2xl object-cover" />
+                  <img src={item.value} alt="" className="max-h-64 w-full rounded-[22px] border border-[#ead9cf] object-cover" />
                 </button>
               ) : null}
             </div>

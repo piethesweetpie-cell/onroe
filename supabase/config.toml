@@ -1,0 +1,2 @@
+[functions.cleanup-order-references]
+verify_jwt = false

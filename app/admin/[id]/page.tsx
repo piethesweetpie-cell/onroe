@@ -256,8 +256,8 @@ export default function AdminRequestDetailPage() {
   if (!request) {
     return (
       <DashboardShell title="요청 상세" subtitle="요청을 찾을 수 없습니다.">
-        <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-zinc-500 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-          <Link href="/admin" className="text-teal-400 hover:underline">
+        <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 text-[#8a7670] shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+          <Link href="/admin" className="text-[#8f695d] hover:underline">
             목록으로 돌아가기
           </Link>
         </div>
@@ -278,9 +278,10 @@ export default function AdminRequestDetailPage() {
       actions={
         <>
           <StatusBadge status={request.status} />
+          <AdminLogoutButton />
           <Link
             href="/admin"
-            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm text-zinc-600 transition hover:bg-zinc-50"
+            className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm text-[#6d5c58] transition hover:bg-[#fbf4f0]"
           >
             목록으로
           </Link>
@@ -301,13 +302,13 @@ export default function AdminRequestDetailPage() {
         </div>
       ) : null}
       {feedback ? (
-        <div className="mb-6 rounded-3xl border border-teal-200 bg-teal-50 p-4 text-sm text-teal-700">
+        <div className="mb-6 rounded-3xl border border-[#e3c5bd] bg-[#f4e3df] p-4 text-sm text-[#8f695d]">
           {feedback}
         </div>
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="space-y-6 rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+        <section className="space-y-6 rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
           <div className="grid gap-4 md:grid-cols-2">
             <ReadOnlyField label="서비스" value={getServiceLabel(request.service_type)} />
             <ReadOnlyField label="작품명" value={request.title} />
@@ -329,12 +330,12 @@ export default function AdminRequestDetailPage() {
 
           {selectedOptionLabels.length > 0 ? (
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">추가 옵션</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">추가 옵션</p>
               <div className="flex flex-wrap gap-2">
                 {selectedOptionLabels.map((option) => (
                   <span
                     key={option}
-                    className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-700"
+                    className="rounded-full border border-[#e3c5bd] bg-[#f4e3df] px-3 py-1.5 text-xs font-medium text-[#8f695d]"
                   >
                     {option}
                   </span>
@@ -345,37 +346,37 @@ export default function AdminRequestDetailPage() {
 
           {selectedStyleImages.length > 0 ? (
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">선호 스타일</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">선호 스타일</p>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 {selectedStyleImages.map((src) => (
-                  <div key={src} className="overflow-hidden rounded-2xl border border-zinc-200 bg-[#fbfaf7] p-2">
+                  <div key={src} className="overflow-hidden rounded-2xl border border-[#ead9cf] bg-[#fbf4f0] p-2">
                     <img src={src} alt="" className="aspect-[2/3] w-full rounded-xl object-cover" />
-                    <p className="mt-2 truncate text-xs text-zinc-500">{src.split("/").pop()}</p>
+                    <p className="mt-2 truncate text-xs text-[#8a7670]">{src.split("/").pop()}</p>
                   </div>
                 ))}
               </div>
             </div>
           ) : null}
 
-          <div className="border-t border-zinc-200 pt-6">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">총 결제 금액</p>
-            <div className="rounded-3xl border border-teal-200 bg-teal-50 px-5 py-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">패키지 + 추가 옵션 합산</p>
-              <p className="mt-2 text-2xl font-black text-zinc-900">{formatKrw(totalPrice)}</p>
+          <div className="border-t border-[#ead9cf] pt-6">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">총 결제 금액</p>
+            <div className="rounded-3xl border border-[#e3c5bd] bg-[#f4e3df] px-5 py-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8f695d]">패키지 + 추가 옵션 합산</p>
+              <p className="mt-2 text-2xl font-black text-[#2c2c2c]">{formatKrw(totalPrice)}</p>
             </div>
           </div>
 
         </section>
 
         <section className="space-y-6">
-          <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-            <h2 className="mb-4 text-lg font-bold text-zinc-900">진행 상태</h2>
+          <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+            <h2 className="mb-4 font-skin-serif text-[24px] text-[#2c2c2c]">진행 상태</h2>
             <RequestProgress status={request.status} />
             <div className="mt-5 flex flex-col gap-3 md:flex-row">
               <select
                 value={status}
                 onChange={(event) => setStatus(event.target.value as RequestStatus)}
-                className="rounded-full border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm text-zinc-900 outline-none"
+                className="rounded-full border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm text-[#2c2c2c] outline-none"
               >
                 {requestStatuses.map((option) => (
                   <option key={option} value={option} className="bg-white">
@@ -387,17 +388,17 @@ export default function AdminRequestDetailPage() {
                 type="button"
                 onClick={() => updateRequest({ status }, "상태가 업데이트되었습니다.")}
                 disabled={working}
-                className="rounded-full bg-teal-400 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
+                className="rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
               >
                 상태 업데이트
               </button>
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+          <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-lg font-bold text-zinc-900">미리보기 이미지</h2>
-              <label className="cursor-pointer rounded-full border border-zinc-200 bg-[#fbfaf7] px-4 py-2 text-sm text-zinc-700">
+              <h2 className="font-skin-serif text-[24px] text-[#2c2c2c]">미리보기 이미지</h2>
+              <label className="cursor-pointer rounded-full border border-[#ead9cf] bg-[#fbf4f0] px-4 py-2 text-sm text-[#6d5c58]">
                 파일 선택
                 <input
                   type="file"
@@ -409,21 +410,21 @@ export default function AdminRequestDetailPage() {
             </div>
 
             {previewImages.length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-zinc-200 p-6 text-sm text-zinc-500">
+              <div className="rounded-3xl border border-dashed border-[#ead9cf] bg-[#fbf4f0] p-6 text-sm text-[#8a7670]">
                 아직 업로드된 이미지가 없습니다.
               </div>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2">
                 {previewImages.map((image) => (
-                  <div key={image.id} className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-3">
+                  <div key={image.id} className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-3">
                     <button
                       type="button"
                       onClick={() => setSelectedPreviewImage(image.url)}
                       className="block w-full"
                     >
-                      <img src={image.url} alt="" className="aspect-[4/5] w-full rounded-2xl object-cover" />
+                      <img src={image.url} alt="" className="aspect-[4/5] w-full rounded-[22px] border border-[#ead9cf] object-cover" />
                     </button>
-                    <div className="mt-3 flex items-center justify-between gap-3 text-xs text-zinc-500">
+                    <div className="mt-3 flex items-center justify-between gap-3 text-xs text-[#8a7670]">
                       <span>{formatDate(image.uploaded_at)}</span>
                       <button
                         type="button"
@@ -438,14 +439,14 @@ export default function AdminRequestDetailPage() {
               </div>
             )}
           </div>
-          <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">클라이언트 확인 링크</p>
+          <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">클라이언트 확인 링크</p>
             {shareLink ? (
-              <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-3">
+              <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-3">
                 <input
                   readOnly
                   value={shareLink}
-                  className="w-full bg-transparent px-1 py-2 text-sm text-zinc-700 outline-none"
+                  className="w-full bg-transparent px-1 py-2 text-sm text-[#5d4c47] outline-none"
                 />
                 <div className="mt-3 flex gap-2">
                   <button
@@ -460,7 +461,7 @@ export default function AdminRequestDetailPage() {
                         setFeedback(null)
                       }
                     }}
-                    className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+                    className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm font-semibold text-[#6d5c58] transition hover:bg-[#fff7f3]"
                   >
                     링크 복사
                   </button>
@@ -468,42 +469,42 @@ export default function AdminRequestDetailPage() {
                     href={shareLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+                    className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm font-semibold text-[#6d5c58] transition hover:bg-[#fff7f3]"
                   >
                     열기
                   </a>
                 </div>
               </div>
             ) : (
-              <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm text-zinc-500">
+              <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm text-[#8a7670]">
                 작업 확인용 비밀번호가 없는 예전 요청은 직접 링크를 만들 수 없습니다.
               </div>
             )}
           </div>
 
-          <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-            <label className="mb-2 block text-sm font-semibold text-zinc-700">내부 메모</label>
+          <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+            <label className="mb-2 block text-sm font-semibold text-[#5d4c47]">내부 메모</label>
             <textarea
               value={adminNote}
               onChange={(event) => setAdminNote(event.target.value)}
-              className="min-h-36 w-full rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-teal-300"
+              className="min-h-36 w-full rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
               placeholder="작업 방향, 전달 사항, 내부 메모를 적어두세요."
             />
             <button
               type="button"
               onClick={() => updateRequest({ admin_note: adminNote }, "내부 메모가 저장되었습니다.")}
               disabled={working}
-              className="mt-3 rounded-full bg-teal-400 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+              className="mt-3 rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
             >
               메모 저장
             </button>
           </div>
 
-          <div className="rounded-[28px] border border-zinc-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
-            <h2 className="mb-4 text-lg font-bold text-zinc-900">댓글</h2>
+          <div className="rounded-[28px] border border-[#ead9cf] bg-white/92 p-6 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+            <h2 className="mb-4 font-skin-serif text-[24px] text-[#2c2c2c]">댓글</h2>
             <div className="space-y-3">
               {comments.length === 0 ? (
-                <div className="rounded-3xl border border-dashed border-zinc-200 p-5 text-sm text-zinc-500">
+                <div className="rounded-3xl border border-dashed border-[#ead9cf] bg-[#fbf4f0] p-5 text-sm text-[#8a7670]">
                   아직 댓글이 없습니다.
                 </div>
               ) : (
@@ -521,11 +522,11 @@ export default function AdminRequestDetailPage() {
               <textarea
                 value={commentText}
                 onChange={(event) => setCommentText(event.target.value)}
-                className="min-h-28 w-full rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-teal-300"
+                className="min-h-28 w-full rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm text-[#2c2c2c] outline-none transition focus:border-[#c9a897]"
                 placeholder="클라이언트에게 전달할 댓글을 입력하세요."
               />
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <label className="cursor-pointer rounded-full border border-zinc-200 bg-[#fbfaf7] px-4 py-2 text-sm text-zinc-700">
+                <label className="cursor-pointer rounded-full border border-[#ead9cf] bg-[#fbf4f0] px-4 py-2 text-sm text-[#6d5c58]">
                   {commentImage ? commentImage.name : "댓글 이미지 첨부"}
                   <input
                     type="file"
@@ -538,7 +539,7 @@ export default function AdminRequestDetailPage() {
                   type="button"
                   onClick={handleCommentCreate}
                   disabled={working}
-                  className="rounded-full bg-teal-400 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
+                  className="rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
                 >
                   댓글 등록
                 </button>
@@ -560,7 +561,7 @@ export default function AdminRequestDetailPage() {
             <button
               type="button"
               onClick={() => setSelectedPreviewImage(null)}
-              className="absolute -right-3 -top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-900 shadow-lg"
+              className="absolute -right-3 -top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2c2c2c] shadow-lg"
             >
               <span className="material-symbols-outlined">close</span>
             </button>
@@ -602,8 +603,8 @@ function ReadOnlyField({
 }) {
   return (
     <div className={full ? "md:col-span-2" : ""}>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{label}</p>
-      <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm leading-6 text-zinc-700 whitespace-pre-wrap">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">{label}</p>
+      <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm leading-6 text-[#5d4c47] whitespace-pre-wrap">
         {value || "없음"}
       </div>
     </div>
@@ -619,21 +620,21 @@ function ReferenceField({
 }) {
   return (
     <div className="md:col-span-2">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">참고 자료</p>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">참고 자료</p>
       {items.length === 0 ? (
-        <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] px-4 py-3 text-sm leading-6 text-zinc-700 whitespace-pre-wrap">
+        <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] px-4 py-3 text-sm leading-6 text-[#5d4c47] whitespace-pre-wrap">
           없음
         </div>
       ) : (
         <div className="grid gap-3 md:grid-cols-2">
           {items.map((item) => (
-            <div key={`${item.label}:${item.value}`} className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-4">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{item.label}</p>
+            <div key={`${item.label}:${item.value}`} className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b7b68]">{item.label}</p>
               <a
                 href={item.value}
                 target="_blank"
                 rel="noreferrer"
-                className="break-all text-sm text-teal-700 hover:underline"
+                className="break-all text-sm text-[#8f695d] hover:underline"
               >
                 {item.value}
               </a>
@@ -658,12 +659,12 @@ function CommentCard({
   onDelete: () => void
 }) {
   return (
-    <div className="rounded-3xl border border-zinc-200 bg-[#fbfaf7] p-4">
+    <div className="rounded-3xl border border-[#ead9cf] bg-[#fbf4f0] p-4">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">Admin</span>
-        <span className="text-xs text-zinc-500">{formatDate(comment.created_at)}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8f695d]">Admin</span>
+        <span className="text-xs text-[#8a7670]">{formatDate(comment.created_at)}</span>
       </div>
-      <p className="whitespace-pre-wrap text-sm leading-6 text-zinc-700">{comment.text || "이미지 첨부"}</p>
+      <p className="whitespace-pre-wrap text-sm leading-6 text-[#5d4c47]">{comment.text || "이미지 첨부"}</p>
       {comment.image_url ? (
         <img src={comment.image_url} alt="" className="mt-3 max-h-72 w-full rounded-2xl object-cover" />
       ) : null}

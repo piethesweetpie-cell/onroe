@@ -1,6 +1,6 @@
 export function LoadingCard({ label = "불러오는 중..." }: { label?: string }) {
   return (
-    <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-sm text-zinc-500 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+    <div className="rounded-[28px] border border-[#ead9cf] bg-white/90 p-6 text-sm text-[#8a7670] shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
       {label}
     </div>
   )

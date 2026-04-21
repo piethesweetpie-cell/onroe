@@ -1,6 +1,6 @@
 "use client"
 
-import type { Dispatch, ReactNode, SetStateAction } from "react"
+import type { Dispatch, ReactNode, RefObject, SetStateAction } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -9,6 +9,8 @@ import { extractStoragePath, formatKrw } from "@/lib/novelcraft"
 
 type TrackType = "product" | "model"
 type PackageType = "starter" | "standard" | "brand-set" | "look" | "editorial" | "campaign"
+type UploadKind = "product" | "reference"
+type UploadedImage = { url: string; name: string }
 
 const directionOptions = [
   {
@@ -96,8 +98,8 @@ const packageOptionsByTrack: Record<
     {
       id: "look",
       title: "LOOK",
-      price: "179,000원",
-      priceValue: 179000,
+      price: "79,000원",
+      priceValue: 79000,
       description: "인물 1컷, 무드/색상 설정",
       bullets: ["인물 1컷", "무드 설정", "색상 톤 제안"],
     },
@@ -126,9 +128,9 @@ const additionalOptionsByTrack: Record<
 > = {
   product: [
     {
-      id: "detail-layout",
-      title: "상세페이지 제작용 구성 컷 배치",
-      description: "상세페이지용 레이아웃으로 바로 활용할 수 있게 정리합니다.",
+      id: "rush-delivery",
+      title: "급행 마감",
+      description: "영업일 2일 이내 1차 결과물 전달",
       price: "+30,000",
       priceValue: 30000,
     },
@@ -136,11 +138,61 @@ const additionalOptionsByTrack: Record<
       id: "same-mood-extra",
       title: "동일 무드 추가컷 1장",
       description: "선택한 무드를 유지한 채 추가 장면을 확장합니다.",
-      price: "+20,000",
-      priceValue: 20000,
+      price: "+30,000",
+      priceValue: 30000,
+    },
+    {
+      id: "extra-retouch",
+      title: "추가 리터칭",
+      description: "기본 1회 수정 이후 추가 수정 요청시",
+      price: "+30,000",
+      priceValue: 30000,
+    },
+    {
+      id: "private-portfolio",
+      title: "포트폴리오 비공개",
+      description: "작업물 외부 공개를 제한합니다",
+      price: "+90,000",
+      priceValue: 90000,
     },
   ],
-  model: [],
+  model: [
+    {
+      id: "rush-delivery",
+      title: "급행 마감",
+      description: "영업일 2일 이내 1차 결과물 전달",
+      price: "+30,000",
+      priceValue: 30000,
+    },
+    {
+      id: "same-mood-extra",
+      title: "동일 무드 추가컷 1장",
+      description: "선택한 무드를 유지한 채 추가 장면을 확장합니다.",
+      price: "+30,000",
+      priceValue: 30000,
+    },
+    {
+      id: "extra-retouch",
+      title: "추가 리터칭",
+      description: "기본 1회 수정 이후 추가 수정 요청시",
+      price: "+30,000",
+      priceValue: 30000,
+    },
+    {
+      id: "private-portfolio",
+      title: "포트폴리오 비공개",
+      description: "작업물 외부 공개를 제한합니다",
+      price: "+90,000",
+      priceValue: 90000,
+    },
+    {
+      id: "extra-model",
+      title: "모델 1인 추가",
+      description: "기본 모델 외에 AI모델 1명 추가 제작",
+      price: "+49,000",
+      priceValue: 49000,
+    },
+  ],
 }
 
 const inputClassName =
@@ -161,17 +213,25 @@ export default function StudioRoePage() {
   const [workKeywords, setWorkKeywords] = useState("")
   const [usageChannel, setUsageChannel] = useState("")
   const [referenceLinks, setReferenceLinks] = useState(["", ""])
-  const [uploadedImages, setUploadedImages] = useState<{ url: string; name: string }[]>([])
+  const [productImages, setProductImages] = useState<UploadedImage[]>([])
+  const [referenceImages, setReferenceImages] = useState<UploadedImage[]>([])
   const [deadline, setDeadline] = useState("")
   const [clientEmail, setClientEmail] = useState("")
   const [clientPassword, setClientPassword] = useState("")
   const [agreeTerms, setAgreeTerms] = useState(false)
-  const [isUploading, setIsUploading] = useState(false)
+  const [uploadingKinds, setUploadingKinds] = useState<Record<UploadKind, boolean>>({
+    product: false,
+    reference: false,
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [uploadError, setUploadError] = useState<string | null>(null)
+  const [uploadErrors, setUploadErrors] = useState<Record<UploadKind, string | null>>({
+    product: null,
+    reference: null,
+  })
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const productFileInputRef = useRef<HTMLInputElement>(null)
+  const referenceFileInputRef = useRef<HTMLInputElement>(null)
   const heroRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const logoGlowRef = useRef<HTMLDivElement>(null)
@@ -188,6 +248,7 @@ export default function StudioRoePage() {
   const totalPrice =
     activePackage.priceValue +
     selectedOptions.reduce((sum, optionId) => sum + (optionMap.get(optionId)?.priceValue ?? 0), 0)
+  const isUploading = uploadingKinds.product || uploadingKinds.reference
 
   useEffect(() => {
     let frameId = 0
@@ -291,51 +352,64 @@ export default function StudioRoePage() {
     setReferenceLinks((prev) => prev.map((link, currentIndex) => (currentIndex === index ? value : link)))
   }
 
-  async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileUpload(kind: UploadKind, event: React.ChangeEvent<HTMLInputElement>) {
     const files = event.target.files
     if (!files || files.length === 0) return
 
-    setUploadError(null)
+    const currentImages = kind === "product" ? productImages : referenceImages
+    const setImages = kind === "product" ? setProductImages : setReferenceImages
+    const inputRef = kind === "product" ? productFileInputRef : referenceFileInputRef
+    const folderName = kind === "product" ? "product-originals" : "reference-images"
+    const maxFileSize = kind === "product" ? 100 * 1024 * 1024 : 5 * 1024 * 1024
+    const maxFileSizeLabel = kind === "product" ? "100MB" : "5MB"
 
-    if (uploadedImages.length + files.length > 3) {
-      setUploadError("최대 3장까지만 업로드할 수 있습니다.")
+    setUploadErrors((prev) => ({ ...prev, [kind]: null }))
+
+    if (currentImages.length + files.length > 3) {
+      setUploadErrors((prev) => ({ ...prev, [kind]: "최대 3장까지만 업로드할 수 있습니다." }))
       return
     }
 
-    setIsUploading(true)
+    setUploadingKinds((prev) => ({ ...prev, [kind]: true }))
 
     for (const file of Array.from(files)) {
-      if (file.size > 5 * 1024 * 1024) {
-        setUploadError(`${file.name}: 파일 크기가 5MB를 초과합니다.`)
+      if (file.size > maxFileSize) {
+        setUploadErrors((prev) => ({ ...prev, [kind]: `${file.name}: 파일 크기가 ${maxFileSizeLabel}를 초과합니다.` }))
         continue
       }
 
       const fileExt = file.name.split(".").pop()
-      const fileName = `${uploadFolder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`
+      const fileName = `${uploadFolder}/${folderName}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`
       const { error } = await supabase.storage.from("order-references").upload(fileName, file)
 
       if (error) {
-        setUploadError(`${file.name}: 업로드 실패 - ${error.message}`)
+        setUploadErrors((prev) => ({ ...prev, [kind]: `${file.name}: 업로드 실패 - ${error.message}` }))
         continue
       }
 
       const { data: urlData } = supabase.storage.from("order-references").getPublicUrl(fileName)
-      setUploadedImages((prev) => [...prev, { url: urlData.publicUrl, name: file.name }])
+      setImages((prev) => [...prev, { url: urlData.publicUrl, name: file.name }])
     }
 
-    setIsUploading(false)
+    setUploadingKinds((prev) => ({ ...prev, [kind]: false }))
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+    if (inputRef.current) {
+      inputRef.current.value = ""
     }
   }
 
-  async function handleRemoveImage(imageUrl: string) {
+  async function handleRemoveImage(kind: UploadKind, imageUrl: string) {
     const fileName = extractStoragePath(imageUrl, "order-references")
     if (fileName) {
       await supabase.storage.from("order-references").remove([fileName])
     }
-    setUploadedImages((prev) => prev.filter((image) => image.url !== imageUrl))
+
+    if (kind === "product") {
+      setProductImages((prev) => prev.filter((image) => image.url !== imageUrl))
+      return
+    }
+
+    setReferenceImages((prev) => prev.filter((image) => image.url !== imageUrl))
   }
 
   function resetForm() {
@@ -350,16 +424,16 @@ export default function StudioRoePage() {
     setWorkKeywords("")
     setUsageChannel("")
     setReferenceLinks(["", ""])
-    setUploadedImages([])
+    setProductImages([])
+    setReferenceImages([])
     setDeadline("")
     setClientEmail("")
     setClientPassword("")
     setAgreeTerms(false)
-    setUploadError(null)
+    setUploadErrors({ product: null, reference: null })
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
-    }
+    if (productFileInputRef.current) productFileInputRef.current.value = ""
+    if (referenceFileInputRef.current) referenceFileInputRef.current.value = ""
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -374,8 +448,9 @@ export default function StudioRoePage() {
     const direction = directionOptions.find((item) => item.id === selectedDirection)
     const formattedLinks = referenceLinks.map((link) => link.trim()).filter(Boolean)
     const referenceNotes = [
-      ...formattedLinks.map((link, index) => `참고 링크 ${index + 1}: ${link}`),
-      ...uploadedImages.map((image, index) => `업로드 이미지 ${index + 1}: ${image.url}`),
+      ...productImages.map((image, index) => `상품 원본 이미지 ${index + 1}: ${image.url}`),
+      ...referenceImages.map((image, index) => `레퍼런스 이미지 ${index + 1}: ${image.url}`),
+      ...formattedLinks.map((link, index) => `레퍼런스 링크 ${index + 1}: ${link}`),
     ].join("\n")
 
     if (!title.trim()) return setSubmitError("제품명 또는 프로젝트명을 입력해 주세요.")
@@ -458,110 +533,105 @@ export default function StudioRoePage() {
       <nav className="fixed inset-x-0 top-0 z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
         <div className="mx-auto flex max-w-[1580px] items-center justify-between px-6 py-5 md:px-10">
           <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">Studio Roe</span>
-          <Link
-            href="/portfolio"
-            className="rounded-full bg-[#934b66] px-7 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
-          >
-            Portfolio
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/client"
+              className="flex items-center justify-center gap-3 rounded-full border border-[#eadfd8] bg-white px-7 py-3 text-base font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c]"
+            >
+              Client
+              <span aria-hidden>→</span>
+            </Link>
+            <Link
+              href="/portfolio"
+              className="rounded-full bg-[#934b66] px-7 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
+            >
+              Portfolio
+            </Link>
+          </div>
         </div>
       </nav>
 
       <form onSubmit={handleSubmit}>
         <main>
-          <section
-            ref={heroRef}
-            className="relative flex min-h-[460px] items-start justify-center overflow-hidden px-6 pb-0 pt-24 md:px-10 md:pt-28"
-            onMouseMove={handleHeroPointerMove}
-            onMouseLeave={handleHeroPointerLeave}
-          >
+          <div className="relative overflow-hidden bg-[#fdf8f5]">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.92),rgba(253,248,245,0.95)_36%,rgba(245,233,226,0.85)_74%,rgba(253,248,245,0.98)_100%)]" />
-            <div className="pointer-events-none absolute inset-0 opacity-60 blur-[90px]" style={{ background: "radial-gradient(circle at 50% 38%, rgba(235, 214, 199, 0.75), transparent 34%)" }} />
-            <div className="pointer-events-none absolute left-[10%] top-[28%] h-28 w-28 rounded-full bg-[#efe4dd] opacity-55 blur-3xl" />
-            <div className="pointer-events-none absolute right-[12%] top-[30%] h-28 w-28 rounded-full bg-[#efe4dd] opacity-50 blur-3xl" />
-
-            <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center">
-              <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start">
-                <div className="relative inline-block hero-copy-enter hero-copy-enter-delay-1">
-                  <div className="flex h-[84px] w-[84px] rotate-[-10deg] items-center justify-center rounded-full border-[3px] border-[#c7a98c]">
-                    <span className="text-[14px] font-semibold uppercase tracking-[0.18em] text-[#c7a98c]">NEW</span>
-                  </div>
-                  <div className="absolute -right-1 top-0 h-6 w-6 rounded-full bg-[#d9a9ac]" />
-                </div>
-              </div>
-
-              <div className="relative -mt-4 flex min-h-[220px] w-full max-w-[1360px] items-start justify-center">
-                <div
-                  ref={logoGlowRef}
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  <div className="h-full w-full rounded-full bg-[radial-gradient(circle,rgba(219,192,175,0.28),rgba(255,255,255,0)_66%)] blur-[68px] hero-logo-glow-enter" />
-                </div>
-
-                <div className="relative pt-0 text-center hero-copy-enter hero-copy-enter-delay-2">
-                  <h1 className="font-skin-serif text-[54px] leading-[0.88] tracking-[-0.05em] text-[#2a2a2a] md:text-[84px] lg:text-[112px]">
-                    AI Studio
-                  </h1>
-                  <p className="mt-[-6px] font-skin-serif text-[44px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-14px] md:text-[70px] lg:text-[92px]">
-                    Request Form
-                  </p>
-                </div>
-
-                <div
-                  ref={logoRef}
-                  className="pointer-events-none absolute left-1/2 top-1/2 w-[120px] -translate-x-1/2 -translate-y-1/2 md:w-[175px] lg:w-[224px]"
-                  style={{ transform: "translate(-50%, calc(-50% - 32px))" }}
-                >
-                  <div className="hero-logo-enter">
-                    <Image
-                      src="/images/logo.png"
-                      alt="Studio Roe logo"
-                      width={900}
-                      height={900}
-                      priority
-                      className="h-auto w-full object-contain opacity-[0.94] drop-shadow-[0_20px_40px_rgba(173,149,166,0.22)]"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="-mt-5 flex flex-col items-center justify-center gap-4 pb-2 text-center hero-copy-enter hero-copy-enter-delay-3 sm:flex-row">
-                <a
-                  href="#request-form"
-                  className="rounded-full bg-[#934b66] px-11 py-4 text-[16px] font-semibold text-white shadow-[0_9px_18px_rgba(147,75,102,0.14)] transition-all hover:-translate-y-1 hover:bg-[#7d3f56]"
-                >
-                  의뢰서 작성하기
-                </a>
-                <Link
-                  href="/client"
-                  className="flex items-center justify-center gap-3 rounded-full border border-[#eadfd8] bg-white px-11 py-4 text-[16px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-1 hover:border-[#c7a98c]"
-                >
-                  Client
-                  <span aria-hidden>→</span>
-                </Link>
-              </div>
-            </div>
-
             <div
-              className="absolute bottom-[-10px] left-0 right-0 h-8 bg-[#f5f0eb]"
-              style={{ clipPath: "ellipse(75% 100% at 50% 100%)" }}
+              className="pointer-events-none absolute inset-0 opacity-60 blur-[90px]"
+              style={{ background: "radial-gradient(circle at 50% 24%, rgba(235, 214, 199, 0.75), transparent 40%)" }}
             />
-          </section>
+            <div className="pointer-events-none absolute left-[10%] top-[10%] h-28 w-28 rounded-full bg-[#efe4dd] opacity-55 blur-3xl" />
+            <div className="pointer-events-none absolute right-[12%] top-[12%] h-28 w-28 rounded-full bg-[#efe4dd] opacity-50 blur-3xl" />
 
-          <section id="story" className="relative bg-[#f5f0eb] px-6 pb-12 pt-12">
-            <div className="mx-auto max-w-5xl">
+            <section
+              ref={heroRef}
+              className="relative flex min-h-[520px] items-start justify-center px-6 pb-16 pt-24 md:px-10 md:pb-24 md:pt-28"
+              onMouseMove={handleHeroPointerMove}
+              onMouseLeave={handleHeroPointerLeave}
+            >
+              <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center">
+                <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start">
+                  <div className="relative inline-block hero-copy-enter hero-copy-enter-delay-1">
+                    <div className="flex h-[92px] w-[92px] rotate-[-10deg] items-center justify-center rounded-full border-[3px] border-[#c7a98c]">
+                      <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#c7a98c]">ONROE</span>
+                    </div>
+                    <div className="absolute -right-1 top-0 h-6 w-6 rounded-full bg-[#d9a9ac]" />
+                  </div>
+                </div>
+
+                <div className="relative -mt-[19px] flex min-h-[220px] w-full max-w-[1360px] items-start justify-center">
+                  <div
+                    ref={logoGlowRef}
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
+                    style={{ willChange: "transform, opacity" }}
+                  >
+                    <div className="h-full w-full rounded-full bg-[radial-gradient(circle,rgba(219,192,175,0.28),rgba(255,255,255,0)_66%)] blur-[68px] hero-logo-glow-enter" />
+                  </div>
+
+                  <div className="relative pt-0 text-center hero-copy-enter hero-copy-enter-delay-2">
+                    <h1 className="font-skin-serif text-[54px] leading-[0.88] tracking-[-0.05em] text-[#2a2a2a] md:text-[84px] lg:text-[112px]">
+                      AI Studio
+                    </h1>
+                    <p className="mt-[-6px] font-skin-serif text-[44px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-14px] md:text-[70px] lg:text-[92px]">
+                      Request Form
+                    </p>
+                  </div>
+
+                  <div
+                    ref={logoRef}
+                    className="pointer-events-none absolute left-1/2 top-1/2 w-[120px] -translate-x-1/2 -translate-y-1/2 md:w-[175px] lg:w-[224px]"
+                    style={{ transform: "translate(-50%, calc(-50% - 32px))" }}
+                  >
+                    <div className="hero-logo-enter">
+                      <Image
+                        src="/images/logo.png"
+                        alt="Studio Roe logo"
+                        width={900}
+                        height={900}
+                        priority
+                        className="h-auto w-full object-contain opacity-[0.94] drop-shadow-[0_20px_40px_rgba(173,149,166,0.22)]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="story" className="relative -mt-14 px-6 pb-12 pt-0 md:-mt-20">
+              <div className="relative z-10 mx-auto max-w-5xl">
               <div className="relative">
-                <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-[32px] bg-[#e8dcd5]" />
+                <div className="absolute inset-0 translate-x-3 translate-y-4 rounded-[32px] bg-[#d9ccc4]/85 shadow-[0_26px_60px_rgba(120,96,78,0.14)]" />
                 <div
                   id="request-form"
-                  className="relative rounded-[32px] bg-white p-8 shadow-2xl md:p-12"
+                  className="relative rounded-[32px] bg-white p-8 shadow-[0_24px_50px_rgba(108,84,64,0.12)] md:p-12"
                   style={{
                     backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 29px, #f5f0eb 30px)",
                   }}
                 >
-                  <div className="absolute right-8 top-8 flex h-16 w-16 rotate-[15deg] items-center justify-center rounded-lg border-2 border-[#b8967e] opacity-60">
-                    <span className="text-center text-[11px] font-bold leading-tight text-[#b8967e]">AI{"\n"}STUDIO</span>
+                  <div className="absolute right-8 top-8 flex h-20 w-20 rotate-[15deg] items-center justify-center rounded-[28px] border-[3px] border-[#cdb5a2] opacity-70">
+                    <span className="text-center text-[11px] font-bold leading-[1.15] tracking-[0.08em] text-[#b8967e]">
+                      AI{" "}
+                      <span className="block">STUDIO</span>
+                    </span>
                   </div>
 
                   <SectionHeading
@@ -590,8 +660,9 @@ export default function StudioRoePage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+              </div>
+            </section>
+          </div>
 
           <section id="offer" className="bg-[#fdf8f5] px-6 py-12">
             <div className="mx-auto max-w-5xl">
@@ -725,27 +796,33 @@ export default function StudioRoePage() {
             </div>
           </section>
 
-          <section id="pricing" className="bg-[#2c2c2c] px-6 py-12">
-            <div className="mx-auto max-w-5xl">
+          <section id="pricing" className="relative overflow-hidden bg-[#f5e6e7] px-6 py-12">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.88),rgba(245,230,231,0.95)_34%,rgba(239,219,222,0.9)_70%,rgba(245,230,231,0.98)_100%)]" />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-60 blur-[90px]"
+              style={{ background: "radial-gradient(circle at 50% 18%, rgba(214, 173, 182, 0.46), transparent 34%)" }}
+            />
+            <div className="pointer-events-none absolute left-[8%] top-[18%] h-32 w-32 rounded-full bg-[#efd8dc] opacity-50 blur-3xl" />
+            <div className="pointer-events-none absolute right-[10%] top-[14%] h-32 w-32 rounded-full bg-[#ecd5da] opacity-45 blur-3xl" />
+
+            <div className="relative z-10 mx-auto max-w-5xl">
               <div className="mb-8 text-center">
-                <div className="mb-6 inline-flex flex-wrap items-center justify-center gap-3">
-                  <span className="bg-[#b8967e] px-4 py-2 text-xs font-bold tracking-[0.22em] text-white">PACKAGE</span>
-                </div>
-                <h2 className="font-skin-serif text-4xl text-[#fdf8f5] md:text-5xl">패키지 선택</h2>
-                <p className="mx-auto mt-4 max-w-xl text-[#f5e6e8]/70">
+                <span className="mb-4 inline-block rounded-full bg-[#f5e6e8] px-4 py-2 text-sm font-medium text-[#8b475d]">05</span>
+                <h2 className="font-skin-serif text-[20px] text-[#2c2c2c] md:text-[25px]">패키지 선택</h2>
+                <p className="mx-auto mt-4 max-w-xl text-[#6b6b6b]">
                   크몽에서 미리 구매하신 상품을 선택해 주세요.
                 </p>
               </div>
 
               <div className="mb-10 flex justify-center">
-                <div className="inline-flex rounded-full border border-white/10 bg-white/5 p-1">
+                <div className="inline-flex rounded-full border border-[#e2d2c8] bg-white/85 p-1.5 shadow-[0_12px_30px_rgba(138,103,83,0.08)] backdrop-blur-sm">
                   <button
                     type="button"
                     onClick={() => handleTrackChange("product")}
                     className={`rounded-full px-6 py-3 text-sm font-semibold transition-all ${
                       selectedTrack === "product"
-                        ? "bg-white text-[#2c2c2c] shadow-lg"
-                        : "text-[#f5e6e8]/70 hover:text-white"
+                        ? "bg-[#8b475d] text-white shadow-[0_12px_24px_rgba(139,71,93,0.22)]"
+                        : "text-[#8a6c5b] hover:text-[#2c2c2c]"
                     }`}
                   >
                     상품
@@ -755,8 +832,8 @@ export default function StudioRoePage() {
                     onClick={() => handleTrackChange("model")}
                     className={`rounded-full px-6 py-3 text-sm font-semibold transition-all ${
                       selectedTrack === "model"
-                        ? "bg-white text-[#2c2c2c] shadow-lg"
-                        : "text-[#f5e6e8]/70 hover:text-white"
+                        ? "bg-[#8b475d] text-white shadow-[0_12px_24px_rgba(139,71,93,0.22)]"
+                        : "text-[#8a6c5b] hover:text-[#2c2c2c]"
                     }`}
                   >
                     모델
@@ -847,57 +924,51 @@ export default function StudioRoePage() {
               <div className="mb-12">
                 <h3 className="mb-4 text-lg font-medium text-[#4a4a4a]">이미지 업로드</h3>
                 <div className="grid gap-6 md:grid-cols-2">
-                  <div className="rounded-[28px] bg-white p-8 shadow-xl md:rotate-[-2deg]">
-                    <label
-                      className={`block rounded-[22px] border-2 border-dashed border-[#e8dcd5] p-8 text-center transition-colors ${
-                        uploadedImages.length >= 3 ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:border-[#b8967e]"
-                      }`}
-                    >
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/jpeg,image/png"
-                        multiple
-                        className="hidden"
-                        onChange={handleFileUpload}
-                        disabled={uploadedImages.length >= 3 || isUploading}
-                      />
-                      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#f5e6e8] text-2xl text-[#8b475d]">
-                        ↑
-                      </div>
-                      <p className="font-medium text-[#2c2c2c]">{isUploading ? "업로드 중..." : "이미지 파일 선택"}</p>
-                      <p className="mt-1 text-sm text-[#6b6b6b]">최대 3장 · JPG, PNG · 각 5MB 이하</p>
-                    </label>
+                  <UploadCard
+                    title="상품 원본 이미지 업로드"
+                    description="실제 상품 사진, 패키지 정면컷, 로고가 보이는 원본 이미지나 ZIP 압축 파일을 올려 주세요."
+                    inputRef={productFileInputRef}
+                    images={productImages}
+                    error={uploadErrors.product}
+                    isUploading={uploadingKinds.product}
+                    disabled={productImages.length >= 3 || isUploading}
+                    accept="image/jpeg,image/png,.zip,application/zip,application/x-zip-compressed"
+                    helperText="최대 3개 · JPG, PNG, ZIP · 각 100MB 이하"
+                    onChange={(event) => handleFileUpload("product", event)}
+                    onRemove={(imageUrl) => handleRemoveImage("product", imageUrl)}
+                    cardClassName="md:rotate-[-2deg]"
+                  />
 
-                    {uploadError ? (
-                      <div className="mt-4 rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                        {uploadError}
-                      </div>
-                    ) : null}
+                  <UploadCard
+                    title="레퍼런스 이미지 업로드"
+                    description="원하는 무드보드, 광고 컷, 상세페이지 예시 이미지를 올려 주세요."
+                    inputRef={referenceFileInputRef}
+                    images={referenceImages}
+                    error={uploadErrors.reference}
+                    isUploading={uploadingKinds.reference}
+                    disabled={referenceImages.length >= 3 || isUploading}
+                    accept="image/jpeg,image/png"
+                    helperText="최대 3장 · JPG, PNG · 각 5MB 이하"
+                    onChange={(event) => handleFileUpload("reference", event)}
+                    onRemove={(imageUrl) => handleRemoveImage("reference", imageUrl)}
+                    cardClassName="md:rotate-[2deg]"
+                  />
+                </div>
 
-                    {uploadedImages.length > 0 ? (
-                      <div className="mt-5 flex flex-wrap gap-3">
-                        {uploadedImages.map((image) => (
-                          <div key={image.url} className="group relative">
-                            <img
-                              src={image.url}
-                              alt={image.name}
-                              className="h-24 w-24 rounded-[18px] border border-[#e8dcd5] object-cover"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveImage(image.url)}
-                              className="absolute -right-2 -top-2 rounded-full bg-[#8b475d] px-2 py-1 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100"
-                            >
-                              삭제
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    ) : null}
+                <div className="mt-6 rounded-[28px] border border-[#ead9cf] bg-white/85 p-8 shadow-[0_18px_40px_rgba(124,98,81,0.08)]">
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <div>
+                      <h4 className="text-lg font-medium text-[#2c2c2c]">레퍼런스 링크</h4>
+                      <p className="mt-1 text-sm leading-7 text-[#6b6b6b]">
+                        핀터레스트, 상세페이지, 광고 레퍼런스 링크가 있다면 함께 남겨 주세요.
+                      </p>
+                    </div>
+                    <div className="rounded-full bg-[#f5e6e8] px-4 py-2 text-xs font-semibold tracking-[0.16em] text-[#8b475d]">
+                      OPTIONAL
+                    </div>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <input
                       value={referenceLinks[0]}
                       onChange={(event) => handleReferenceLinkChange(0, event.target.value)}
@@ -910,9 +981,6 @@ export default function StudioRoePage() {
                       className={inputClassName}
                       placeholder="https://..."
                     />
-                    <p className="text-sm leading-7 text-[#6b6b6b]">
-                      상품 사진 원본, 패키지 이미지, 기존 상세페이지, 무드보드, 원하는 광고 비주얼 예시를 첨부해 주세요.
-                    </p>
                   </div>
                 </div>
               </div>
@@ -1035,7 +1103,7 @@ function CenteredHeading({
   return (
     <div className="mb-8 text-center">
       <span className={`mb-4 inline-block rounded-full px-4 py-2 text-sm font-medium ${badgeClassName}`}>{index}</span>
-      <h2 className="font-skin-serif text-[28px] text-[#2c2c2c] md:text-[36px]">{title}</h2>
+      <h2 className="font-skin-serif text-[20px] text-[#2c2c2c] md:text-[25px]">{title}</h2>
       {body ? <p className="mx-auto mt-4 max-w-2xl text-[#6b6b6b]">{body}</p> : null}
     </div>
   )
@@ -1045,7 +1113,7 @@ function SectionHeading({ index, title, body }: { index: string; title: string; 
   return (
     <div className="mb-6">
       <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#8b7355]">{index}</p>
-      <h2 className="font-skin-serif text-[28px] leading-tight text-[#2c2c2c] md:text-[36px]">{title}</h2>
+      <h2 className="font-skin-serif text-[20px] leading-tight text-[#2c2c2c] md:text-[25px]">{title}</h2>
       <p className="mt-4 max-w-2xl text-[#6b6b6b]">{body}</p>
     </div>
   )
@@ -1058,6 +1126,107 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
       {children}
     </label>
   )
+}
+
+function UploadCard({
+  title,
+  description,
+  inputRef,
+  images,
+  error,
+  isUploading,
+  disabled,
+  accept,
+  helperText,
+  onChange,
+  onRemove,
+  cardClassName,
+}: {
+  title: string
+  description: string
+  inputRef: RefObject<HTMLInputElement | null>
+  images: UploadedImage[]
+  error: string | null
+  isUploading: boolean
+  disabled: boolean
+  accept: string
+  helperText: string
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onRemove: (imageUrl: string) => void
+  cardClassName?: string
+}) {
+  return (
+    <div
+      className={`rounded-[28px] border border-[#ead9cf] bg-white p-8 shadow-[0_18px_40px_rgba(124,98,81,0.08)] ${
+        cardClassName ?? ""
+      }`}
+    >
+      <div className="mb-5">
+        <h4 className="text-lg font-medium text-[#2c2c2c]">{title}</h4>
+        <p className="mt-2 text-sm leading-7 text-[#6b6b6b]">{description}</p>
+      </div>
+
+      <label
+        className={`block rounded-[22px] border-2 border-dashed border-[#e8dcd5] p-8 text-center transition-colors ${
+          disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:border-[#b8967e]"
+        }`}
+      >
+        <input
+          ref={inputRef}
+          type="file"
+          accept={accept}
+          multiple
+          className="hidden"
+          onChange={onChange}
+          disabled={disabled}
+        />
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#f5e6e8] text-2xl text-[#8b475d]">
+          ↑
+        </div>
+        <p className="font-medium text-[#2c2c2c]">{isUploading ? "업로드 중..." : "이미지 파일 선택"}</p>
+        <p className="mt-1 text-sm text-[#6b6b6b]">{helperText}</p>
+      </label>
+
+      {error ? (
+        <div className="mt-4 rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
+      ) : null}
+
+      {images.length > 0 ? (
+        <div className="mt-5 flex flex-wrap gap-3">
+          {images.map((image) => (
+            <div key={image.url} className="group relative">
+              {isPreviewableImage(image.name) ? (
+                <img
+                  src={image.url}
+                  alt={image.name}
+                  className="h-24 w-24 rounded-[18px] border border-[#e8dcd5] object-cover"
+                />
+              ) : (
+                <div className="flex h-24 w-24 flex-col items-center justify-center rounded-[18px] border border-[#e8dcd5] bg-[#fbf4f0] px-2 text-center">
+                  <span className="rounded-full bg-[#f5e6e8] px-2 py-1 text-[10px] font-bold tracking-[0.14em] text-[#8b475d]">
+                    ZIP
+                  </span>
+                  <span className="mt-2 overflow-hidden text-[11px] font-medium leading-4 text-[#6b6b6b]">{image.name}</span>
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => onRemove(image.url)}
+                className="absolute -right-2 -top-2 rounded-full bg-[#8b475d] px-2 py-1 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                삭제
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function isPreviewableImage(fileName: string) {
+  const normalizedName = fileName.toLowerCase()
+  return normalizedName.endsWith(".jpg") || normalizedName.endsWith(".jpeg") || normalizedName.endsWith(".png")
 }
 
 function NoteCard({
@@ -1131,27 +1300,31 @@ function PackageCard({
     <div
       onClick={onClick}
       className={`relative cursor-pointer rounded-[28px] p-8 transition-all duration-300 ${
-        active ? "scale-105 bg-[#fdf8f5] shadow-2xl" : "bg-[#3a4f4a] hover:bg-[#405550]"
+        active
+          ? "scale-[1.03] border border-[#d9b7c0] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)] shadow-[0_24px_46px_rgba(148,106,120,0.16)]"
+          : "border border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:-translate-y-1 hover:border-[#d9b8a6] hover:shadow-[0_22px_42px_rgba(124,98,81,0.12)]"
       }`}
     >
+      <div className={`pointer-events-none absolute inset-x-0 top-0 h-24 rounded-t-[28px] ${active ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(255,255,255,0))]" : "bg-[linear-gradient(180deg,rgba(247,238,233,0.7),rgba(255,255,255,0))]"} `} />
+
       {active ? (
-        <div className="absolute left-1/2 top-[-16px] -translate-x-1/2 rounded-full bg-[#8b475d] px-4 py-1 text-xs font-bold text-white">
+        <div className="absolute left-1/2 top-[-16px] -translate-x-1/2 rounded-full bg-[#8b475d] px-4 py-1 text-xs font-bold text-white shadow-[0_10px_22px_rgba(139,71,93,0.22)]">
           SELECT
         </div>
       ) : null}
 
-      <div className="mb-6 text-center">
-        <p className={`text-sm font-medium ${active ? "text-[#8b475d]" : "text-[#b8967e]"}`}>{title}</p>
-        <p className={`font-skin-serif text-4xl ${active ? "text-[#2c2c2c]" : "text-[#fdf8f5]"}`}>{price}</p>
+      <div className="relative mb-6 text-center">
+        <p className={`text-sm font-medium tracking-[0.12em] ${active ? "text-[#8b475d]" : "text-[#b8967e]"}`}>{title}</p>
+        <p className={`font-skin-serif text-4xl ${active ? "text-[#2c2c2c]" : "text-[#3c322f]"}`}>{price}</p>
       </div>
 
-      <p className={`mb-6 text-sm leading-7 ${active ? "text-[#6b6b6b]" : "text-[#f5e6e8]/70"}`}>{description}</p>
+      <p className={`mb-6 text-sm leading-7 ${active ? "text-[#6b6b6b]" : "text-[#6f6159]"}`}>{description}</p>
 
       <ul className="mb-8 space-y-3">
         {bullets.map((bullet) => (
           <li
             key={bullet}
-            className={`flex items-center gap-3 text-sm ${active ? "text-[#4a4a4a]" : "text-[#f5e6e8]"}`}
+            className={`flex items-center gap-3 text-sm ${active ? "text-[#4a4a4a]" : "text-[#554640]"}`}
           >
             <span className="text-[#8b475d]">✓</span>
             {bullet}
@@ -1162,7 +1335,9 @@ function PackageCard({
       <button
         type="button"
         className={`w-full rounded-full py-3 text-sm font-medium transition-all ${
-          active ? "bg-[#8b475d] text-white" : "bg-[#fdf8f5] text-[#2c2c2c] hover:bg-[#f5e6e8]"
+          active
+            ? "bg-[#8b475d] text-white shadow-[0_12px_24px_rgba(139,71,93,0.2)]"
+            : "border border-[#ead9cf] bg-[#fbf4f0] text-[#2c2c2c] hover:bg-[#f5e6e8]"
         }`}
       >
         {active ? "선택됨" : "선택하기"}

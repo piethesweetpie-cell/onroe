@@ -40,16 +40,16 @@ export type PreviewImageRow = {
 }
 
 export const statusClassNames: Record<RequestStatus, string> = {
-  접수: "bg-zinc-100 text-zinc-700 ring-1 ring-zinc-200",
-  작업중: "bg-teal-50 text-teal-700 ring-1 ring-teal-200",
-  수정중: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
-  완료: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
+  접수: "bg-[#f7efe8] text-[#7b675d] ring-1 ring-[#ead9cf]",
+  작업중: "bg-[#f4e3df] text-[#9f6f66] ring-1 ring-[#e3c5bd]",
+  수정중: "bg-[#f3e8db] text-[#9b7657] ring-1 ring-[#e3cdb7]",
+  완료: "bg-[#ebf0e8] text-[#66745f] ring-1 ring-[#cfd8c9]",
 }
 
 export const packageClassNames = {
-  basic: "bg-zinc-100 text-zinc-700",
-  standard: "bg-teal-50 text-teal-700 ring-1 ring-teal-200",
-  premium: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
+  basic: "bg-[#f7efe8] text-[#7b675d] ring-1 ring-[#ead9cf]",
+  standard: "bg-[#f4e3df] text-[#9f6f66] ring-1 ring-[#e3c5bd]",
+  premium: "bg-[#f3e8db] text-[#9b7657] ring-1 ring-[#e3cdb7]",
 }
 
 export const additionalOptionLabels: Record<string, string> = {
