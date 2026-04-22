@@ -567,17 +567,17 @@ export default function StudioRoePage() {
 
             <section
               ref={heroRef}
-              className="relative flex min-h-[520px] items-start justify-center px-6 pb-16 pt-24 md:px-10 md:pb-24 md:pt-28"
+              className="relative flex min-h-[400px] items-start justify-center px-6 pb-8 pt-24 md:min-h-[520px] md:px-10 md:pb-24 md:pt-28"
               onMouseMove={handleHeroPointerMove}
               onMouseLeave={handleHeroPointerLeave}
             >
               <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center">
                 <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start">
                   <div className="relative inline-block hero-copy-enter hero-copy-enter-delay-1">
-                    <div className="flex h-[92px] w-[92px] rotate-[-10deg] items-center justify-center rounded-full border-[3px] border-[#c7a98c]">
-                      <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#c7a98c]">ONROE</span>
+                    <div className="flex h-[37px] w-[37px] rotate-[-10deg] items-center justify-center rounded-full border-[2px] border-[#c7a98c] md:h-[92px] md:w-[92px] md:border-[3px]">
+                      <span className="text-[5px] font-semibold uppercase tracking-[0.12em] text-[#c7a98c] md:text-[12px]">ONROE</span>
                     </div>
-                    <div className="absolute -right-1 top-0 h-6 w-6 rounded-full bg-[#d9a9ac]" />
+                    <div className="absolute -right-1 top-0 h-[10px] w-[10px] rounded-full bg-[#d9a9ac] md:h-6 md:w-6" />
                   </div>
                 </div>
 
@@ -619,7 +619,7 @@ export default function StudioRoePage() {
               </div>
             </section>
 
-            <section id="story" className="relative -mt-14 px-6 pb-12 pt-0 md:-mt-20">
+            <section id="story" className="relative -mt-24 px-6 pb-12 pt-0 md:-mt-20">
               <div className="relative z-10 mx-auto max-w-5xl">
               <div className="relative">
                 <div className="absolute inset-0 translate-x-3 translate-y-4 rounded-[32px] bg-[#d9ccc4]/85 shadow-[0_26px_60px_rgba(120,96,78,0.14)]" />
