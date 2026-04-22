@@ -534,19 +534,19 @@ export default function StudioRoePage() {
       />
 
       <nav className="fixed inset-x-0 top-0 z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1580px] items-center justify-between px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-[1580px] items-center justify-between px-6 py-4 md:px-10 md:py-5">
           <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">Studio Roe</span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Link
               href="/client"
-              className="flex items-center justify-center gap-3 rounded-full border border-[#eadfd8] bg-white px-7 py-3 text-base font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c]"
+              className="flex items-center justify-center gap-2 rounded-full border border-[#eadfd8] bg-white px-5 py-2.5 text-[15px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:gap-3 md:px-7 md:py-3 md:text-base"
             >
               Client
               <span aria-hidden>→</span>
             </Link>
             <Link
               href="/portfolio"
-              className="rounded-full bg-[#934b66] px-7 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
+              className="rounded-full bg-[#934b66] px-5 py-2.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
             >
               Portfolio
             </Link>
@@ -572,7 +572,7 @@ export default function StudioRoePage() {
               onMouseLeave={handleHeroPointerLeave}
             >
               <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center">
-                <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start">
+                <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start invisible md:visible">
                   <div className="relative inline-block hero-copy-enter hero-copy-enter-delay-1">
                     <div className="flex h-[37px] w-[37px] rotate-[-10deg] items-center justify-center rounded-full border-[2px] border-[#c7a98c] md:h-[92px] md:w-[92px] md:border-[3px]">
                       <span className="text-[5px] font-semibold uppercase tracking-[0.12em] text-[#c7a98c] md:text-[12px]">ONROE</span>
@@ -590,7 +590,7 @@ export default function StudioRoePage() {
                     <div className="h-full w-full rounded-full bg-[radial-gradient(circle,rgba(219,192,175,0.28),rgba(255,255,255,0)_66%)] blur-[68px] hero-logo-glow-enter" />
                   </div>
 
-                  <div className="relative pt-0 text-center hero-copy-enter hero-copy-enter-delay-2">
+                  <div className="relative pt-[60px] text-center hero-copy-enter hero-copy-enter-delay-2 md:pt-0">
                     <h1 className="font-skin-serif text-[54px] leading-[0.88] tracking-[-0.05em] text-[#2a2a2a] md:text-[84px] lg:text-[112px]">
                       AI Studio
                     </h1>
@@ -601,8 +601,7 @@ export default function StudioRoePage() {
 
                   <div
                     ref={logoRef}
-                    className="pointer-events-none absolute left-1/2 top-1/2 w-[120px] -translate-x-1/2 -translate-y-1/2 md:w-[175px] lg:w-[224px]"
-                    style={{ transform: "translate(-50%, calc(-50% - 32px))" }}
+                    className="pointer-events-none absolute left-1/2 top-1/2 w-[120px] -translate-x-1/2 -translate-y-[calc(50%+62px)] md:w-[175px] md:-translate-y-[calc(50%+32px)] lg:w-[224px]"
                   >
                     <div className="hero-logo-enter">
                       <Image
@@ -630,7 +629,7 @@ export default function StudioRoePage() {
                     backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 29px, #f5f0eb 30px)",
                   }}
                 >
-                  <div className="absolute right-8 top-8 flex h-20 w-20 rotate-[15deg] items-center justify-center rounded-[28px] border-[3px] border-[#cdb5a2] opacity-70">
+                  <div className="absolute right-8 top-8 hidden h-20 w-20 rotate-[15deg] items-center justify-center rounded-[28px] border-[3px] border-[#cdb5a2] opacity-70 md:flex">
                     <span className="text-center text-[11px] font-bold leading-[1.15] tracking-[0.08em] text-[#b8967e]">
                       AI{" "}
                       <span className="block">STUDIO</span>
@@ -916,7 +915,7 @@ export default function StudioRoePage() {
               <CenteredHeading
                 index="07"
                 title="레퍼런스와 연락처"
-                body="상품 사진과 레퍼런스가 구체적일수록 더 정확하게 무드 방향을 설계할 수 있습니다."
+                body="원본 사진의 용량이 크거나 파일이 많으면, onroeway@gmail.com으로 메일 주세요."
                 badgeClassName="bg-white text-[#8b475d]"
               />
 
@@ -1057,9 +1056,13 @@ export default function StudioRoePage() {
                     <button
                       type="submit"
                       disabled={isSubmitting || isUploading}
-                      className="rounded-full bg-[#8b475d] px-12 py-5 text-lg font-medium text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-[#6b3447] disabled:cursor-not-allowed disabled:opacity-60"
+                      className="group relative overflow-hidden rounded-full bg-[#8b475d] px-12 py-5 text-lg font-medium text-white shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      {isSubmitting ? "제출 중..." : "제출하기"}
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 translate-y-full bg-[#a65c78] transition-transform duration-500 ease-out group-hover:translate-y-0"
+                      />
+                      <span className="relative z-10">{isSubmitting ? "제출 중..." : "제출하기"}</span>
                     </button>
                   </div>
                 </div>
