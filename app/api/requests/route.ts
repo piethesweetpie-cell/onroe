@@ -13,7 +13,8 @@ import { getServerSupabase } from "@/lib/server-supabase"
 type RequestPayload = {
   client_email: string
   client_password: string
-  service_type?: "onsu" | "studio_roe"
+  service_type?: "onsu" | "studio_roe" | "character_roe"
+  serviceType?: "CharacterRoe"
   title: string
   author: string
   genre: string
@@ -33,14 +34,14 @@ export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as RequestPayload
     const password = payload.client_password?.trim()
-    const serviceType = payload.service_type === "studio_roe" ? "studio_roe" : "onsu"
+    const serviceType = normalizeServiceType(payload)
     const mailConfig = getMailConfig(serviceType)
 
     if (!password) {
       return NextResponse.json({ error: "작업 확인용 비밀번호를 입력해 주세요." }, { status: 400 })
     }
 
-    const { client_password: _clientPassword, ...requestData } = payload
+    const { client_password: _clientPassword, serviceType: _serviceType, ...requestData } = payload
 
     const supabase = getServerSupabase()
     const { data, error } = await supabase
@@ -121,7 +122,25 @@ export async function POST(request: Request) {
   }
 }
 
-function getMailConfig(serviceType: "onsu" | "studio_roe") {
+type RequestServiceType = "onsu" | "studio_roe" | "character_roe"
+
+function normalizeServiceType(payload: RequestPayload): RequestServiceType {
+  if (payload.service_type === "character_roe" || payload.serviceType === "CharacterRoe") return "character_roe"
+  if (payload.service_type === "studio_roe") return "studio_roe"
+  return "onsu"
+}
+
+function getMailConfig(serviceType: RequestServiceType) {
+  if (serviceType === "character_roe") {
+    return {
+      apiKey: process.env.RESEND_API_KEY_STUDIO_ROE ?? process.env.RESEND_API_KEY ?? "",
+      adminFrom: process.env.ORDER_MAIL_FROM_STUDIO_ROE ?? "STUDIO ROE <onboarding@resend.dev>",
+      adminTo: process.env.ORDER_NOTIFICATION_TO_STUDIO_ROE ?? "onroeway@gmail.com",
+      clientFrom: process.env.CLIENT_CONFIRMATION_MAIL_FROM_STUDIO_ROE ?? "STUDIO ROE <onboarding@resend.dev>",
+      clientUrl: process.env.CLIENT_CONFIRMATION_URL_STUDIO_ROE ?? "https://onroe.vercel.app/client",
+    }
+  }
+
   if (serviceType === "studio_roe") {
     return {
       apiKey: process.env.RESEND_API_KEY_STUDIO_ROE ?? process.env.RESEND_API_KEY ?? "",
@@ -144,7 +163,7 @@ function getMailConfig(serviceType: "onsu" | "studio_roe") {
   }
 }
 
-function buildOrderEmailText(payload: RequestPayload, serviceType: "onsu" | "studio_roe") {
+function buildOrderEmailText(payload: RequestPayload, serviceType: RequestServiceType) {
   const selectedOptions = extractLabeledList(payload.admin_note, "추가 옵션")
   const selectedStyles = extractLabeledList(payload.admin_note, "선호 스타일")
   const originalMemo = extractOriginalMemo(payload.admin_note)
@@ -176,7 +195,7 @@ function buildOrderEmailText(payload: RequestPayload, serviceType: "onsu" | "stu
 
 function buildOrderEmailHtml(
   payload: RequestPayload,
-  serviceType: "onsu" | "studio_roe",
+  serviceType: RequestServiceType,
   _adminRecipient: string
 ) {
   const selectedOptions = extractLabeledList(payload.admin_note, "추가 옵션")
@@ -256,7 +275,7 @@ function buildOrderEmailHtml(
 
 function buildClientConfirmationEmailText(
   payload: RequestPayload,
-  serviceType: "onsu" | "studio_roe",
+  serviceType: RequestServiceType,
   clientUrl: string
 ) {
   const selectedOptions = extractLabeledList(payload.admin_note, "추가 옵션")
@@ -284,7 +303,7 @@ function buildClientConfirmationEmailText(
 
 function buildClientConfirmationEmailHtml(
   payload: RequestPayload,
-  serviceType: "onsu" | "studio_roe",
+  serviceType: RequestServiceType,
   adminRecipient: string,
   clientUrl: string
 ) {
@@ -504,7 +523,8 @@ function renderStyleGrid(stylePaths: string[]) {
   `
 }
 
-function getServiceName(serviceType: "onsu" | "studio_roe") {
+function getServiceName(serviceType: RequestServiceType) {
+  if (serviceType === "character_roe") return "CharacterRoe"
   return serviceType === "studio_roe" ? "STUDIO ROE" : "ONSU"
 }
 

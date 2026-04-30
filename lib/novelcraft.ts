@@ -1,7 +1,7 @@
 export const requestStatuses = ["접수", "작업중", "수정중", "완료"] as const
 
 export type RequestStatus = (typeof requestStatuses)[number]
-export type ServiceType = "onsu" | "studio_roe"
+export type ServiceType = "onsu" | "studio_roe" | "character_roe"
 
 export type RequestComment = {
   id: string
@@ -66,6 +66,9 @@ export const packagePrices = {
   standard: 149000,
   studioBasic: 59000,
   studioStandard: 120000,
+  characterBasic: 99000,
+  characterStandard: 179000,
+  characterPremium: 490000,
   premium: 220000,
 } as const
 
@@ -83,11 +86,16 @@ export function formatAdditionalOption(value: string) {
 }
 
 export function getPackagePrice(packageValue?: string | null) {
+  const normalizedValue = packageValue?.toUpperCase() ?? ""
+
+  if (packageValue?.includes("캐릭터 기본")) return packagePrices.characterBasic
+  if (packageValue?.includes("캐릭터 비쥬얼")) return packagePrices.characterStandard
+  if (packageValue?.includes("프로젝트 캐릭터")) return packagePrices.characterPremium
   if (packageValue?.includes("초단편")) return packagePrices.basic
   if (packageValue?.includes("스탠다드")) return packagePrices.standard
-  if (packageValue?.includes("BASIC")) return packagePrices.studioBasic
-  if (packageValue?.includes("STANDARD")) return packagePrices.studioStandard
-  if (packageValue?.includes("PREMIUM")) return packagePrices.premium
+  if (normalizedValue.includes("BASIC")) return packagePrices.studioBasic
+  if (normalizedValue.includes("STANDARD")) return packagePrices.studioStandard
+  if (normalizedValue.includes("PREMIUM")) return packagePrices.premium
   return 0
 }
 
@@ -114,13 +122,18 @@ export function formatDate(value?: string | null) {
 }
 
 export function getPackageTone(value?: string | null) {
+  const normalizedValue = value?.toUpperCase() ?? ""
+
   if (value?.includes("초단편")) return packageClassNames.basic
-  if (value?.includes("PREMIUM")) return packageClassNames.premium
-  if (value?.includes("BASIC")) return packageClassNames.basic
+  if (value?.includes("캐릭터 기본")) return packageClassNames.basic
+  if (value?.includes("프로젝트 캐릭터")) return packageClassNames.premium
+  if (normalizedValue.includes("PREMIUM")) return packageClassNames.premium
+  if (normalizedValue.includes("BASIC")) return packageClassNames.basic
   return packageClassNames.standard
 }
 
 export function getServiceLabel(value?: ServiceType | null) {
+  if (value === "character_roe") return "CharacterRoe"
   if (value === "studio_roe") return "STUDIO ROE"
   return "ONSU"
 }

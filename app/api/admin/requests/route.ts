@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { RequestStatus, requestStatuses } from "@/lib/novelcraft"
+import { RequestStatus, requestStatuses, ServiceType } from "@/lib/novelcraft"
 import { deleteAdminRequest, listAdminRequests } from "@/lib/admin-requests"
 import { requireAdminSession } from "@/lib/admin-api"
 
@@ -13,15 +13,22 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const rawStatus = searchParams.get("status")?.trim()
+    const rawServiceType = searchParams.get("service_type")?.trim()
     const rawPage = Number(searchParams.get("page") ?? "1")
     const page = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1
     const status =
       rawStatus && rawStatus !== "전체" && requestStatuses.includes(rawStatus as RequestStatus)
         ? (rawStatus as RequestStatus)
         : undefined
+    const serviceTypes: ServiceType[] = ["onsu", "studio_roe", "character_roe"]
+    const serviceType =
+      rawServiceType && rawServiceType !== "전체" && serviceTypes.includes(rawServiceType as ServiceType)
+        ? (rawServiceType as ServiceType)
+        : undefined
 
     const { requests, totalCount } = await listAdminRequests({
       status,
+      serviceType,
       page,
       pageSize: 24,
     })

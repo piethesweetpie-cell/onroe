@@ -66,6 +66,21 @@ body {
   font-family: var(--font-inter), var(--font-noto-sans-kr), sans-serif;
 }
 
+.material-symbols-outlined {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  line-height: 1;
+}
+
+.material-symbols-outlined::before {
+  content: "×";
+  font-family: var(--font-noto-sans-kr), sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
 @keyframes hero-copy-enter {
   from {
     opacity: 0;

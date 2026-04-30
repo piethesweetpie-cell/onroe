@@ -1,6 +1,6 @@
 import crypto from "crypto"
 import { getAppUrl } from "@/lib/app-url"
-import { extractStoragePath, PreviewImageRow, RequestComment, RequestRow } from "@/lib/novelcraft"
+import { extractStoragePath, PreviewImageRow, RequestComment, RequestRow, ServiceType } from "@/lib/novelcraft"
 import { createClientDirectAccessToken } from "@/lib/server-auth"
 import { getServerSupabase } from "@/lib/server-supabase"
 
@@ -19,10 +19,12 @@ const adminListColumns = [
 
 export async function listAdminRequests({
   status,
+  serviceType,
   page,
   pageSize,
 }: {
   status?: RequestRow["status"]
+  serviceType?: ServiceType
   page: number
   pageSize: number
 }) {
@@ -38,6 +40,10 @@ export async function listAdminRequests({
 
   if (status) {
     query = query.eq("status", status)
+  }
+
+  if (serviceType) {
+    query = query.eq("service_type", serviceType)
   }
 
   const { data, error, count } = await query

@@ -238,6 +238,9 @@ export default function PortfolioPage() {
             <span className="font-skin-serif text-[24px] tracking-[0] text-[#2c2c2c]">Portfolio</span>
           </div>
           <div className="flex items-center gap-3">
+            <Link href="/characterroe" className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#8b7355] shadow-[0_10px_20px_rgba(124,98,81,0.08)] transition-colors hover:border-[#c7a98c]">
+              CharacterRoe
+            </Link>
             <Link href="/" className="rounded-full bg-[linear-gradient(135deg,#c89f92,#b98677)] px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-white shadow-[0_14px_28px_rgba(185,134,119,0.20)] transition-colors hover:opacity-95">
               의뢰하기
             </Link>

@@ -538,8 +538,14 @@ export default function StudioRoePage() {
           <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">Studio Roe</span>
           <div className="flex items-center gap-2 md:gap-3">
             <Link
+              href="/characterroe"
+              className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
+            >
+              CharacterRoe
+            </Link>
+            <Link
               href="/client"
-              className="flex items-center justify-center gap-2 rounded-full border border-[#eadfd8] bg-white px-5 py-2.5 text-[15px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:gap-3 md:px-7 md:py-3 md:text-base"
+              className="flex items-center justify-center gap-2 rounded-full border border-[#eadfd8] bg-white px-4 py-2.5 text-[15px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:gap-3 md:px-7 md:py-3 md:text-base"
             >
               Client
               <span aria-hidden>→</span>

@@ -15,13 +15,22 @@ import {
   RequestRow,
   RequestStatus,
   safeArray,
+  ServiceType,
 } from "@/lib/novelcraft"
 
 type FilterValue = "전체" | RequestStatus
+type ServiceFilterValue = "전체" | ServiceType
 const pageSize = 24
+const serviceFilterOptions: { value: ServiceFilterValue; label: string }[] = [
+  { value: "전체", label: "전체" },
+  { value: "studio_roe", label: "STUDIO ROE" },
+  { value: "character_roe", label: "CharacterRoe" },
+  { value: "onsu", label: "ONSU" },
+]
 
 export default function AdminPage() {
   const [requests, setRequests] = useState<RequestRow[]>([])
+  const [activeServiceFilter, setActiveServiceFilter] = useState<ServiceFilterValue>("전체")
   const [activeFilter, setActiveFilter] = useState<FilterValue>("전체")
   const [page, setPage] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
@@ -43,6 +52,9 @@ export default function AdminPage() {
         })
         if (activeFilter !== "전체") {
           params.set("status", activeFilter)
+        }
+        if (activeServiceFilter !== "전체") {
+          params.set("service_type", activeServiceFilter)
         }
 
         const response = await fetch(`/api/admin/requests?${params.toString()}`, { cache: "no-store" })
@@ -71,7 +83,7 @@ export default function AdminPage() {
     return () => {
       active = false
     }
-  }, [activeFilter, page])
+  }, [activeFilter, activeServiceFilter, page])
 
   useEffect(() => {
     setSelectedRequestIds((prev) => prev.filter((id) => requests.some((request) => request.id === id)))
@@ -184,33 +196,57 @@ export default function AdminPage() {
         </>
       }
     >
-      <div className="mb-6 flex flex-wrap gap-3">
-        {(["전체", ...requestStatuses] as FilterValue[]).map((status) => (
+      <div className="mb-6 space-y-3">
+        <div className="flex flex-wrap gap-3">
+          {serviceFilterOptions.map((service) => (
+            <button
+              key={service.value}
+              type="button"
+              onClick={() => {
+                setActiveServiceFilter(service.value)
+                setSelectedRequestIds([])
+                setPage(1)
+              }}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeServiceFilter === service.value
+                  ? "border border-[#d9b8a6] bg-[#f4e3df] text-[#8f695d]"
+                  : "border border-[#ead9cf] bg-white text-[#6d5c58] hover:bg-[#fbf4f0]"
+              }`}
+            >
+              {service.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          {(["전체", ...requestStatuses] as FilterValue[]).map((status) => (
+            <button
+              key={status}
+              type="button"
+              onClick={() => {
+                setActiveFilter(status)
+                setSelectedRequestIds([])
+                setPage(1)
+              }}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeFilter === status
+                  ? "border border-[#d9b8a6] bg-[#f4e3df] text-[#8f695d]"
+                  : "border border-[#ead9cf] bg-white text-[#6d5c58] hover:bg-[#fbf4f0]"
+              }`}
+            >
+              {status}
+            </button>
+          ))}
           <button
-            key={status}
             type="button"
-            onClick={() => {
-              setActiveFilter(status)
-              setPage(1)
-            }}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-              activeFilter === status
-                ? "border border-[#d9b8a6] bg-[#f4e3df] text-[#8f695d]"
-                : "border border-[#ead9cf] bg-white text-[#6d5c58] hover:bg-[#fbf4f0]"
-            }`}
+            onClick={toggleSelectAllVisible}
+            className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm font-semibold text-[#6d5c58] hover:bg-[#fbf4f0]"
           >
-            {status}
+            {requests.length > 0 && requests.every((request) => selectedRequestIds.includes(request.id))
+              ? "보이는 항목 선택 해제"
+              : "보이는 항목 전체 선택"}
           </button>
-        ))}
-        <button
-          type="button"
-          onClick={toggleSelectAllVisible}
-          className="rounded-full border border-[#ead9cf] bg-white px-4 py-2 text-sm font-semibold text-[#6d5c58] hover:bg-[#fbf4f0]"
-        >
-          {requests.length > 0 && requests.every((request) => selectedRequestIds.includes(request.id))
-            ? "보이는 항목 선택 해제"
-            : "보이는 항목 전체 선택"}
-        </button>
+        </div>
       </div>
 
       {error ? (
