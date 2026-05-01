@@ -13,3 +13,16 @@ backup/
 psd/
 .tmp_skin/
 studio-roe-backup.zip
+# Added by code-review-graph
+.code-review-graph/
+
+# Local run artifacts
+.tmp-*
+*.log
+tsconfig.tsbuildinfo
+test-results/
+supabase/.temp/
+photoshop-*.tsv
+photoshop-*.txt
+watercolor-*.tsv
+watercolor-*.txt
