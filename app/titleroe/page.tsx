@@ -9,14 +9,18 @@ import { supabase } from "@/lib/supabase"
 
 type UploadedFile = { url: string; name: string }
 
+const heroImagePositions = {
+  roe: "bottom-[45px] right-[-19px] w-[82%] max-w-[420px] sm:bottom-[41px] sm:right-[-19px] sm:w-[72%] md:bottom-[-33px] md:right-[-3px] md:w-[70%] md:max-w-[720px] lg:bottom-[-39px] lg:right-[25px] lg:w-[68%]",
+  roe2: "bottom-[45px] right-0 w-[76%] max-w-[390px] sm:right-0 sm:w-[68%] md:bottom-[-73px] md:right-4 md:w-[58%] md:max-w-[600px] lg:right-8 lg:w-[56%]",
+} as const
+
 const heroImages = [
   {
-    src: "/images/characterroe/roe2.png",
+    src: "/images/characterroe/roe.png",
     alt: "Character Roe 캐릭터 라인업",
-    width: 989,
-    height: 710,
-    visualClassName:
-      "bottom-[45px] right-0 w-[76%] max-w-[390px] sm:right-0 sm:w-[68%] md:bottom-[-73px] md:right-4 md:w-[58%] md:max-w-[600px] lg:right-8 lg:w-[56%]",
+    width: 1124,
+    height: 490,
+    visualClassName: heroImagePositions.roe,
   },
 ] as const
 
@@ -27,19 +31,34 @@ const textAreaClassName = `${inputClassName} min-h-[130px] resize-y`
 
 const styleOptions = [
   {
-    label: "세미 카툰",
-    icon: "🎨",
-    detail: "웹툰·라이트노벨에 어울리는 친근한 화풍",
+    label: "반실사 로맨스 표지풍",
+    icon: "🌸",
+    detail: "여성향 로판·현로에 가장 많이 쓰이는 안정적 스타일",
   },
   {
-    label: "애니메이션 풍",
+    label: "프리미엄 반실사",
+    icon: "⭐",
+    detail: "대표작·키비주얼용 고급 스타일 (여성향·남성향 모두 적합)",
+  },
+  {
+    label: "다크 반실사",
+    icon: "🖤",
+    detail: "빌런·집착남주·다크 판타지·헌터물 빌런",
+  },
+  {
+    label: "클린 반실사 페인티드",
     icon: "✨",
-    detail: "일본식 애니·게임 일러스트 스타일",
+    detail: "설정화·내부자료용 깔끔한 스타일",
   },
   {
-    label: "반실사 캐릭터",
-    icon: "🌟",
-    detail: "RPG·하이엔드 게임에 어울리는 스타일",
+    label: "페인티드 로맨스풍",
+    icon: "💗",
+    detail: "여성향 감성·무드 중심 (BL·현로 추천)",
+  },
+  {
+    label: "남성향 무협·현판풍",
+    icon: "⚔️",
+    detail: "무협·헌터물·현판 표지에 최적화된 강렬한 스타일",
   },
   {
     label: "추천받기",
@@ -57,59 +76,68 @@ const steps = [
 
 const packageOptions = [
   {
-    id: "basic",
-    icon: "🪶",
-    title: "캐릭터 베이직",
-    price: "19,000원",
-    amount: 19000,
-    subtitle: "캐릭터 한 컷 빠르게 받아보기",
-    description: "캐릭터 빠른 시안 / 외주 전달용 / 컨셉 확인",
-    bullets: ["캐릭터 1명 일러스트 1장", "배경 없음 (투명·단색 배경)", "인물 중심 단독 컷", "시안 1개 제공", "수정 1회"],
+    id: "cover",
+    icon: "👤",
+    title: "표지 일러스트",
+    price: "220,000원",
+    amount: 220000,
+    subtitle: "인물 1인 표지 일러스트 단독 제작 (타이포 미포함)",
+    description: "직접 타이포 작업 가능한 작가용 / 일러스트만 필요한 경우",
+    bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "시안 2개 → 1개 선택 후 진행", "후보정 포함 (손·디테일 보정)", "수정 2회"],
   },
   {
-    id: "standard",
-    icon: "⭐",
-    title: "캐릭터 스탠다드",
-    price: "49,000원",
-    amount: 49000,
-    subtitle: "프로필·설정 정리까지 가능한 기본 패키지",
-    description: "웹툰·게임 캐릭터 설정 정리 / 프로토타입",
-    bullets: ["캐릭터 1명, 총 2장", "프로필 (얼굴 클로즈업) 1장", "전신 설정화 1장", "배경 없음 (투명·단색 배경)", "시안 2개 → 1개 선택 후 진행", "수정 2회"],
+    id: "full-cover",
+    icon: "👤 + ✍️",
+    title: "표지 풀패키지",
+    price: "350,000원",
+    amount: 350000,
+    subtitle: "인물 1인 + 타이틀 디자인까지 완성된 표지",
+    description: "연재·출간·플랫폼 업로드용 완성형 표지",
+    bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
     badge: "BEST",
     emphasized: true,
   },
   {
-    id: "deluxe",
-    icon: "💎",
-    title: "캐릭터 디럭스",
-    price: "99,000원",
-    amount: 99000,
-    subtitle: "표정·포즈까지 포함된 캐릭터 시트",
-    description: "캐릭터 프로덕션 / IP 컨셉 / 외주 발주용 시트",
-    bullets: ["캐릭터 1명, 총 4장", "프로필 1장", "전신 설정화 1장", "표정 시트 (4표정 묶음) 1장", "포즈·액션 컷 1장", "배경 없음 (투명·단색 배경)", "시안 2개 → 1개 선택 후 진행", "수정 2회"],
+    id: "two-person-cover",
+    icon: "👥 + ✍️",
+    title: "2인 표지 풀패키지",
+    price: "480,000원",
+    amount: 480000,
+    subtitle: "남녀주·커플 구도 + 타이틀까지 완성된 프리미엄 표지",
+    description: "로맨스 메인 키비주얼 / 남녀주 합본 표지 / 출간용 대표 비주얼",
+    bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 2인 (남녀주 / 라이벌 / 커플 구도) + 의상·소품·배경 디테일", "인물 간 관계성·구도 연출", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
+    badge: "PREMIUM",
+    note: "1인 풀패키지 대비 +130,000원 / 인물 추가 옵션보다 저렴",
   },
 ]
 
 const addOnOptions = [
   {
-    id: "background",
-    title: "배경 추가",
-    priceLabel: "+30,000원",
-    amount: 30000,
-    detail: "단순 배경·환경 묘사 추가",
-  },
-  {
     id: "extra-person",
     title: "인물 추가",
-    priceLabel: "+30,000원/인",
+    priceLabel: "+80,000원",
+    amount: 80000,
+    detail: "서브 캐릭터, 3인 이상 구도 등",
+  },
+  {
+    id: "mood-cut",
+    title: "무드컷 / 장면컷 추가",
+    priceLabel: "+30,000원/장",
     amount: 30000,
-    detail: "서브 캐릭터·동료 추가",
+    detail: "표지 외 추가 비주얼",
+  },
+  {
+    id: "character-sheet",
+    title: "캐릭터 설정 시트",
+    priceLabel: "+40,000원",
+    amount: 40000,
+    detail: "외형·의상·표정 정리 시트",
   },
   {
     id: "extra-revision",
     title: "수정 횟수 추가",
-    priceLabel: "+10,000원/회",
-    amount: 10000,
+    priceLabel: "+20,000원/회",
+    amount: 20000,
     detail: "기본 수정 횟수 외 추가 조정",
   },
   {
@@ -118,7 +146,14 @@ const addOnOptions = [
     priceLabel: "+30%",
     amount: 0,
     percentage: 0.3,
-    detail: "2일 이내 납품",
+    detail: "3일 이내 납품",
+  },
+  {
+    id: "psd",
+    title: "PSD 원본 파일 제공",
+    priceLabel: "+50,000원",
+    amount: 50000,
+    detail: "레이어 분리된 작업 원본",
   },
 ] as const
 
@@ -126,7 +161,7 @@ const formSections = [
   {
     index: "01",
     title: "의뢰 목적",
-    body: "제작하려는 캐릭터 시안의 용도를 선택해 주세요.",
+    body: "제작하려는 웹소설 표지의 용도를 선택해 주세요.",
   },
   {
     index: "02",
@@ -136,7 +171,7 @@ const formSections = [
   {
     index: "03",
     title: "비주얼 방향",
-    body: "외형과 스타일에서 꼭 필요한 방향만 알려주세요.",
+    body: "생각하는 캐릭터를 알려주세요.",
   },
   {
     index: "04",
@@ -150,39 +185,40 @@ const checkboxGroups = {
     "차분한 / 지적인",
     "다정한 / 따뜻한",
     "도도한 / 카리스마",
-    "밝은 / 발랄한",
+    "밝은 / 순수한",
+    "퇴폐적인 / 위험한",
+    "비밀스러운 / 미스터리",
+    "고급스러운 / 우아한",
     "강인한 / 거친",
-    "귀여운 / 친근한",
-    "위험한 / 미스터리",
+    "로맨틱 / 애틋한",
+    "집착 / 광기",
   ],
 }
 
 const radioGroups = {
-  purpose: ["웹툰 캐릭터", "게임 캐릭터", "콘텐츠·SNS용 캐릭터", "기타"],
-  gender: ["여성", "남성", "중성적", "미정"],
+  purpose: ["웹소설 표지 (여성향) — 로판 / 현로 / BL", "웹소설 표지 (남성향) — 현판 / 무협 / 헌터물", "웹소설 삽화 / 일러스트 — 본문 삽화 / 캐릭터 단독 컷", "e-book / 단행본 표지 — 출간·인쇄용", "기타 — 위에 해당하지 않는 표지 의뢰"],
+  gender: ["여성", "남성"],
   age: ["10대 후반 ~ 20대 초반", "20대 중후반", "30대", "40대 이상", "미정"],
-  role: ["메인 캐릭터", "서브 / 조연", "라이벌 / 빌런"],
 }
 
 const initialTextValues = {
   projectTitle: "",
   characterName: "",
-  oneLine: "",
   appearance: "",
   avoid: "",
   clientName: "",
   deadline: "",
   email: "",
+  secondaryEmail: "",
   request: "",
   password: "",
 }
 
 const initialSingleValues = {
-  package: "standard",
+  package: "full-cover",
   purpose: "",
-  gender: "미정",
+  gender: "",
   age: "미정",
-  role: "",
   style: "추천받기",
 }
 
@@ -377,10 +413,6 @@ export default function CharacterRoePage() {
       if (!singleValues.purpose) return "어떤 용도인지 선택해 주세요."
     }
 
-    if (stepIndex === 1) {
-      if (!textValues.oneLine.trim()) return "캐릭터 한 줄 소개를 입력해 주세요."
-    }
-
     if (stepIndex === 3) {
       if (!textValues.clientName.trim()) return "이름 또는 담당자명을 입력해 주세요."
       if (!textValues.deadline.trim()) return "희망 완료일을 선택해 주세요."
@@ -435,42 +467,42 @@ export default function CharacterRoePage() {
       .join("\n")
 
     const adminNote = [
-      "serviceType: CharacterRoe",
+      "serviceType: TitleRoe",
       `의뢰 목적: ${singleValues.purpose}`,
       textValues.projectTitle.trim() ? `제목: ${textValues.projectTitle.trim()}` : "",
       textValues.characterName.trim() ? `캐릭터 이름: ${textValues.characterName.trim()}` : "",
       `성별: ${singleValues.gender}`,
       `나이대: ${singleValues.age}`,
-      singleValues.role ? `캐릭터 역할: ${singleValues.role}` : "",
-      textValues.oneLine.trim() ? `한 줄 소개: ${textValues.oneLine.trim()}` : "",
       `분위기/성격 키워드: ${multiValues.personality.join(", ") || "미정"}`,
-      textValues.appearance.trim() ? `외형 희망사항: ${textValues.appearance.trim()}` : "",
+      textValues.appearance.trim() ? `캐릭터 설명: ${textValues.appearance.trim()}` : "",
       textValues.avoid.trim() ? `피하고 싶은 요소: ${textValues.avoid.trim()}` : "",
       `원하는 그림체: ${singleValues.style}`,
       `패키지: ${selectedPackage.title} (${selectedPackage.price})`,
       `추가 옵션: ${selectedAddOnOptions.map((option) => `${option.title} ${option.priceLabel}`).join(", ") || "없음"}`,
       `예상 합계: ${formatWon(totalEstimate)}`,
       textValues.deadline.trim() ? `희망 완료일: ${textValues.deadline.trim()}` : "",
+      textValues.secondaryEmail.trim()
+        ? `카카오톡 ID 혹은 전화번호, 보조 email 등 알림 누락 방지용 연락처: ${textValues.secondaryEmail.trim()}`
+        : "",
       textValues.request.trim() ? `추가 요청사항: ${textValues.request.trim()}` : "",
     ]
       .filter(Boolean)
       .join("\n")
 
     const requestPayload = {
-      service_type: "character" as const,
-      serviceType: "CharacterRoe" as const,
+      service_type: "title" as const,
+      serviceType: "TitleRoe" as const,
       client_email: textValues.email.trim(),
       client_password: textValues.password.trim(),
-      title: textValues.projectTitle.trim() || textValues.characterName.trim() || "CharacterRoe 캐릭터 시안 의뢰",
+      title: textValues.projectTitle.trim() || textValues.characterName.trim() || "TitleRoe 웹소설 표지 의뢰",
       author: textValues.clientName.trim(),
-      genre: singleValues.purpose || "캐릭터 시안 제작",
+      genre: singleValues.purpose || "캐릭터 비주얼 제작",
       style_direction: singleValues.style,
       package: `${selectedPackage.title} - ${selectedPackage.price} / 옵션: ${selectedAddOnOptions.map((option) => option.title).join(", ") || "없음"} / 예상 합계: ${formatWon(totalEstimate)}`,
       mood_keywords: multiValues.personality.join(", ") || "미정",
       color_keywords:
-        textValues.oneLine.trim() ||
         textValues.appearance.trim() ||
-        "웹툰·게임 캐릭터 시안 상담",
+        "캐릭터 비주얼 제작 상담",
       reference_url: referenceNotes || null,
       deadline: textValues.deadline.trim() || "상담 후 결정",
       comments: [],
@@ -518,8 +550,8 @@ export default function CharacterRoePage() {
 
       <nav className="relative z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
         <div className="mx-auto flex max-w-[1580px] flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-10 md:py-5">
-          <Link href="/characterroe" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
-            CHARACTER ROE
+          <Link href="/titleroe" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
+            TITLE ROE
           </Link>
           <div className="grid w-full grid-cols-3 gap-2 sm:flex sm:w-auto sm:items-center md:gap-3">
             <Link
@@ -530,16 +562,16 @@ export default function CharacterRoePage() {
             </Link>
             <Link
               href="/characterroe"
-              className="rounded-full bg-[#934b66] px-5 py-2.5 text-[12px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
+              className="rounded-full border border-[#eadfd8] bg-white px-5 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
             >
               CharacterRoe
             </Link>
-            <a
+            <Link
               href="/titleroe"
-              className="rounded-full border border-[#eadfd8] bg-white px-5 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
+              className="rounded-full bg-[#934b66] px-5 py-2.5 text-[12px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
             >
               TitleRoe
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -567,13 +599,13 @@ export default function CharacterRoePage() {
 
                 <div className="relative z-10 pt-[11px] text-left hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px]">
                   <h1 className="font-skin-serif text-[50px] leading-[0.88] tracking-[-0.05em] text-[#252525] md:text-[78px] lg:text-[100px]">
-                    CharacterRoe
+                    TitleRoe
                   </h1>
-                  <p className="mt-2 max-w-[560px] font-skin-serif text-[28px] italic leading-tight tracking-[-0.04em] text-[#c7a98c] md:text-[40px] lg:text-[48px]">
+                  <p className="mt-[-4px] font-skin-serif text-[40px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-10px] md:text-[62px] lg:text-[78px]">
                     Request Form
                   </p>
                   <p className="mt-2 font-skin-serif leading-tight text-[#2a2a2a]" style={{ fontSize: "34px" }}>
-                    캐릭터 제작 의뢰서
+                    웹소설 표지 의뢰서
                   </p>
                 </div>
 
@@ -616,7 +648,7 @@ export default function CharacterRoePage() {
               >
                 <div className="absolute right-7 top-7 hidden h-20 w-20 rotate-[15deg] items-center justify-center rounded-[28px] border-[3px] border-[#cdb5a2] bg-white/25 opacity-75 md:flex">
                   <span className="text-center text-[11px] font-bold leading-[1.15] tracking-[0.08em] text-[#b8967e]">
-                    CA
+                    TITLE
                     <span className="block">ROE</span>
                   </span>
                 </div>
@@ -624,7 +656,7 @@ export default function CharacterRoePage() {
             {activeStep === 0 ? (
               <FormCard section={formSections[0]}>
                 <Field label="제목">
-                  <input className={inputClassName} value={textValues.projectTitle} onChange={(event) => updateText("projectTitle", event.target.value)} placeholder="예: 판타지 RPG 주연 / 로맨스 웹툰 메인 캐릭터" />
+                  <input className={inputClassName} value={textValues.projectTitle} onChange={(event) => updateText("projectTitle", event.target.value)} placeholder="예: 폭군의 계약 황후 / 회귀한 검신은 멈추지 않는다" />
                 </Field>
                 <Field label="어떤 용도인가요? *">
                   <RadioGroup options={radioGroups.purpose} value={singleValues.purpose} onChange={(value) => updateSingle("purpose", value)} />
@@ -643,12 +675,6 @@ export default function CharacterRoePage() {
                 <Field label="나이대">
                   <RadioGroup options={radioGroups.age} value={singleValues.age} onChange={(value) => updateSingle("age", value)} />
                 </Field>
-                <Field label="캐릭터 역할">
-                  <RadioGroup options={radioGroups.role} value={singleValues.role} onChange={(value) => updateSingle("role", value)} />
-                </Field>
-                <Field label="캐릭터를 한 줄로 소개해주세요 *">
-                  <textarea className={textAreaClassName} value={textValues.oneLine} onChange={(event) => updateText("oneLine", event.target.value)} placeholder="예: 무뚝뚝하지만 동료에겐 다정한 검사 캐릭터" />
-                </Field>
                 <Field label="분위기 키워드">
                   <ChipGroup options={checkboxGroups.personality} values={multiValues.personality} onToggle={(value) => toggleMulti("personality", value)} />
                   <p className="mt-2 text-xs text-[#8a6c5b]">최대 3개까지 선택할 수 있습니다.</p>
@@ -658,11 +684,11 @@ export default function CharacterRoePage() {
 
             {activeStep === 2 ? (
               <FormCard section={formSections[2]}>
-                <Field label="외형 희망사항">
-                  <textarea className={textAreaClassName} value={textValues.appearance} onChange={(event) => updateText("appearance", event.target.value)} placeholder="예: 보라빛 단발, 후드 자켓" />
+                <Field label="캐릭터 설명">
+                  <textarea className={textAreaClassName} value={textValues.appearance} onChange={(event) => updateText("appearance", event.target.value)} placeholder="예: 은발 긴머리, 보라빛 눈동자, 황실 드레스" />
                 </Field>
                 <Field label="피하고 싶은 요소">
-                  <textarea className={textAreaClassName} value={textValues.avoid} onChange={(event) => updateText("avoid", event.target.value)} placeholder="예: 양산형 그림체, 과한 노출" />
+                  <textarea className={textAreaClassName} value={textValues.avoid} onChange={(event) => updateText("avoid", event.target.value)} placeholder="예: 어려 보이는 얼굴, 양산형 그림체, 과한 보정" />
                 </Field>
                 <Field label="원하는 스타일">
                   <div className="grid gap-4 md:grid-cols-2">
@@ -730,6 +756,9 @@ export default function CharacterRoePage() {
                               <p className={`text-sm font-semibold tracking-[0.08em] ${active ? "text-[#8b475d]" : "text-[#b8967e]"}`}>{option.title}</p>
                               <p className={`mt-2 font-skin-serif text-[31px] leading-tight lg:text-4xl ${active ? "text-[#2c2c2c]" : "text-[#3c322f]"}`}>{option.price}</p>
                               <p className={`mt-3 text-sm leading-6 ${active ? "text-[#5f4c45]" : "text-[#6f6159]"}`}>{option.subtitle}</p>
+                              {option.note ? (
+                                <p className="mt-3 rounded-[16px] bg-white/75 px-3 py-2 text-xs leading-5 text-[#8b475d]">{option.note}</p>
+                              ) : null}
                             </div>
                             <ul className="space-y-3">
                               {option.bullets.map((bullet) => (
@@ -820,10 +849,15 @@ export default function CharacterRoePage() {
                 <Field label="이름 / 담당자명 *">
                   <input className={inputClassName} value={textValues.clientName} onChange={(event) => updateText("clientName", event.target.value)} />
                 </Field>
-                <div className="grid gap-5 md:grid-cols-3">
+                <div className="grid gap-5 md:grid-cols-2">
                   <Field label="이메일 *">
                     <input type="email" className={inputClassName} value={textValues.email} onChange={(event) => updateText("email", event.target.value)} />
                   </Field>
+                  <Field label="카카오톡 ID 혹은 전화번호, 보조 email 등 알림 누락 방지용 연락처">
+                    <input className={inputClassName} value={textValues.secondaryEmail} onChange={(event) => updateText("secondaryEmail", event.target.value)} placeholder="예: kakao_id / 010-0000-0000 / backup@email.com" />
+                  </Field>
+                </div>
+                <div className="grid gap-5 md:grid-cols-2">
                   <Field label="희망 완료일 *">
                     <input type="date" className={inputClassName} value={textValues.deadline} onChange={(event) => updateText("deadline", event.target.value)} />
                   </Field>
@@ -905,10 +939,10 @@ export default function CharacterRoePage() {
               <div className="mt-8 rounded-[28px] border border-[#ead9cf] bg-white p-7 shadow-[0_18px_38px_rgba(124,98,81,0.08)]">
                 <h3 className="font-skin-serif text-[24px] text-[#2c2c2c]">안내사항</h3>
                 <p className="mt-3 text-sm leading-7 text-[#6b6b6b]">
-                  CharacterRoe는 웹툰·게임 캐릭터 시안 빠른 제작 서비스입니다. 캐릭터 컨셉 확인, 외주 전달용 레퍼런스, 프로토타입에 적합합니다.
+                  TitleRoe는 웹소설 표지 일러스트 제작 전문 서비스입니다. 여성향·남성향 웹소설 연재·출간·플랫폼 업로드용 표지에 특화되어 있습니다.
                 </p>
                 <p className="text-sm leading-7 text-[#6b6b6b]">
-                  다음 작업은 진행하지 않습니다: 웹소설 표지 / 단행본 표지 / 인쇄용 벡터 / 특정 작가 그림체 복제
+                  다음 작업은 진행하지 않습니다: 로고형 마스코트 / 유아 대상 캐릭터 / 인쇄용 벡터 / 특정 작가 그림체 복제
                 </p>
               </div>
             ) : null}

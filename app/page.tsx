@@ -535,13 +535,19 @@ export default function StudioRoePage() {
 
       <nav className="fixed inset-x-0 top-0 z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
         <div className="mx-auto flex max-w-[1580px] items-center justify-between px-6 py-4 md:px-10 md:py-5">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">Studio Roe</span>
+          <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">ProductRoe</span>
           <div className="flex items-center gap-2 md:gap-3">
             <Link
               href="/characterroe"
               className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
             >
               CharacterRoe
+            </Link>
+            <Link
+              href="/titleroe"
+              className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
+            >
+              TitleRoe
             </Link>
             <Link
               href="/client"
