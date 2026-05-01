@@ -24,7 +24,9 @@ const pageSize = 24
 const serviceFilterOptions: { value: ServiceFilterValue; label: string }[] = [
   { value: "전체", label: "전체" },
   { value: "studio_roe", label: "STUDIO ROE" },
-  { value: "character_roe", label: "CharacterRoe" },
+  { value: "character", label: "CharacterRoe" },
+  { value: "title", label: "TitleRoe" },
+  { value: "character_roe", label: "CharacterRoe Legacy" },
   { value: "onsu", label: "ONSU" },
 ]
 

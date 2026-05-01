@@ -20,7 +20,7 @@ export async function GET(request: Request) {
       rawStatus && rawStatus !== "전체" && requestStatuses.includes(rawStatus as RequestStatus)
         ? (rawStatus as RequestStatus)
         : undefined
-    const serviceTypes: ServiceType[] = ["onsu", "studio_roe", "character_roe"]
+    const serviceTypes: ServiceType[] = ["onsu", "studio_roe", "character_roe", "character", "title"]
     const serviceType =
       rawServiceType && rawServiceType !== "전체" && serviceTypes.includes(rawServiceType as ServiceType)
         ? (rawServiceType as ServiceType)

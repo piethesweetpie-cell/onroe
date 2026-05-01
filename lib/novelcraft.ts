@@ -1,7 +1,7 @@
 export const requestStatuses = ["접수", "작업중", "수정중", "완료"] as const
 
 export type RequestStatus = (typeof requestStatuses)[number]
-export type ServiceType = "onsu" | "studio_roe" | "character_roe"
+export type ServiceType = "onsu" | "studio_roe" | "character_roe" | "character" | "title"
 
 export type RequestComment = {
   id: string
@@ -53,6 +53,9 @@ export const packageClassNames = {
 }
 
 export const additionalOptionLabels: Record<string, string> = {
+  background: "배경 추가",
+  "extra-person": "인물 추가",
+  "extra-revision": "수정 횟수 추가",
   rush: "급행 마감",
   series: "시리즈 권별 컬러 변경",
   private: "포트폴리오 비공개",
@@ -62,17 +65,26 @@ export const additionalOptionLabels: Record<string, string> = {
 }
 
 export const packagePrices = {
+  characterBasic: 19000,
+  characterStandard: 49000,
+  characterDeluxe: 99000,
+  titleCover: 220000,
+  titleFullCover: 350000,
+  titleTwoPersonCover: 480000,
   basic: 99000,
   standard: 149000,
   studioBasic: 59000,
   studioStandard: 120000,
-  characterBasic: 99000,
-  characterStandard: 179000,
-  characterPremium: 490000,
+  legacyCharacterBasic: 99000,
+  legacyCharacterStandard: 179000,
+  legacyCharacterPremium: 490000,
   premium: 220000,
 } as const
 
 export const additionalOptionPrices: Record<string, number> = {
+  background: 30000,
+  "extra-person": 30000,
+  "extra-revision": 10000,
   rush: 20000,
   series: 20000,
   private: 50000,
@@ -88,9 +100,15 @@ export function formatAdditionalOption(value: string) {
 export function getPackagePrice(packageValue?: string | null) {
   const normalizedValue = packageValue?.toUpperCase() ?? ""
 
-  if (packageValue?.includes("캐릭터 기본")) return packagePrices.characterBasic
-  if (packageValue?.includes("캐릭터 비쥬얼")) return packagePrices.characterStandard
-  if (packageValue?.includes("프로젝트 캐릭터")) return packagePrices.characterPremium
+  if (packageValue?.includes("캐릭터 베이직")) return packagePrices.characterBasic
+  if (packageValue?.includes("캐릭터 스탠다드")) return packagePrices.characterStandard
+  if (packageValue?.includes("캐릭터 디럭스")) return packagePrices.characterDeluxe
+  if (packageValue?.includes("2인 표지 풀패키지")) return packagePrices.titleTwoPersonCover
+  if (packageValue?.includes("표지 풀패키지")) return packagePrices.titleFullCover
+  if (packageValue?.includes("표지 일러스트")) return packagePrices.titleCover
+  if (packageValue?.includes("캐릭터 기본")) return packagePrices.legacyCharacterBasic
+  if (packageValue?.includes("캐릭터 비쥬얼")) return packagePrices.legacyCharacterStandard
+  if (packageValue?.includes("프로젝트 캐릭터")) return packagePrices.legacyCharacterPremium
   if (packageValue?.includes("초단편")) return packagePrices.basic
   if (packageValue?.includes("스탠다드")) return packagePrices.standard
   if (normalizedValue.includes("BASIC")) return packagePrices.studioBasic
@@ -102,6 +120,11 @@ export function getPackagePrice(packageValue?: string | null) {
 export function getAdditionalOptionPrice(optionValue: string) {
   const directPrice = additionalOptionPrices[optionValue]
   if (typeof directPrice === "number") return directPrice
+
+  if (optionValue.includes("배경 추가")) return 30000
+  if (optionValue.includes("인물 추가")) return optionValue.includes("80,000") ? 80000 : 30000
+  if (optionValue.includes("수정 횟수 추가")) return optionValue.includes("20,000") ? 20000 : 10000
+  if (optionValue.includes("러시 작업")) return 0
 
   const matchedEntry = Object.entries(additionalOptionLabels).find(([, label]) => label === optionValue)
   if (!matchedEntry) return 0
@@ -125,6 +148,10 @@ export function getPackageTone(value?: string | null) {
   const normalizedValue = value?.toUpperCase() ?? ""
 
   if (value?.includes("초단편")) return packageClassNames.basic
+  if (value?.includes("캐릭터 베이직")) return packageClassNames.basic
+  if (value?.includes("캐릭터 디럭스")) return packageClassNames.premium
+  if (value?.includes("2인 표지 풀패키지")) return packageClassNames.premium
+  if (value?.includes("표지 풀패키지")) return packageClassNames.premium
   if (value?.includes("캐릭터 기본")) return packageClassNames.basic
   if (value?.includes("프로젝트 캐릭터")) return packageClassNames.premium
   if (normalizedValue.includes("PREMIUM")) return packageClassNames.premium
@@ -133,6 +160,8 @@ export function getPackageTone(value?: string | null) {
 }
 
 export function getServiceLabel(value?: ServiceType | null) {
+  if (value === "character") return "CharacterRoe"
+  if (value === "title") return "TitleRoe"
   if (value === "character_roe") return "CharacterRoe"
   if (value === "studio_roe") return "STUDIO ROE"
   return "ONSU"

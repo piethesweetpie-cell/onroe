@@ -13,8 +13,8 @@ import { getServerSupabase } from "@/lib/server-supabase"
 type RequestPayload = {
   client_email: string
   client_password: string
-  service_type?: "onsu" | "studio_roe" | "character_roe"
-  serviceType?: "CharacterRoe"
+  service_type?: "onsu" | "studio_roe" | "character_roe" | "character" | "title"
+  serviceType?: "CharacterRoe" | "TitleRoe"
   title: string
   author: string
   genre: string
@@ -122,16 +122,20 @@ export async function POST(request: Request) {
   }
 }
 
-type RequestServiceType = "onsu" | "studio_roe" | "character_roe"
+type RequestServiceType = "onsu" | "studio_roe" | "character_roe" | "character" | "title"
 
 function normalizeServiceType(payload: RequestPayload): RequestServiceType {
-  if (payload.service_type === "character_roe" || payload.serviceType === "CharacterRoe") return "character_roe"
+  if (payload.service_type === "character") return "character"
+  if (payload.service_type === "title") return "title"
+  if (payload.service_type === "character_roe") return "character_roe"
+  if (payload.serviceType === "CharacterRoe") return "character"
+  if (payload.serviceType === "TitleRoe") return "title"
   if (payload.service_type === "studio_roe") return "studio_roe"
   return "onsu"
 }
 
 function getMailConfig(serviceType: RequestServiceType) {
-  if (serviceType === "character_roe") {
+  if (serviceType === "character_roe" || serviceType === "character" || serviceType === "title") {
     return {
       apiKey: process.env.RESEND_API_KEY_STUDIO_ROE ?? process.env.RESEND_API_KEY ?? "",
       adminFrom: process.env.ORDER_MAIL_FROM_STUDIO_ROE ?? "STUDIO ROE <onboarding@resend.dev>",
@@ -524,6 +528,8 @@ function renderStyleGrid(stylePaths: string[]) {
 }
 
 function getServiceName(serviceType: RequestServiceType) {
+  if (serviceType === "character") return "CharacterRoe"
+  if (serviceType === "title") return "TitleRoe"
   if (serviceType === "character_roe") return "CharacterRoe"
   return serviceType === "studio_roe" ? "STUDIO ROE" : "ONSU"
 }
