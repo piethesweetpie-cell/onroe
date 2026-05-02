@@ -550,13 +550,6 @@ export default function StudioRoePage() {
               TitleRoe
             </Link>
             <Link
-              href="/client"
-              className="flex items-center justify-center gap-2 rounded-full border border-[#eadfd8] bg-white px-4 py-2.5 text-[15px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:gap-3 md:px-7 md:py-3 md:text-base"
-            >
-              Client
-              <span aria-hidden>→</span>
-            </Link>
-            <Link
               href="/portfolio"
               className="rounded-full bg-[#934b66] px-5 py-2.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
             >
@@ -1086,7 +1079,7 @@ export default function StudioRoePage() {
 
       <footer className="border-t border-[#2c2c2c] bg-[#1a1a1a] px-6 py-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 md:flex-row">
-          <span className="text-sm uppercase tracking-[0.24em] text-[#6b6b6b]">Studio Roe</span>
+          <Link href="/client" className="cursor-default text-sm uppercase tracking-[0.24em] text-[#6b6b6b] focus:outline-none">Studio Roe</Link>
           <p className="text-sm text-[#6b6b6b]">
             <Link href="/admin" className="cursor-default text-inherit focus:outline-none">
               ©
