@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
+import { requireAdminSession } from "@/lib/admin-api"
 
 const portfolioRoot = path.join(process.cwd(), "public", "images", "portfolio")
 
@@ -86,6 +87,9 @@ function safeAbsolute(filePath: string): string | null {
 // DELETE single file: { filePath: "/portfolio/brand/file.png" }
 // DELETE brand folder: { brand: "brand-id" }
 export async function DELETE(req: NextRequest) {
+  const unauthorized = await requireAdminSession()
+  if (unauthorized) return unauthorized
+
   const body = await req.json()
 
   if (body.brand) {

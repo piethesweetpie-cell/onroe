@@ -36,6 +36,7 @@ export default function PortfolioPage() {
   const [renameValue, setRenameValue] = useState("")
   const renameInputRef = useRef<HTMLInputElement>(null)
   const [confirmDeleteBrand, setConfirmDeleteBrand] = useState<string | null>(null)
+  const [confirmEditMode, setConfirmEditMode] = useState(false)
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false)
   const [checkingAdminSession, setCheckingAdminSession] = useState(true)
   const heroRef = useRef<HTMLElement>(null)
@@ -59,7 +60,10 @@ export default function PortfolioPage() {
     fetch("/api/admin-session", { cache: "no-store" })
       .then((r) => r.json())
       .then((result) => setIsAdminAuthenticated(Boolean(result?.authenticated)))
-      .catch(() => setIsAdminAuthenticated(false))
+      .catch(() => {
+        setIsAdminAuthenticated(false)
+        setEditMode(false)
+      })
       .finally(() => setCheckingAdminSession(false))
   }, [])
 
@@ -157,7 +161,20 @@ export default function PortfolioPage() {
       return
     }
 
-    setEditMode((value) => !value)
+    if (editMode) {
+      setEditMode(false)
+      setRenamingBrand(null)
+      setConfirmDeleteBrand(null)
+      return
+    }
+
+    setConfirmEditMode(true)
+  }
+
+  function confirmEnterEditMode() {
+    setEditMode(true)
+    setConfirmEditMode(false)
+    setLightbox(null)
     setRenamingBrand(null)
     setConfirmDeleteBrand(null)
   }
@@ -520,6 +537,26 @@ export default function PortfolioPage() {
       </footer>
 
       {/* Lightbox */}
+      {confirmEditMode && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a332d]/60 backdrop-blur-sm p-4" onClick={() => setConfirmEditMode(false)}>
+          <div className="w-full max-w-sm rounded-[28px] border border-[#ead9cf] bg-white p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#b98677]">관리자 편집 모드</p>
+            <p className="mb-2 text-base font-bold text-[#2c2c2c]">포트폴리오 편집을 시작할까요?</p>
+            <p className="mb-6 text-sm leading-relaxed text-[#6d5c58]">
+              이미지 삭제 버튼과 카테고리 이름 수정·삭제 버튼이 표시됩니다.
+            </p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setConfirmEditMode(false)} className="flex-1 rounded-full border border-[#ead9cf] py-3 text-sm font-bold text-[#6d5c58] transition-colors hover:bg-[#fbf4f0]">
+                취소
+              </button>
+              <button type="button" onClick={confirmEnterEditMode} className="flex-1 rounded-full bg-[#b98677] py-3 text-sm font-bold text-white transition-colors hover:bg-[#a87567]">
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {lightbox && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a332d]/68 backdrop-blur-sm p-4" onClick={() => setLightbox(null)}>
           <button className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#6d5c58] transition-colors hover:bg-white text-sm font-bold shadow" onClick={() => setLightbox(null)}>✕</button>
