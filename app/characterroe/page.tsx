@@ -16,7 +16,7 @@ const heroImages = [
     width: 989,
     height: 710,
     visualClassName:
-      "bottom-[45px] right-0 w-[76%] max-w-[390px] sm:right-0 sm:w-[68%] md:bottom-[-73px] md:right-4 md:w-[58%] md:max-w-[600px] lg:right-8 lg:w-[56%]",
+      "bottom-[45px] right-0 w-[76%] max-w-[390px] sm:right-0 sm:w-[68%] md:bottom-[-96px] md:right-4 md:w-[58%] md:max-w-[600px] lg:bottom-[-96px] lg:right-8 lg:w-[56%]",
   },
 ] as const
 
@@ -575,6 +575,12 @@ export default function CharacterRoePage() {
                   <p className="mt-2 font-skin-serif leading-tight text-[#2a2a2a]" style={{ fontSize: "34px" }}>
                     캐릭터 제작 의뢰서
                   </p>
+                  <Link
+                    href="https://titleroe-portfolio.piethesweetpie.workers.dev/"
+                    className="mt-6 inline-flex items-center justify-center rounded-full bg-[#934b66] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(147,75,102,0.24)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
+                  >
+                    포트폴리오 보기
+                  </Link>
                 </div>
 
                 {selectedHeroImage ? (
