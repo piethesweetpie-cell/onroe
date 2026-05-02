@@ -13,6 +13,9 @@ backup/
 psd/
 .tmp_skin/
 studio-roe-backup.zip
+
+# Portfolio image bundles live in separate portfolio repos.
+/public/images/titleroe-portfolio/
 # Added by code-review-graph
 .code-review-graph/
 
