@@ -27,8 +27,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "STUDIO ROE",
-  description: "제품 연출 비주얼 제작 의뢰를 접수하는 STUDIO ROE 전용 프로젝트입니다.",
+  title: "ONROE - AI Studio for Brand & Story",
+  description: "ONROE는 상품 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다.",
 }
 
 export default function RootLayout({
