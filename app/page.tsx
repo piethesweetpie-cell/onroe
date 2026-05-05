@@ -2,10 +2,45 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, type ReactNode } from "react"
+import { motion, type Variants } from "framer-motion"
+import { useEffect, useState, type ReactNode } from "react"
 import styles from "./page.module.css"
 
 const styleMap = styles as Record<string, string>
+
+const FADE_UP_VARIANTS: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", duration: 0.8 } },
+}
+
+const STAGGER_CONTAINER_VARIANTS: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+function FloatCard({ title, imageSrc, rotation = -5, delay = "0s", duration = "6.5s", style }: {
+  title: string; imageSrc: string; rotation?: number; delay?: string; duration?: string; style?: React.CSSProperties
+}) {
+  return (
+    <div style={{ position: "absolute", ...style }}>
+      <div className={s("float-card")} style={{ "--fc-rot": `${rotation}deg`, "--fc-delay": delay, "--fc-dur": duration } as React.CSSProperties}>
+        <div className={s("float-card-head")}>
+          <span className={s("float-card-dot")} />
+          <span className={s("float-card-title")}>{title}</span>
+          <span className={s("float-card-menu")}>•••</span>
+        </div>
+        <div className={s("float-card-img")}>
+          <img src={imageSrc} alt={title} />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function s(classNames: string) {
   return classNames
@@ -40,11 +75,12 @@ function HubLink({
 }
 
 export default function HubPage() {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
+
   useEffect(() => {
     const nav = document.querySelector<HTMLElement>("[data-nav]")
     const scrolledClass = styleMap["is-scrolled"]
     const visibleClass = styleMap["is-visible"]
-    const openClass = styleMap["is-open"]
 
     const onScroll = () => {
       nav?.classList.toggle(scrolledClass, window.scrollY > 30)
@@ -69,23 +105,9 @@ export default function HubPage() {
       revealObserver.observe(element)
     })
 
-    const faqButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-faq-button]"))
-    const faqCleanups = faqButtons.map((button) => {
-      const onClick = () => {
-        const item = button.parentElement
-        const isOpen = item?.classList.toggle(openClass) ?? false
-        const indicator = button.querySelector("span")
-        if (indicator) indicator.textContent = isOpen ? "-" : "+"
-      }
-
-      button.addEventListener("click", onClick)
-      return () => button.removeEventListener("click", onClick)
-    })
-
     return () => {
       window.removeEventListener("scroll", onScroll)
       revealObserver.disconnect()
-      faqCleanups.forEach((cleanup) => cleanup())
     }
   }, [])
 
@@ -98,7 +120,6 @@ export default function HubPage() {
               <HubLink className={s("nav-link")} href="/productroe">ProductRoe</HubLink>
               <HubLink className={s("nav-link")} href="/characterroe">CharacterRoe</HubLink>
               <HubLink className={s("nav-link")} href="/titleroe">TitleRoe</HubLink>
-              <HubLink className={s("client-link")} href="/client">Client <span aria-hidden="true">→</span></HubLink>
               <HubLink className={s("portfolio-nav-link")} href="/portfolio">Portfolio</HubLink>
             </div>
           </div>
@@ -125,7 +146,15 @@ export default function HubPage() {
               </div>
             </div>
             <div className={s("hero-mark reveal")}>
-              <Image unoptimized src="/hub/logo.png" alt="ONROE logo mark" width={550} height={538} />
+              <div className={s("hero-mark-bg")}>
+                <Image unoptimized src="/images/bg.png" alt="" width={800} height={800} />
+              </div>
+              <div className={s("hero-mark-logo")}>
+                <Image unoptimized src="/hub/logo.png" alt="ONROE logo mark" width={550} height={538} />
+              </div>
+              <FloatCard title="Product Photo" imageSrc="/hub/portfolio/product-pedestal-hero.png" rotation={-6} delay="0s" duration="6.8s" style={{ top: "8px", left: "-7px" }} />
+              <FloatCard title="AI illustration" imageSrc="/hub/roe.png" rotation={4} delay="2.2s" duration="7.4s" style={{ top: "30px", right: "-45px" }} />
+              <FloatCard title="Detail View" imageSrc="/hub/portfolio/product-clean-stand.png" rotation={3} delay="4s" duration="6.2s" style={{ bottom: "32px", right: "-30px" }} />
             </div>
             <div className={s("hero-index")}>01 / 06</div>
           </section>
@@ -139,46 +168,67 @@ export default function HubPage() {
               <p>목적에 맞는 서비스를 선택하면 필요한 비주얼을 시작할 수 있습니다.</p>
             </div>
       
-            <div className={s("service-grid")}>
-              <HubLink className={s("service-card reveal")} href="/productroe">
-                <div className={s("service-image")}>
-                  <Image unoptimized src="/hub/portfolio/product-pedestal-hero.png" alt="ProductRoe product visual" width={768} height={1376} />
-                </div>
-                <div className={s("service-body")}>
-                  <div className={s("meta")}><strong>01</strong><i></i><span>Product Visual</span></div>
-                  <h3>ProductRoe</h3>
-                  <div className={s("tagline")}>For Brands & Sellers</div>
-                  <p>제품 사진을 상세페이지와 광고용 비주얼로 확장합니다.</p>
-                  <div className={s("target")}>온라인 셀러 · 브랜드 · 쇼핑몰 운영자</div>
-                </div>
-              </HubLink>
+            <motion.div
+              className={s("service-grid")}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={STAGGER_CONTAINER_VARIANTS}
+            >
+              <motion.div
+                className={s("service-motion-card")}
+                variants={FADE_UP_VARIANTS}
+              >
+                <HubLink className={s("service-card")} href="/productroe">
+                  <div className={s("service-image")}>
+                    <Image unoptimized src="/hub/portfolio/product-pedestal-hero.png" alt="ProductRoe product visual" width={768} height={1376} />
+                  </div>
+                  <div className={s("service-body")}>
+                    <div className={s("meta")}><strong>01</strong><i></i><span>Product Visual</span></div>
+                    <h3>ProductRoe</h3>
+                    <div className={s("tagline")}>For Brands & Sellers</div>
+                    <p>제품 사진을 상세페이지와 광고용 비주얼로 확장합니다.</p>
+                    <div className={s("target")}>온라인 셀러 · 브랜드 · 쇼핑몰 운영자</div>
+                  </div>
+                </HubLink>
+              </motion.div>
       
-              <HubLink className={s("service-card reveal")} href="/characterroe">
-                <div className={s("service-image")} style={{ background: "#F0EEF8" }}>
-                  <Image unoptimized src="/hub/roe.png" alt="CharacterRoe character visual" width={1124} height={490} style={{ objectPosition: "center top" }} />
-                </div>
-                <div className={s("service-body")}>
-                  <div className={s("meta")}><strong>02</strong><i></i><span>Character Design</span></div>
-                  <h3>CharacterRoe</h3>
-                  <div className={s("tagline")}>For Creators & Planners</div>
-                  <p>웹툰, 게임, 콘텐츠 캐릭터 시안을 빠르게 시각화합니다.</p>
-                  <div className={s("target")}>웹툰·게임 기획자 · 1인 창작자</div>
-                </div>
-              </HubLink>
+              <motion.div
+                className={s("service-motion-card")}
+                variants={FADE_UP_VARIANTS}
+              >
+                <HubLink className={s("service-card")} href="/characterroe">
+                  <div className={s("service-image")} style={{ background: "#F0EEF8" }}>
+                    <Image unoptimized src="/hub/roe.png" alt="CharacterRoe character visual" width={1124} height={490} style={{ objectPosition: "center top" }} />
+                  </div>
+                  <div className={s("service-body")}>
+                    <div className={s("meta")}><strong>02</strong><i></i><span>Character Design</span></div>
+                    <h3>CharacterRoe</h3>
+                    <div className={s("tagline")}>For Creators & Planners</div>
+                    <p>웹툰, 게임, 콘텐츠 캐릭터 시안을 빠르게 시각화합니다.</p>
+                    <div className={s("target")}>웹툰·게임 기획자 · 1인 창작자</div>
+                  </div>
+                </HubLink>
+              </motion.div>
       
-              <HubLink className={s("service-card reveal")} href="/titleroe">
-                <div className={s("service-image")}>
-                  <div className={s("title-placeholder")}>TITLE ROE</div>
-                </div>
-                <div className={s("service-body")}>
-                  <div className={s("meta")}><strong>03</strong><i></i><span>Cover Illustration</span></div>
-                  <h3>TitleRoe</h3>
-                  <div className={s("tagline")}>For Writers</div>
-                  <p>장르와 무드에 맞는 웹소설 표지와 삽화를 제작합니다.</p>
-                  <div className={s("target")}>웹소설 작가 · 출간 준비자</div>
-                </div>
-              </HubLink>
-            </div>
+              <motion.div
+                className={s("service-motion-card")}
+                variants={FADE_UP_VARIANTS}
+              >
+                <HubLink className={s("service-card")} href="/titleroe">
+                  <div className={s("service-image")}>
+                    <div className={s("title-placeholder")}>TITLE ROE</div>
+                  </div>
+                  <div className={s("service-body")}>
+                    <div className={s("meta")}><strong>03</strong><i></i><span>Cover Illustration</span></div>
+                    <h3>TitleRoe</h3>
+                    <div className={s("tagline")}>For Writers</div>
+                    <p>장르와 무드에 맞는 웹소설 표지와 삽화를 제작합니다.</p>
+                    <div className={s("target")}>웹소설 작가 · 출간 준비자</div>
+                  </div>
+                </HubLink>
+              </motion.div>
+            </motion.div>
           </section>
       
           <section className={s("detail-shell")}>
@@ -291,24 +341,24 @@ export default function HubPage() {
                 <p>추가 문의는 각 서비스 페이지에서.</p>
               </div>
               <div className={s("reveal")}>
-                <div className={s("faq-item")}>
-                  <button className={s("faq-button")} type="button" data-faq-button="">AI로 만든 이미지를 상업적으로 사용할 수 있나요?<span>+</span></button>
+                <div className={s(openFaqIndex === 0 ? "faq-item is-open" : "faq-item")}>
+                  <button className={s("faq-button")} type="button" aria-expanded={openFaqIndex === 0} onClick={() => setOpenFaqIndex(openFaqIndex === 0 ? null : 0)}>AI로 만든 이미지를 상업적으로 사용할 수 있나요?<span>{openFaqIndex === 0 ? "-" : "+"}</span></button>
                   <div className={s("faq-answer")}>서비스별 사용 범위와 조건은 의뢰 전 안내드립니다. 사용 채널과 목적을 함께 남겨 주세요.</div>
                 </div>
-                <div className={s("faq-item")}>
-                  <button className={s("faq-button")} type="button" data-faq-button="">원본 사진이 꼭 필요한가요?<span>+</span></button>
+                <div className={s(openFaqIndex === 1 ? "faq-item is-open" : "faq-item")}>
+                  <button className={s("faq-button")} type="button" aria-expanded={openFaqIndex === 1} onClick={() => setOpenFaqIndex(openFaqIndex === 1 ? null : 1)}>원본 사진이 꼭 필요한가요?<span>{openFaqIndex === 1 ? "-" : "+"}</span></button>
                   <div className={s("faq-answer")}>ProductRoe는 제품 원본 이미지가 있을수록 정확도가 높습니다. CharacterRoe와 TitleRoe는 설명, 레퍼런스, 분위기 정보가 더 중요합니다.</div>
                 </div>
-                <div className={s("faq-item")}>
-                  <button className={s("faq-button")} type="button" data-faq-button="">원하는 스타일을 참고 이미지로 전달할 수 있나요?<span>+</span></button>
+                <div className={s(openFaqIndex === 2 ? "faq-item is-open" : "faq-item")}>
+                  <button className={s("faq-button")} type="button" aria-expanded={openFaqIndex === 2} onClick={() => setOpenFaqIndex(openFaqIndex === 2 ? null : 2)}>원하는 스타일을 참고 이미지로 전달할 수 있나요?<span>{openFaqIndex === 2 ? "-" : "+"}</span></button>
                   <div className={s("faq-answer")}>가능합니다. 레퍼런스 이미지나 핀터레스트 링크를 함께 전달하면 무드 설계에 반영됩니다.</div>
                 </div>
-                <div className={s("faq-item")}>
-                  <button className={s("faq-button")} type="button" data-faq-button="">수정도 가능한가요?<span>+</span></button>
+                <div className={s(openFaqIndex === 3 ? "faq-item is-open" : "faq-item")}>
+                  <button className={s("faq-button")} type="button" aria-expanded={openFaqIndex === 3} onClick={() => setOpenFaqIndex(openFaqIndex === 3 ? null : 3)}>수정도 가능한가요?<span>{openFaqIndex === 3 ? "-" : "+"}</span></button>
                   <div className={s("faq-answer")}>패키지별 기본 수정 범위가 포함되어 있으며, 추가 리터칭은 옵션으로 선택할 수 있습니다.</div>
                 </div>
-                <div className={s("faq-item")}>
-                  <button className={s("faq-button")} type="button" data-faq-button="">작업물 비공개가 가능한가요?<span>+</span></button>
+                <div className={s(openFaqIndex === 4 ? "faq-item is-open" : "faq-item")}>
+                  <button className={s("faq-button")} type="button" aria-expanded={openFaqIndex === 4} onClick={() => setOpenFaqIndex(openFaqIndex === 4 ? null : 4)}>작업물 비공개가 가능한가요?<span>{openFaqIndex === 4 ? "-" : "+"}</span></button>
                   <div className={s("faq-answer")}>ProductRoe에는 포트폴리오 비공개 옵션이 있습니다. 의뢰 시 함께 선택해 주세요.</div>
                 </div>
               </div>
@@ -332,14 +382,13 @@ export default function HubPage() {
             <div className={s("footer-top")}>
               <div>
                 <div className={s("footer-brand")}>ONROE</div>
-                <div className={s("footer-sub")}>AI Studio for Brand & Story</div>
+                <div className={s("footer-sub")}>AI Studio for Brand & <HubLink href="/client">Story</HubLink></div>
               </div>
               <div className={s("footer-links")}>
                 <HubLink href="/productroe">ProductRoe</HubLink>
                 <HubLink href="/characterroe">CharacterRoe</HubLink>
                 <HubLink href="/titleroe">TitleRoe</HubLink>
                 <HubLink href="/portfolio">Portfolio</HubLink>
-                <HubLink href="/client">Client</HubLink>
               </div>
             </div>
             <div className={s("footer-line")}></div>
