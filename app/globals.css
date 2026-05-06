@@ -58,6 +58,110 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.service-nav-inner {
+  width: min(1024px, calc(100% - 64px));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 0;
+}
+
+.service-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.service-nav-links > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #2c2c2c;
+  padding: 4px 0 8px;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.service-nav-links > a:hover {
+  border-color: rgba(147, 75, 102, 0.45);
+  color: #934b66;
+  transform: none;
+  background: transparent;
+}
+
+.service-nav-links > a[href*="portfolio"] {
+  text-decoration: underline;
+  text-decoration-color: rgba(147, 75, 102, 0.85);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
+
+.service-nav-links > a[href*="portfolio"]:hover {
+  text-decoration-color: #7d3f56;
+}
+
+@media (min-width: 768px) {
+  .service-nav-inner {
+    padding: 20px 0;
+  }
+
+  .service-nav-links {
+    gap: 44px;
+  }
+
+  .service-nav-links > a {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .service-nav-inner {
+    width: min(100% - 44px, 1024px);
+    height: auto;
+    min-height: 64px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  .service-nav-links {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    gap: 0;
+    scrollbar-width: none;
+  }
+
+  .service-nav-links > a {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .service-nav-links > :first-child {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .service-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .font-skin-serif {
   font-family: var(--font-playfair), Georgia, serif;
 }

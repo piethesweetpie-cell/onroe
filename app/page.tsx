@@ -8,6 +8,8 @@ import { useEffect, useState, type ReactNode } from "react"
 import styles from "./page.module.css"
 
 const styleMap = styles as Record<string, string>
+const PRODUCTROE_PORTFOLIO_URL = "https://productroe-portfolio.piethesweetpie.workers.dev/"
+const TITLEROE_PORTFOLIO_URL = "https://titleroe-portfolio.piethesweetpie.workers.dev/"
 
 const FADE_UP_VARIANTS: Variants = {
   hidden: { opacity: 0, y: 10 },
@@ -24,21 +26,33 @@ const STAGGER_CONTAINER_VARIANTS: Variants = {
   },
 }
 
-function FloatCard({ title, imageSrc, rotation = -5, delay = "0s", duration = "6.5s", style }: {
-  title: string; imageSrc: string; rotation?: number; delay?: string; duration?: string; style?: React.CSSProperties
+function FloatCard({ title, imageSrc, href, rotation = -5, delay = "0s", duration = "6.5s", style }: {
+  title: string; imageSrc: string; href?: string; rotation?: number; delay?: string; duration?: string; style?: React.CSSProperties
 }) {
+  const card = (
+    <div className={s("float-card")} style={{ "--fc-rot": `${rotation}deg`, "--fc-delay": delay, "--fc-dur": duration } as React.CSSProperties}>
+      <div className={s("float-card-head")}>
+        <span className={s("float-card-dot")} />
+        <span className={s("float-card-title")}>{title}</span>
+        <span className={s("float-card-menu")}>•••</span>
+      </div>
+      <div className={s("float-card-img")}>
+        <img src={imageSrc} alt={title} />
+      </div>
+    </div>
+  )
+
+  if (href) {
+    return (
+      <a href={href} className={s("float-card-link")} aria-label={`${title} 포트폴리오 보기`} style={{ position: "absolute", ...style }}>
+        {card}
+      </a>
+    )
+  }
+
   return (
     <div style={{ position: "absolute", ...style }}>
-      <div className={s("float-card")} style={{ "--fc-rot": `${rotation}deg`, "--fc-delay": delay, "--fc-dur": duration } as React.CSSProperties}>
-        <div className={s("float-card-head")}>
-          <span className={s("float-card-dot")} />
-          <span className={s("float-card-title")}>{title}</span>
-          <span className={s("float-card-menu")}>•••</span>
-        </div>
-        <div className={s("float-card-img")}>
-          <img src={imageSrc} alt={title} />
-        </div>
-      </div>
+      {card}
     </div>
   )
 }
@@ -121,7 +135,7 @@ export default function HubPage() {
               <HubLink className={s("nav-link")} href="/productroe">ProductRoe</HubLink>
               <HubLink className={s("nav-link")} href="/characterroe">CharacterRoe</HubLink>
               <HubLink className={s("nav-link")} href="/titleroe">TitleRoe</HubLink>
-              <HubLink className={s("portfolio-nav-link")} href="/portfolio">Portfolio</HubLink>
+              <HubLink className={s("portfolio-nav-link")} href={PRODUCTROE_PORTFOLIO_URL}>Portfolio</HubLink>
             </div>
           </div>
         </nav>
@@ -145,18 +159,12 @@ export default function HubPage() {
                 </div>
                 <div className={s("fc-card")}>
                   <svg className={s("fc-wave-svg")} viewBox="0 0 900 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M 0,64 C 40,64 95,47 150,47 C 205,47 252,74 300,74 C 348,74 395,47 450,47 C 505,47 552,74 600,74 C 655,74 700,47 750,47 C 800,47 845,55 858,55" stroke="#BF8EA0" fill="none" strokeWidth="0.9" opacity="0.8" />
+                    <path d="M 0,64 C 40,64 95,47 150,47 C 205,47 252,74 300,74 C 348,74 395,47 450,47 C 505,47 552,74 600,74 C 655,74 700,47 750,47 C 800,47 845,55 858,55" stroke="#F2E6ED" fill="none" strokeWidth="0.9" opacity="1" />
                   </svg>
                   <div className={s("fc-sparkle")} aria-hidden="true">
                     <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <filter id="sp-glow" x="-120%" y="-120%" width="340%" height="340%">
-                          <feGaussianBlur stdDeviation="1.8" result="blur" />
-                          <feMerge><feMergeNode in="blur" /><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                      </defs>
-                      <path d="M7,0 L8,6 L14,7 L8,8 L7,14 L6,8 L0,7 L6,6 Z" fill="#C8688A" opacity="0.9" filter="url(#sp-glow)" />
-                      <path d="M7,3 L7.6,6.4 L11,7 L7.6,7.6 L7,11 L6.4,7.6 L3,7 L6.4,6.4 Z" fill="#F2B8D0" opacity="0.85" />
+                      <path d="M7,0 L8,6 L14,7 L8,8 L7,14 L6,8 L0,7 L6,6 Z" fill="#F2E6ED" opacity="1" />
+                      <path d="M7,3 L7.6,6.4 L11,7 L7.6,7.6 L7,11 L6.4,7.6 L3,7 L6.4,6.4 Z" fill="#F2E6ED" opacity="1" />
                     </svg>
                   </div>
                   <HubLink href="#productroe" className={s("fc-item")}>
@@ -210,9 +218,9 @@ export default function HubPage() {
               <div className={s("hero-mark-logo")}>
                 <Image unoptimized src="/hub/logo.png" alt="ONROE logo mark" width={550} height={538} />
               </div>
-              <FloatCard title="Product Photo" imageSrc="/hub/portfolio/product-pedestal-hero.png" rotation={-6} delay="0s" duration="6.8s" style={{ top: "8px", left: "-7px" }} />
-              <FloatCard title="AI illustration" imageSrc="/hub/roe.png" rotation={4} delay="2.2s" duration="7.4s" style={{ top: "30px", right: "-45px" }} />
-              <FloatCard title="Detail View" imageSrc="/hub/portfolio/product-clean-stand.png" rotation={3} delay="4s" duration="6.2s" style={{ bottom: "32px", right: "-30px" }} />
+              <FloatCard title="Product Photo" href={PRODUCTROE_PORTFOLIO_URL} imageSrc="/hub/portfolio/product-pedestal-hero.png" rotation={-6} delay="0s" duration="6.8s" style={{ top: "8px", left: "-7px" }} />
+              <FloatCard title="AI illustration" href={TITLEROE_PORTFOLIO_URL} imageSrc="/hub/roe.png" rotation={4} delay="2.2s" duration="7.4s" style={{ top: "30px", right: "-45px" }} />
+              <FloatCard title="Detail View" href={TITLEROE_PORTFOLIO_URL} imageSrc="/hub/portfolio/product-clean-stand.png" rotation={3} delay="4s" duration="6.2s" style={{ bottom: "32px", right: "-30px" }} />
             </div>
             <div className={s("hero-index")}>01 / 06</div>
           </section>
@@ -324,10 +332,10 @@ export default function HubPage() {
                   <h2>캐릭터 콘셉트를<br />시각화하는 AI 캐릭터 제작</h2>
                   <p>웹툰, 게임, SNS 콘텐츠에 필요한 캐릭터를 성격, 세계관, 의상, 분위기 정보로 설계해 첫 시안을 제공합니다.</p>
                   <div className={s("detail-feature-grid")}>
-                    <div className={s("detail-feature")}><span><UserRound size={26} /></span><strong>캐릭터 콘셉트 기획</strong><p>성격·세계관·외형 등 캐릭터 방향 설계</p></div>
-                    <div className={s("detail-feature")}><span><Gamepad2 size={26} /></span><strong>시리즈형 설계</strong><p>SNS·웹툰·게임 등 확장형 시안 제공</p></div>
-                    <div className={s("detail-feature")}><span><PencilLine size={26} /></span><strong>콘셉트 시안</strong><p>콘셉트 기반의 캐릭터 시안 제작</p></div>
-                    <div className={s("detail-feature")}><span><UsersRound size={26} /></span><strong>1인 창작자 지원</strong><p>혼자 기획과 제작을 병행하는 창작자 지원</p></div>
+                    <div className={s("detail-feature")}><span><UserRound size={26} /></span><strong>AI 캐릭터 이미지 제작</strong><p>원하는 분위기와 설정에 맞춰<br />캐릭터 이미지 제작</p></div>
+                    <div className={s("detail-feature")}><span><Gamepad2 size={26} /></span><strong>장르별 캐릭터 작업</strong><p>웹툰·게임·SNS 콘텐츠에 어울리는<br />캐릭터 비주얼</p></div>
+                    <div className={s("detail-feature")}><span><PencilLine size={26} /></span><strong>의상·표정·분위기 반영</strong><p>캐릭터의 매력이 보이도록<br />제작</p></div>
+                    <div className={s("detail-feature")}><span><UsersRound size={26} /></span><strong>완성 이미지 제공</strong><p>바로 활용할 수 있는<br />캐릭터 시안 전달</p></div>
                   </div>
                   <HubLink className={s("text-link")} href="/characterroe">CharacterRoe 의뢰하기 -&gt;</HubLink>
                 </div>
@@ -362,19 +370,19 @@ export default function HubPage() {
                 <span className={s("label")}>Portfolio</span>
                 <h2>실제 작업 사례</h2>
               </div>
-              <HubLink className={s("btn btn-secondary")} href="/portfolio">포트폴리오 전체 보기 -&gt;</HubLink>
+              <HubLink className={s("btn btn-secondary")} href={PRODUCTROE_PORTFOLIO_URL}>포트폴리오 전체 보기 -&gt;</HubLink>
             </div>
       
             <div className={s("portfolio-grid")}>
-              <HubLink className={s("portfolio-item reveal")} href="/portfolio">
+              <HubLink className={s("portfolio-item reveal")} href={PRODUCTROE_PORTFOLIO_URL}>
                 <Image unoptimized src="/hub/portfolio/product-pedestal-hero.png" alt="Bold campaign portfolio" width={768} height={1376} />
                 <span>PRODUCT</span>
               </HubLink>
-              <HubLink className={s("portfolio-item reveal")} href="/portfolio">
+              <HubLink className={s("portfolio-item reveal")} href={PRODUCTROE_PORTFOLIO_URL}>
                 <Image unoptimized src="/hub/portfolio/product-clean-stand.png" alt="Clean commerce portfolio" width={825} height={1024} />
                 <span>PRODUCT</span>
               </HubLink>
-              <HubLink className={s("portfolio-item reveal")} href="/portfolio">
+              <HubLink className={s("portfolio-item reveal")} href={PRODUCTROE_PORTFOLIO_URL}>
                 <Image unoptimized src="/hub/portfolio/product-everyday-surface.png" alt="Soft lifestyle portfolio" width={848} height={1264} />
                 <span>PRODUCT</span>
               </HubLink>
@@ -448,7 +456,7 @@ export default function HubPage() {
                 <HubLink href="/productroe">ProductRoe</HubLink>
                 <HubLink href="/characterroe">CharacterRoe</HubLink>
                 <HubLink href="/titleroe">TitleRoe</HubLink>
-                <HubLink href="/portfolio">Portfolio</HubLink>
+                <HubLink href={PRODUCTROE_PORTFOLIO_URL}>Portfolio</HubLink>
               </div>
             </div>
             <div className={s("footer-line")}></div>

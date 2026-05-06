@@ -29,6 +29,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ONROE - AI Studio for Brand & Story",
   description: "ONROE는 상품 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다.",
+  icons: {
+    icon: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
 }
 
 export default function RootLayout({

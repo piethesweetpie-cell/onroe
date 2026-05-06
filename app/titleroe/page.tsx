@@ -549,11 +549,11 @@ export default function CharacterRoePage() {
       />
 
       <nav className="relative z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1580px] flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-10 md:py-5">
-          <Link href="/titleroe" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
-            TITLE ROE
+        <div className="service-nav-inner">
+          <Link href="/" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
+            ONROE
           </Link>
-          <div className="grid w-full grid-cols-3 gap-2 sm:flex sm:w-auto sm:items-center md:gap-3">
+          <div className="service-nav-links">
             <Link
               href="/"
               className="rounded-full border border-[#eadfd8] bg-white px-5 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"

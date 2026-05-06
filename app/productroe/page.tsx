@@ -12,6 +12,8 @@ type PackageType = "starter" | "standard" | "brand-set" | "look" | "editorial" |
 type UploadKind = "product" | "reference"
 type UploadedImage = { url: string; name: string }
 
+const PRODUCTROE_PORTFOLIO_URL = "https://productroe-portfolio.piethesweetpie.workers.dev/"
+
 const directionOptions = [
   {
     id: 1,
@@ -534,9 +536,11 @@ export default function StudioRoePage() {
       />
 
       <nav className="fixed inset-x-0 top-0 z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1580px] items-center justify-between px-6 py-4 md:px-10 md:py-5">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">ProductRoe</span>
-          <div className="flex items-center gap-2 md:gap-3">
+        <div className="service-nav-inner">
+          <Link href="/" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
+            ONROE
+          </Link>
+          <div className="service-nav-links">
             <Link
               href="/characterroe"
               className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
@@ -549,12 +553,12 @@ export default function StudioRoePage() {
             >
               TitleRoe
             </Link>
-            <Link
-              href="/portfolio"
+            <a
+              href={PRODUCTROE_PORTFOLIO_URL}
               className="rounded-full bg-[#934b66] px-5 py-2.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
             >
               Portfolio
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
@@ -577,7 +581,7 @@ export default function StudioRoePage() {
               onMouseLeave={handleHeroPointerLeave}
             >
               <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center">
-                <div className="-mt-2 mb-1 flex w-full max-w-[1360px] justify-start invisible md:visible">
+                <div className="-mt-2 mb-1 flex w-full max-w-5xl justify-start invisible md:visible">
                   <div className="relative inline-block hero-copy-enter hero-copy-enter-delay-1">
                     <div className="flex h-[37px] w-[37px] rotate-[-10deg] items-center justify-center rounded-full border-[2px] border-[#c7a98c] md:h-[92px] md:w-[92px] md:border-[3px]">
                       <span className="text-[5px] font-semibold uppercase tracking-[0.12em] text-[#c7a98c] md:text-[12px]">ONROE</span>
