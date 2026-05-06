@@ -9,6 +9,7 @@
       --bg-bottom: #F5E9E2;
       --accent: #934B66;
       --accent-dark: #7D3F56;
+      --hero-brown: #C7A98C;
       --text: #2C2C2C;
       --body: #4A4A4A;
       --muted: #6F6F6F;
@@ -421,7 +422,7 @@
     }
 
     h1 .hero-title-sub {
-      color: #C7A98C;
+      color: var(--hero-brown);
       font-style: italic;
     }
 
@@ -806,8 +807,6 @@
         0 28px 56px rgba(94, 69, 49, 0.13),
         0 8px 18px rgba(147, 75, 102, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.96);
-      -webkit-backdrop-filter: blur(18px);
-      backdrop-filter: blur(18px);
       transform: rotate(var(--card-rot)) translateY(var(--card-y));
       transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease, background 260ms ease;
     }
@@ -1517,7 +1516,7 @@
     }
 
     .final h2 span {
-      color: var(--muted);
+      color: var(--hero-brown);
     }
 
     .final p {
@@ -1525,6 +1524,10 @@
       color: var(--muted);
       font-size: 15px;
       line-height: 1.8;
+    }
+
+    .final .btn {
+      font-family: var(--font-serif);
     }
 
     .hubRoot footer {
@@ -1886,22 +1889,34 @@
 
     .float-card {
       position: relative;
-      width: clamp(113px, 11.3vw, 162px);
-      padding: 13px;
+      width: clamp(102px, 10.2vw, 146px);
+      padding: 12px;
       border-radius: 24px;
       opacity: 0.9;
-      background: linear-gradient(145deg, rgba(250, 244, 240, 0.52), rgba(245, 235, 228, 0.40));
+      background:
+        linear-gradient(145deg, rgba(252, 243, 241, 0.72), rgba(248, 238, 233, 0.46)),
+        radial-gradient(circle at 30% 18%, rgba(252, 243, 241, 0.7), transparent 44%),
+        linear-gradient(165deg, rgba(250, 244, 240, 0.54), rgba(245, 235, 228, 0.34));
       border: 1px solid #e7d5d2;
       box-shadow:
-        0 24px 48px rgba(143,85,103,0.13),
-        0 8px 18px rgba(143,85,103,0.08);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+        0 24px 48px rgba(143,85,103,0.065),
+        0 8px 18px rgba(143,85,103,0.04),
+        inset 0 1px 0 rgba(252,243,241,0.9),
+        inset 0 -18px 30px rgba(247,198,214,0.16);
       overflow: hidden;
-      animation: floatCard var(--fc-dur, 6.5s) ease-in-out infinite;
+      animation: floatCard var(--fc-dur, 6.5s) ease-in-out 3;
       animation-delay: var(--fc-delay, 0s);
       transform: rotate(var(--fc-rot, -5deg));
       transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), box-shadow 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .float-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(252,243,241,0.56), transparent 46%);
     }
 
     .float-card-link {
@@ -1912,11 +1927,9 @@
     }
 
     .float-card:hover {
-      animation-play-state: paused;
-      transform: rotate(var(--fc-rot, -5deg)) scale(1.06);
       box-shadow:
-        0 32px 64px rgba(143,85,103,0.18),
-        0 12px 24px rgba(143,85,103,0.1),
+        0 32px 64px rgba(143,85,103,0.09),
+        0 12px 24px rgba(143,85,103,0.05),
         inset 0 1px 0 rgba(255,255,255,0.9);
     }
 
