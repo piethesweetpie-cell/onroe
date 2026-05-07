@@ -518,8 +518,8 @@ export default function CharacterRoePage() {
 
       <nav className="relative z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
         <div className="service-nav-inner">
-          <Link href="/" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
-            ONROE
+          <Link href="/" className="inline-flex items-center gap-[6px] text-[12px] font-semibold uppercase tracking-[0.1em] text-[#c7a98c]">
+            <Image src="/images/ONROE_w.png" alt="ONROE logo" width={12} height={12} className="shrink-0" />ONROE
           </Link>
           <div className="service-nav-links">
             <Link

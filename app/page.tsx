@@ -130,7 +130,7 @@ export default function HubPage() {
     <div className={styles.hubRoot}>
       <nav className={s("nav")} data-nav="">
           <div className={s("nav-inner")}>
-            <HubLink className={s("brand")} href="/">ONROE</HubLink>
+            <HubLink className={s("brand")} href="/"><Image unoptimized src="/images/ONROE_w.png" alt="ONROE logo" width={12} height={12} className="shrink-0" />ONROE</HubLink>
             <div className={s("nav-links")}>
               <HubLink className={s("nav-link")} href="/productroe">ProductRoe</HubLink>
               <HubLink className={s("nav-link")} href="/characterroe">CharacterRoe</HubLink>
@@ -451,12 +451,6 @@ export default function HubPage() {
               <div>
                 <div className={s("footer-brand")}>ONROE</div>
                 <div className={s("footer-sub")}>AI Studio for Brand & <HubLink href="/client">Story</HubLink></div>
-              </div>
-              <div className={s("footer-links")}>
-                <HubLink href="/productroe">ProductRoe</HubLink>
-                <HubLink href="/characterroe">CharacterRoe</HubLink>
-                <HubLink href="/titleroe">TitleRoe</HubLink>
-                <HubLink href={PRODUCTROE_PORTFOLIO_URL}>Portfolio</HubLink>
               </div>
             </div>
             <div className={s("footer-line")}></div>

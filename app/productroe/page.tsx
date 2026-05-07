@@ -535,30 +535,15 @@ export default function StudioRoePage() {
         }}
       />
 
-      <nav className="fixed inset-x-0 top-0 z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
+      <nav className="relative z-40 border-b border-[#eadfd8] bg-[#fdf8f5]/92 backdrop-blur-sm">
         <div className="service-nav-inner">
-          <Link href="/" className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#9d7f67]">
-            ONROE
+          <Link href="/" className="inline-flex items-center gap-[6px] text-[12px] font-semibold uppercase tracking-[0.1em] text-[#c7a98c]">
+            <Image src="/images/ONROE_w.png" alt="ONROE logo" width={12} height={12} className="shrink-0" />ONROE
           </Link>
           <div className="service-nav-links">
-            <Link
-              href="/characterroe"
-              className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
-            >
-              CharacterRoe
-            </Link>
-            <Link
-              href="/titleroe"
-              className="flex items-center justify-center rounded-full border border-[#eadfd8] bg-white px-3 py-2.5 text-[12px] font-medium text-[#4a4a4a] shadow-[0_7px_14px_rgba(90,70,50,0.06)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] md:px-7 md:py-3 md:text-base"
-            >
-              TitleRoe
-            </Link>
-            <a
-              href={PRODUCTROE_PORTFOLIO_URL}
-              className="rounded-full bg-[#934b66] px-5 py-2.5 text-[15px] font-semibold text-white shadow-[0_14px_30px_rgba(147,75,102,0.28)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56] md:px-7 md:py-3 md:text-base"
-            >
-              Portfolio
-            </a>
+            <Link href="/productroe" className="">ProductRoe</Link>
+            <Link href="/characterroe" className="">CharacterRoe</Link>
+            <Link href="/titleroe" className="">TitleRoe</Link>
           </div>
         </div>
       </nav>
@@ -576,7 +561,7 @@ export default function StudioRoePage() {
 
             <section
               ref={heroRef}
-              className="relative flex min-h-[400px] items-start justify-center px-6 pb-8 pt-24 md:min-h-[520px] md:px-10 md:pb-24 md:pt-28"
+              className="relative flex md:min-h-[520px] items-start justify-center px-6 pb-8 pt-6 md:px-10 md:pb-24 md:pt-28"
               onMouseMove={handleHeroPointerMove}
               onMouseLeave={handleHeroPointerLeave}
             >
@@ -606,6 +591,12 @@ export default function StudioRoePage() {
                     <p className="mt-[-6px] font-skin-serif text-[44px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-14px] md:text-[70px] lg:text-[92px]">
                       Request Form
                     </p>
+                    <a
+                      href="https://productroe-portfolio.piethesweetpie.workers.dev/"
+                      className="mt-6 inline-flex items-center justify-center rounded-full bg-[#934b66] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(147,75,102,0.24)] transition-all hover:bg-[#7d3f56] md:hidden"
+                    >
+                      포트폴리오 보기
+                    </a>
                   </div>
 
                   <div
@@ -627,7 +618,7 @@ export default function StudioRoePage() {
               </div>
             </section>
 
-            <section id="story" className="relative -mt-24 px-6 pb-12 pt-0 md:-mt-20">
+            <section id="story" className="relative mt-[2px] px-6 pb-12 pt-0 md:-mt-20">
               <div className="relative z-10 mx-auto max-w-5xl">
               <div className="relative">
                 <div className="absolute inset-0 translate-x-3 translate-y-4 rounded-[32px] bg-[#d9ccc4]/85 shadow-[0_26px_60px_rgba(120,96,78,0.14)]" />
