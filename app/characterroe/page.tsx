@@ -556,16 +556,47 @@ export default function CharacterRoePage() {
 
           <section ref={heroRef} className="relative z-50 flex min-h-[400px] items-start justify-center px-6 pb-0 pt-2 md:min-h-[520px] md:px-10 md:pb-0 md:pt-3">
             <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center">
-              <div className="relative flex min-h-[300px] w-full items-start justify-start md:min-h-[360px]">
+              <div className="flex w-full flex-col items-center md:relative md:flex-row md:min-h-[360px] md:items-start md:justify-start">
                 <div
                   ref={logoGlowRef}
-                  className="pointer-events-none absolute left-[62%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
+                  className="pointer-events-none hidden md:absolute md:block left-[62%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
                   style={{ willChange: "transform, opacity" }}
                 >
                   <div className="h-full w-full rounded-full bg-[radial-gradient(circle,rgba(219,192,175,0.28),rgba(255,255,255,0)_66%)] blur-[68px] hero-logo-glow-enter" />
                 </div>
 
-                <div className="relative z-10 pt-[11px] text-left hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px]">
+                {selectedHeroImage ? (
+                  <>
+                    {/* 모바일: 이미지 상단 센터 */}
+                    <div className={`md:hidden w-full flex justify-center transition-all duration-1000 ease-out ${heroImageLoaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"}`}>
+                      <Image
+                        src={selectedHeroImage.src}
+                        alt={selectedHeroImage.alt}
+                        width={selectedHeroImage.width}
+                        height={selectedHeroImage.height}
+                        priority
+                        className="h-auto w-full max-w-[300px] object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
+                      />
+                    </div>
+                    {/* 데스크탑: 기존 absolute 포지셔닝 */}
+                    <div
+                      className={`pointer-events-none hidden md:block absolute z-[80] transition-all duration-1000 ease-out ${selectedHeroImage.visualClassName} ${
+                        heroImageLoaded ? "translate-y-0 opacity-100 blur-0" : "translate-y-5 opacity-0 blur-sm"
+                      }`}
+                    >
+                      <Image
+                        src={selectedHeroImage.src}
+                        alt={selectedHeroImage.alt}
+                        width={selectedHeroImage.width}
+                        height={selectedHeroImage.height}
+                        priority
+                        className="h-auto w-full object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
+                      />
+                    </div>
+                  </>
+                ) : null}
+
+                <div className="relative z-10 text-center hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px] md:text-left">
                   <h1 className="font-skin-serif text-[50px] leading-[0.88] tracking-[-0.05em] text-[#252525] md:text-[78px] lg:text-[100px]">
                     CharacterRoe
                   </h1>
@@ -577,34 +608,17 @@ export default function CharacterRoePage() {
                   </p>
                   <Link
                     href="https://titleroe-portfolio.piethesweetpie.workers.dev/"
-                    className="mt-6 inline-flex items-center justify-center rounded-full bg-[#934b66] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(147,75,102,0.24)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
+                    className="mt-[16px] inline-flex items-center justify-center rounded-full bg-[#934b66] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(147,75,102,0.24)] transition-all hover:-translate-y-0.5 hover:bg-[#7d3f56]"
                   >
                     포트폴리오 보기
                   </Link>
                 </div>
 
-                {selectedHeroImage ? (
-                  <div
-                    className={`pointer-events-none absolute z-[80] transition-all duration-1000 ease-out ${selectedHeroImage.visualClassName} ${
-                      heroImageLoaded ? "translate-y-0 opacity-100 blur-0" : "translate-y-5 opacity-0 blur-sm"
-                    }`}
-                  >
-                    <Image
-                      src={selectedHeroImage.src}
-                      alt={selectedHeroImage.alt}
-                      width={selectedHeroImage.width}
-                      height={selectedHeroImage.height}
-                      priority
-                      className="h-auto w-full object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
-                    />
-                  </div>
-                ) : null}
-
               </div>
             </div>
           </section>
 
-          <section className="sticky top-0 z-30 -mt-20 px-6 pb-8 pt-0 md:-mt-20">
+          <section className="sticky top-0 z-30 mt-4 px-6 pb-8 pt-0 md:-mt-20">
             <div className="mx-auto max-w-5xl">
               <StepProgress steps={steps} activeStep={activeStep} />
             </div>

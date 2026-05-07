@@ -1641,14 +1641,19 @@
         width: min(100% - 44px, 1024px);
         height: auto;
         min-height: 64px;
-        align-items: flex-start;
+        align-items: center;
         flex-direction: column;
         padding: 16px 0;
       }
 
+      .brand {
+        width: 100%;
+        text-align: center;
+      }
+
       .nav-links {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        display: flex;
+        justify-content: space-between;
         width: 100%;
         overflow-x: auto;
         padding-bottom: 2px;
@@ -1671,15 +1676,33 @@
       .nav-link,
       .client-link,
       .portfolio-nav-link {
-        width: 100%;
+        width: auto;
         padding: 4px 0 8px;
         font-size: 14px;
         text-align: center;
       }
 
+      .portfolio-nav-link {
+        font-weight: 500;
+        text-decoration: none;
+        border-bottom-color: transparent;
+      }
+
       .nav-links > :first-child {
         justify-content: flex-start;
         text-align: left;
+      }
+
+      .nav-links > :last-child {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+
+      .hero-copy {
+        text-align: center;
+        align-items: center;
+        margin-top: -14px;
       }
 
       .hubRoot h1 {
@@ -1690,7 +1713,7 @@
         order: -1;
         width: 100%;
         min-height: 190px;
-        justify-content: flex-start;
+        justify-content: center;
         margin-top: 0 !important;
       }
 

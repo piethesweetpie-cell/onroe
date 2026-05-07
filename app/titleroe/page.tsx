@@ -10,7 +10,7 @@ import { supabase } from "@/lib/supabase"
 type UploadedFile = { url: string; name: string }
 
 const heroImagePositions = {
-  roe: "bottom-[45px] right-[-19px] w-[82%] max-w-[420px] sm:bottom-[41px] sm:right-[-19px] sm:w-[72%] md:bottom-[-58px] md:right-[-3px] md:w-[70%] md:max-w-[720px] lg:bottom-[-68px] lg:right-[25px] lg:w-[68%]",
+  roe: "bottom-[-10px] right-[-6px] w-[82%] max-w-[420px] sm:bottom-[41px] sm:right-[-19px] sm:w-[72%] md:bottom-[-58px] md:right-[-3px] md:w-[70%] md:max-w-[720px] lg:bottom-[-68px] lg:right-[25px] lg:w-[68%]",
   roe2: "bottom-[45px] right-0 w-[76%] max-w-[390px] sm:right-0 sm:w-[68%] md:bottom-[-73px] md:right-4 md:w-[58%] md:max-w-[600px] lg:right-8 lg:w-[56%]",
 } as const
 
@@ -34,31 +34,47 @@ const styleOptions = [
     label: "반실사 로맨스 표지풍",
     icon: "🌸",
     detail: "여성향 로판·현로에 가장 많이 쓰이는 안정적 스타일",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/06_%EB%B0%98%EC%8B%A4%EC%82%AC%20%EB%A1%9C%EB%A7%A8%EC%8A%A4%20%ED%91%9C%EC%A7%80%ED%92%8D/165_b03cb027-e3e2-486f-b7b8-8fd8b6f445c3.jpg",
+    imageAlt: "반실사 로맨스 표지풍 샘플",
+    imagePosition: "50% 34%",
   },
   {
     label: "프리미엄 반실사",
     icon: "⭐",
     detail: "대표작·키비주얼용 고급 스타일 (여성향·남성향 모두 적합)",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/07_%ED%94%84%EB%A6%AC%EB%AF%B8%EC%97%84%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%ED%91%9C%EC%A7%80%ED%92%8D/078_d80db90c-d67a-41bf-a42c-8ce0a307d83e.jpg",
+    imageAlt: "프리미엄 반실사 표지풍 샘플",
+    imagePosition: "50% 5%",
   },
   {
     label: "다크 반실사",
     icon: "🖤",
     detail: "빌런·집착남주·다크 판타지·헌터물 빌런",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/10_%EB%8B%A4%ED%81%AC%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%EB%A1%9C%EB%A7%A8%EC%8A%A4%20%ED%91%9C%EC%A7%80%ED%92%8D/076_6b183794-0b73-482d-8125-67af39208d97.jpg",
+    imageAlt: "다크 반실사 로맨스 표지풍 샘플",
+    imagePosition: "58% 8%",
   },
   {
     label: "클린 반실사 페인티드",
     icon: "✨",
     detail: "설정화·내부자료용 깔끔한 스타일",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/97_%ED%81%B4%EB%A6%B0%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%ED%94%84%EB%A1%9C%ED%95%84%ED%92%8D/022_b308d54c-3a97-4b78-80f1-b962a2d06e71.jpg",
+    imageAlt: "클린 반실사 프로필풍 샘플",
+    imagePosition: "50% 25%",
   },
   {
     label: "페인티드 로맨스풍",
     icon: "💗",
     detail: "여성향 감성·무드 중심 (BL·현로 추천)",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/09_페인티드 로맨스 표지풍/002_ae7f0f66-b493-4781-b062-7fe9022056cf.jpg",
+    imageAlt: "페인티드 로맨스 표지풍 샘플",
   },
   {
     label: "남성향 무협·현판풍",
     icon: "⚔️",
     detail: "무협·헌터물·현판 표지에 최적화된 강렬한 스타일",
+    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/93_사극_동양 채색화/012_f1fe1399-539f-43e1-97b5-2710a5069fb6.jpg",
+    imageAlt: "사극 동양 채색화 샘플",
   },
   {
     label: "추천받기",
@@ -588,16 +604,47 @@ export default function CharacterRoePage() {
 
           <section ref={heroRef} className="relative z-50 flex min-h-[400px] items-start justify-center px-6 pb-0 pt-2 md:min-h-[520px] md:px-10 md:pb-0 md:pt-3">
             <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center">
-              <div className="relative flex min-h-[300px] w-full items-start justify-start md:min-h-[360px]">
+              <div className="flex w-full flex-col items-center md:relative md:flex-row md:min-h-[360px] md:items-start md:justify-start">
                 <div
                   ref={logoGlowRef}
-                  className="pointer-events-none absolute left-[62%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
+                  className="pointer-events-none hidden md:absolute md:block left-[62%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2"
                   style={{ willChange: "transform, opacity" }}
                 >
                   <div className="h-full w-full rounded-full bg-[radial-gradient(circle,rgba(219,192,175,0.28),rgba(255,255,255,0)_66%)] blur-[68px] hero-logo-glow-enter" />
                 </div>
 
-                <div className="relative z-10 pt-[11px] text-left hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px]">
+                {selectedHeroImage ? (
+                  <>
+                    {/* 모바일: 이미지 상단 센터 */}
+                    <div className={`md:hidden w-full flex justify-center mb-4 mt-[4px] transition-all duration-1000 ease-out ${heroImageLoaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"}`}>
+                      <Image
+                        src={selectedHeroImage.src}
+                        alt={selectedHeroImage.alt}
+                        width={selectedHeroImage.width}
+                        height={selectedHeroImage.height}
+                        priority
+                        className="h-auto w-full max-w-[300px] object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
+                      />
+                    </div>
+                    {/* 데스크탑: 기존 absolute 포지셔닝 */}
+                    <div
+                      className={`pointer-events-none hidden md:block absolute z-[100] transition-all duration-1000 ease-out ${selectedHeroImage.visualClassName} ${
+                        heroImageLoaded ? "translate-y-0 opacity-100 blur-0" : "translate-y-5 opacity-0 blur-sm"
+                      }`}
+                    >
+                      <Image
+                        src={selectedHeroImage.src}
+                        alt={selectedHeroImage.alt}
+                        width={selectedHeroImage.width}
+                        height={selectedHeroImage.height}
+                        priority
+                        className="h-auto w-full object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
+                      />
+                    </div>
+                  </>
+                ) : null}
+
+                <div className="relative z-[90] text-center hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px] md:text-left">
                   <h1 className="font-skin-serif text-[50px] leading-[0.88] tracking-[-0.05em] text-[#252525] md:text-[78px] lg:text-[100px]">
                     TitleRoe
                   </h1>
@@ -615,28 +662,11 @@ export default function CharacterRoePage() {
                   </Link>
                 </div>
 
-                {selectedHeroImage ? (
-                  <div
-                    className={`pointer-events-none absolute z-[80] transition-all duration-1000 ease-out ${selectedHeroImage.visualClassName} ${
-                      heroImageLoaded ? "translate-y-0 opacity-100 blur-0" : "translate-y-5 opacity-0 blur-sm"
-                    }`}
-                  >
-                    <Image
-                      src={selectedHeroImage.src}
-                      alt={selectedHeroImage.alt}
-                      width={selectedHeroImage.width}
-                      height={selectedHeroImage.height}
-                      priority
-                      className="h-auto w-full object-contain drop-shadow-[0_24px_38px_rgba(80,68,62,0.12)]"
-                    />
-                  </div>
-                ) : null}
-
               </div>
             </div>
           </section>
 
-          <section className="sticky top-0 z-30 -mt-20 px-6 pb-8 pt-0 md:-mt-20">
+          <section className="sticky top-0 z-30 -mt-[9px] px-6 pb-8 pt-0 md:-mt-20">
             <div className="mx-auto max-w-5xl">
               <StepProgress steps={steps} activeStep={activeStep} />
             </div>
@@ -696,7 +726,19 @@ export default function CharacterRoePage() {
                 <Field label="피하고 싶은 요소">
                   <textarea className={textAreaClassName} value={textValues.avoid} onChange={(event) => updateText("avoid", event.target.value)} placeholder="예: 어려 보이는 얼굴, 양산형 그림체, 과한 보정" />
                 </Field>
-                <Field label="원하는 스타일">
+                <Field
+                  label="원하는 스타일"
+                  action={
+                    <Link
+                      href="https://titleroe-portfolio.piethesweetpie.workers.dev/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[34px] items-center justify-center rounded-full border border-[#ead9cf] bg-white px-4 text-xs font-semibold text-[#934b66] shadow-[0_8px_16px_rgba(124,98,81,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] hover:bg-[#fdf8f5]"
+                    >
+                      스타일 확인하기 ↗
+                    </Link>
+                  }
+                >
                   <div className="grid gap-4 md:grid-cols-2">
                     {styleOptions.map((option) => {
                       const active = singleValues.style === option.label
@@ -705,15 +747,41 @@ export default function CharacterRoePage() {
                           key={option.label}
                           type="button"
                           onClick={() => updateSingle("style", option.label)}
-                          className={`rounded-[22px] border p-5 text-left transition-all ${
-                            active ? "border-[#d9b7c0] bg-[#f7e7eb] shadow-[0_16px_30px_rgba(148,106,120,0.12)]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
+                          className={`relative min-h-[136px] overflow-hidden rounded-[22px] border p-5 text-left transition-all ${
+                            active ? "border-[#d9b7c0] bg-[#f7e7eb]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
                           }`}
                         >
-                          <span className="flex items-center gap-2 text-sm font-semibold text-[#2c2c2c]">
-                            <span aria-hidden="true">{option.icon}</span>
-                            {option.label}
+                          {option.imageSrc ? (
+                            <>
+                              <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[22px]">
+                                <img
+                                  src={option.imageSrc}
+                                  alt={option.imageAlt}
+                                  loading="lazy"
+                                  className="h-full w-full object-cover"
+                                  style={{
+                                    objectPosition: option.imagePosition ?? "50% 50%",
+                                    transform: "translateX(26%)",
+                                  }}
+                                />
+                              </span>
+                              <span
+                                className="pointer-events-none absolute inset-0"
+                                style={{
+                                  background: active
+                                    ? "linear-gradient(90deg, #f7e7eb 0%, #f7e7eb 62%, rgba(247,231,235,0.92) 72%, rgba(247,231,235,0.54) 84%, rgba(247,231,235,0) 100%)"
+                                    : "linear-gradient(90deg, #fff 0%, #fff 46%, rgba(255,255,255,0.94) 54%, rgba(255,255,255,0.72) 63%, rgba(255,255,255,0.32) 76%, rgba(255,255,255,0) 100%)",
+                                }}
+                              />
+                            </>
+                          ) : null}
+                          <span className={option.imageSrc ? "relative z-10 block max-w-[58%]" : "relative z-10 block"}>
+                            <span className="flex items-center gap-2 text-sm font-semibold text-[#2c2c2c]">
+                              <span aria-hidden="true">{option.icon}</span>
+                              {option.label}
+                            </span>
+                            <span className="mt-2 block text-sm leading-6 text-[#6b6b6b]">{option.detail}</span>
                           </span>
-                          <span className="mt-2 block text-sm leading-6 text-[#6b6b6b]">{option.detail}</span>
                         </button>
                       )
                     })}
@@ -1020,10 +1088,13 @@ function StepProgress({
   )
 }
 
-function Field({ label, children }: { label: string; children: ReactNode }) {
+function Field({ label, action, children }: { label: string; action?: ReactNode; children: ReactNode }) {
   return (
     <div className="block">
-      <span className="mb-2 block text-sm font-medium text-[#4a4a4a]">{label}</span>
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
+        <span className="block text-sm font-medium text-[#4a4a4a]">{label}</span>
+        {action}
+      </div>
       {children}
     </div>
   )
@@ -1077,7 +1148,7 @@ function RadioGroup({
             key={option}
             type="button"
             onClick={() => onChange(option)}
-            className={`min-h-[44px] rounded-full px-4 py-2 text-sm font-medium transition-all ${
+            className={`min-h-[44px] w-full rounded-full px-4 py-2 text-left text-sm font-medium transition-all md:w-auto md:text-center ${
               active ? "bg-[#8b475d] text-white" : "bg-[#f5f0eb] text-[#4a4a4a] hover:bg-[#e8dcd5]"
             }`}
           >
