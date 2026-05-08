@@ -74,16 +74,16 @@ const packageOptionsByTrack: Record<
     {
       id: "starter",
       title: "STARTER",
-      price: "59,000원",
-      priceValue: 59000,
+      price: "29,000원",
+      priceValue: 29000,
       description: "단품 1컷 연출, 배경 무드 변환, 2시안",
       bullets: ["단품 1컷", "배경 무드 변환", "2시안 제공"],
     },
     {
       id: "standard",
       title: "STANDARD",
-      price: "110,000원",
-      priceValue: 110000,
+      price: "59,000원",
+      priceValue: 59000,
       description: "4컷 구성",
       bullets: [
         "1차. 컬러가 다른 시안 2종 제공, 이후 선택한 컬러로 4컷 제공",
@@ -93,8 +93,8 @@ const packageOptionsByTrack: Record<
     {
       id: "brand-set",
       title: "BRAND SET",
-      price: "180,000원",
-      priceValue: 180000,
+      price: "110,000원",
+      priceValue: 110000,
       description: "10컷",
       bullets: [
         "1차. 스타일이 다른 컨셉 2종 시안 제공, 택 1",
@@ -135,6 +135,13 @@ const additionalOptionsByTrack: Record<
   { id: string; title: string; description: string; price: string; priceValue: number }[]
 > = {
   product: [
+    {
+      id: "detail-page",
+      title: "상세페이지 제작",
+      description: "1만 px 이내의 상세페이지 제작",
+      price: "+90,000",
+      priceValue: 90000,
+    },
     {
       id: "rush-delivery",
       title: "급행 마감",
@@ -812,7 +819,7 @@ export default function StudioRoePage() {
                 <span className="mb-4 inline-block rounded-full bg-[#f5e6e8] px-4 py-2 text-sm font-medium text-[#8b475d]">05</span>
                 <h2 className="font-skin-serif text-[20px] text-[#2c2c2c] md:text-[25px]">패키지 선택</h2>
                 <p className="mx-auto mt-4 max-w-xl text-[#6b6b6b]">
-                  크몽에서 미리 구매하신 상품을 선택해 주세요.
+                  구매하신 상품을 선택해 주세요.
                 </p>
               </div>
 

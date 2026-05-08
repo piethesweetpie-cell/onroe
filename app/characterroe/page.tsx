@@ -27,24 +27,24 @@ const textAreaClassName = `${inputClassName} min-h-[130px] resize-y`
 
 const styleOptions = [
   {
-    label: "세미 카툰",
+    label: "웹툰체",
     icon: "🎨",
-    detail: "웹툰·라이트노벨에 어울리는 친근한 화풍",
+    detail: "국내 웹툰 특유의 선명한 선과 감각적인 컬러감",
   },
   {
-    label: "애니메이션 풍",
+    label: "순정만화체",
+    icon: "🌸",
+    detail: "섬세한 눈과 감성적인 분위기의 순정 일러스트",
+  },
+  {
+    label: "라노벨애니체",
     icon: "✨",
-    detail: "일본식 애니·게임 일러스트 스타일",
+    detail: "일본 라이트노벨·애니메이션 삽화 스타일",
   },
   {
-    label: "반실사 캐릭터",
-    icon: "🌟",
-    detail: "RPG·하이엔드 게임에 어울리는 스타일",
-  },
-  {
-    label: "추천받기",
-    icon: "💬",
-    detail: "장르와 목적에 맞춰 제안받기",
+    label: "여성향 게임풍",
+    icon: "💎",
+    detail: "오토메·여성향 게임의 화려하고 세련된 캐릭터 디자인",
   },
 ]
 
@@ -60,8 +60,8 @@ const packageOptions = [
     id: "basic",
     icon: "🪶",
     title: "캐릭터 베이직",
-    price: "19,000원",
-    amount: 19000,
+    price: "10,000원",
+    amount: 10000,
     subtitle: "캐릭터 한 컷 빠르게 받아보기",
     description: "캐릭터 빠른 시안 / 외주 전달용 / 컨셉 확인",
     bullets: ["캐릭터 1명 일러스트 1장", "배경 없음 (투명·단색 배경)", "인물 중심 단독 컷", "시안 1개 제공", "수정 1회"],
@@ -730,7 +730,7 @@ export default function CharacterRoePage() {
                             onClick={() => updateSingle("package", option.id)}
                             aria-pressed={active}
                             className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top transition-all duration-300 md:px-7 ${
-                              active || option.emphasized
+                              active
                                 ? "border-2 border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)] shadow-[0_24px_46px_rgba(148,106,120,0.16)]"
                                 : "border border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:-translate-y-1 hover:border-[#d9b8a6] hover:shadow-[0_22px_42px_rgba(124,98,81,0.12)]"
                             }`}
