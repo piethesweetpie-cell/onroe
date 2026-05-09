@@ -95,8 +95,9 @@ const packageOptions = [
     id: "cover",
     icon: "👤",
     title: "표지 일러스트",
-    price: "120,000원",
-    amount: 120000,
+    originalPrice: "120,000원",
+    price: "84,000원",
+    amount: 84000,
     subtitle: "인물 1인 표지 일러스트 단독 제작 (타이포 미포함)",
     description: "직접 타이포 작업 가능한 작가용 / 일러스트만 필요한 경우",
     bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "시안 2개 → 1개 선택 후 진행", "후보정 포함 (손·디테일 보정)", "수정 2회"],
@@ -105,8 +106,9 @@ const packageOptions = [
     id: "full-cover",
     icon: "👤 + ✍️",
     title: "표지 풀패키지",
-    price: "180,000원",
-    amount: 180000,
+    originalPrice: "180,000원",
+    price: "125,000원",
+    amount: 125000,
     subtitle: "인물 1인 + 타이틀 디자인까지 완성된 표지",
     description: "연재·출간·플랫폼 업로드용 완성형 표지",
     bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
@@ -117,13 +119,14 @@ const packageOptions = [
     id: "two-person-cover",
     icon: "👥 + ✍️",
     title: "2인 표지 풀패키지",
-    price: "270,000원",
-    amount: 270000,
+    originalPrice: "270,000원",
+    price: "190,000원",
+    amount: 190000,
     subtitle: "남녀주·커플 구도 + 타이틀까지 완성된 프리미엄 표지",
     description: "로맨스 메인 키비주얼 / 남녀주 합본 표지 / 출간용 대표 비주얼",
     bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 2인 (남녀주 / 라이벌 / 커플 구도) + 의상·소품·배경 디테일", "인물 간 관계성·구도 연출", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
     badge: "PREMIUM",
-    note: "1인 풀패키지 대비 +90,000원 / 인물 추가 옵션보다 저렴",
+    note: "1인 풀패키지 대비 +65,000원 / 인물 추가 옵션보다 저렴",
   },
 ]
 
@@ -825,9 +828,15 @@ export default function CharacterRoePage() {
                                 {option.badge}
                               </span>
                             ) : null}
-                            <div className="mb-5 min-h-[170px] w-full pr-12 pt-8">
+                            <div className="mb-5 w-full pr-12 pt-8">
                               <div className="mb-4 text-2xl" aria-hidden="true">{option.icon}</div>
                               <p className={`text-sm font-semibold tracking-[0.08em] ${active ? "text-[#8b475d]" : "text-[#b8967e]"}`}>{option.title}</p>
+                              {"originalPrice" in option && option.originalPrice ? (
+                                <p className="mt-2 text-sm font-medium text-[#b0a09a] line-through">{option.originalPrice}</p>
+                              ) : null}
+                              <div className="mt-1 flex flex-wrap items-center gap-2">
+                                <span className="rounded-full bg-[#8b475d] px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-white">오픈기념 30% 특가</span>
+                              </div>
                               <p className={`mt-2 font-skin-serif text-[31px] leading-tight lg:text-4xl ${active ? "text-[#2c2c2c]" : "text-[#3c322f]"}`}>{option.price}</p>
                               <p className={`mt-3 text-sm leading-6 ${active ? "text-[#5f4c45]" : "text-[#6f6159]"}`}>{option.subtitle}</p>
                               {option.note ? (
