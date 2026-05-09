@@ -100,7 +100,7 @@ const packageOptions = [
     amount: 84000,
     subtitle: "인물 1인 표지 일러스트 단독 제작 (타이포 미포함)",
     description: "직접 타이포 작업 가능한 작가용 / 일러스트만 필요한 경우",
-    bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "시안 2개 → 1개 선택 후 진행", "후보정 포함 (손·디테일 보정)", "수정 2회"],
+    bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "시안 2개 → 1개 선택 후 진행", "후보정 포함 (손·디테일 보정)", "수정 2회"],
   },
   {
     id: "full-cover",
@@ -111,7 +111,7 @@ const packageOptions = [
     amount: 125000,
     subtitle: "인물 1인 + 타이틀 디자인까지 완성된 표지",
     description: "연재·출간·플랫폼 업로드용 완성형 표지",
-    bullets: ["표지 일러스트 1장 (여성향 / 남성향)", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
+    bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
     badge: "BEST",
     emphasized: true,
   },
@@ -124,7 +124,7 @@ const packageOptions = [
     amount: 190000,
     subtitle: "남녀주·커플 구도 + 타이틀까지 완성된 프리미엄 표지",
     description: "로맨스 메인 키비주얼 / 남녀주 합본 표지 / 출간용 대표 비주얼",
-    bullets: ["표지 일러스트 1장 (여성향/남성향)", "인물 2인 + 의상·소품·배경 디테일", "인물 간 관계성·구도 연출", "타이틀 타이포그래피 디자인", "시안 2개 → 1개 선택 후 진행", "후보정 + 색감 보정 + 수정 3회"],
+    bullets: ["표지 일러스트 1장", "인물 2인 + 의상·소품·배경 디테일", "인물 간 관계성·구도 연출", "타이틀 타이포그래피 디자인", "시안 2개 → 1개 선택 후 진행", "후보정 + 색감 보정 + 수정 3회"],
     badge: "PREMIUM",
     note: "1인 풀패키지 대비 +65,000원 / 인물 추가 옵션보다 저렴",
   },
@@ -812,19 +812,19 @@ export default function CharacterRoePage() {
                             type="button"
                             onClick={() => updateSingle("package", option.id)}
                             aria-pressed={active}
-                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top transition-colors duration-150 md:px-7 ${
+                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top md:px-7 ${
                               active
-                                ? "border-2 border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)] shadow-[0_24px_46px_rgba(148,106,120,0.16)]"
-                                : "border-2 border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:border-[#d9b8a6]"
+                                ? "border border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)]"
+                                : "border border-[#ead9cf] bg-white/92 hover:border-[#d9b8a6]"
                             }`}
                           >
                             {active ? (
-                              <span className="absolute left-4 top-4 rounded-full bg-[#8b475d] px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] text-white shadow-[0_8px_16px_rgba(139,71,93,0.16)]">
+                              <span className="absolute left-4 top-4 rounded-full bg-[#8b475d] px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] text-white">
                                 선택됨
                               </span>
                             ) : null}
                             {option.badge ? (
-                              <span className="absolute right-4 top-4 rounded-full border border-[#d9b7c0] bg-white/90 px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] text-[#8b475d] shadow-[0_8px_16px_rgba(139,71,93,0.10)]">
+                              <span className="absolute right-4 top-4 rounded-full border border-[#d9b7c0] bg-white/90 px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] text-[#8b475d]">
                                 {option.badge}
                               </span>
                             ) : null}
