@@ -812,10 +812,10 @@ export default function CharacterRoePage() {
                             type="button"
                             onClick={() => updateSingle("package", option.id)}
                             aria-pressed={active}
-                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top transition-all duration-300 md:px-7 ${
+                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top transition-colors duration-150 md:px-7 ${
                               active
                                 ? "border-2 border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)] shadow-[0_24px_46px_rgba(148,106,120,0.16)]"
-                                : "border border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:-translate-y-1 hover:border-[#d9b8a6] hover:shadow-[0_22px_42px_rgba(124,98,81,0.12)]"
+                                : "border-2 border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:border-[#d9b8a6]"
                             }`}
                           >
                             {active ? (
