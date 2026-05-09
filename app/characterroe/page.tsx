@@ -693,8 +693,8 @@ export default function CharacterRoePage() {
                           key={option.label}
                           type="button"
                           onClick={() => updateSingle("style", option.label)}
-                          className={`rounded-[22px] border p-5 text-left transition-all ${
-                            active ? "border-[#d9b7c0] bg-[#f7e7eb] shadow-[0_16px_30px_rgba(148,106,120,0.12)]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
+                          className={`rounded-[22px] border p-5 text-left ${
+                            active ? "border-[#d9b7c0] bg-[#f7e7eb] shadow-[0_8px_15px_rgba(148,106,120,0.06)]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
                           }`}
                         >
                           <span className="flex items-center gap-2 text-sm font-semibold text-[#2c2c2c]">
@@ -729,10 +729,10 @@ export default function CharacterRoePage() {
                             type="button"
                             onClick={() => updateSingle("package", option.id)}
                             aria-pressed={active}
-                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top transition-all duration-300 md:px-7 ${
+                            className={`relative flex h-full min-h-[520px] origin-top cursor-pointer flex-col items-start justify-start rounded-[28px] px-6 pb-7 pt-7 text-left align-top md:px-7 ${
                               active
-                                ? "border-2 border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)] shadow-[0_24px_46px_rgba(148,106,120,0.16)]"
-                                : "border border-[#ead9cf] bg-white/92 shadow-[0_18px_38px_rgba(124,98,81,0.08)] hover:-translate-y-1 hover:border-[#d9b8a6] hover:shadow-[0_22px_42px_rgba(124,98,81,0.12)]"
+                                ? "border border-[#8b475d] bg-[linear-gradient(180deg,#fffaf8_0%,#f7e7eb_100%)]"
+                                : "border border-[#ead9cf] bg-white/92 hover:border-[#d9b8a6]"
                             }`}
                           >
                             {active ? (
