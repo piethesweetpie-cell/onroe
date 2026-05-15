@@ -31,39 +31,7 @@ const textAreaClassName = `${inputClassName} min-h-[130px] resize-y`
 
 const styleOptions = [
   {
-    label: "반실사 로맨스 표지풍",
-    icon: "🌸",
-    detail: "여성향 로판·현로에 가장 많이 쓰이는 안정적 스타일",
-    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/06_%EB%B0%98%EC%8B%A4%EC%82%AC%20%EB%A1%9C%EB%A7%A8%EC%8A%A4%20%ED%91%9C%EC%A7%80%ED%92%8D/165_b03cb027-e3e2-486f-b7b8-8fd8b6f445c3.jpg",
-    imageAlt: "반실사 로맨스 표지풍 샘플",
-    imagePosition: "50% 34%",
-  },
-  {
-    label: "프리미엄 반실사",
-    icon: "⭐",
-    detail: "대표작·키비주얼용 고급 스타일 (여성향·남성향 모두 적합)",
-    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/07_%ED%94%84%EB%A6%AC%EB%AF%B8%EC%97%84%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%ED%91%9C%EC%A7%80%ED%92%8D/078_d80db90c-d67a-41bf-a42c-8ce0a307d83e.jpg",
-    imageAlt: "프리미엄 반실사 표지풍 샘플",
-    imagePosition: "50% 5%",
-  },
-  {
-    label: "다크 반실사",
-    icon: "🖤",
-    detail: "빌런·집착남주·다크 판타지·헌터물 빌런",
-    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/10_%EB%8B%A4%ED%81%AC%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%EB%A1%9C%EB%A7%A8%EC%8A%A4%20%ED%91%9C%EC%A7%80%ED%92%8D/076_6b183794-0b73-482d-8125-67af39208d97.jpg",
-    imageAlt: "다크 반실사 로맨스 표지풍 샘플",
-    imagePosition: "58% 8%",
-  },
-  {
-    label: "클린 반실사 페인티드",
-    icon: "✨",
-    detail: "설정화·내부자료용 깔끔한 스타일",
-    imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/97_%ED%81%B4%EB%A6%B0%20%EB%B0%98%EC%8B%A4%EC%82%AC%20%ED%94%84%EB%A1%9C%ED%95%84%ED%92%8D/022_b308d54c-3a97-4b78-80f1-b962a2d06e71.jpg",
-    imageAlt: "클린 반실사 프로필풍 샘플",
-    imagePosition: "50% 25%",
-  },
-  {
-    label: "페인티드 로맨스풍",
+    label: "페인티드 로맨스 (베이직)",
     icon: "💗",
     detail: "여성향 감성·무드 중심 (BL·현로 추천)",
     imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/09_페인티드 로맨스 표지풍/002_ae7f0f66-b493-4781-b062-7fe9022056cf.jpg",
@@ -75,6 +43,14 @@ const styleOptions = [
     detail: "무협·헌터물·현판 표지에 최적화된 강렬한 스타일",
     imageSrc: "https://titleroe-portfolio.piethesweetpie.workers.dev/images/titleroe-portfolio/93_사극_동양 채색화/012_f1fe1399-539f-43e1-97b5-2710a5069fb6.jpg",
     imageAlt: "사극 동양 채색화 샘플",
+  },
+  {
+    label: "반실사 (프리미엄)",
+    icon: "⭐",
+    detail: "극실사 톤의 반실사 일러스트, 메인 비주얼 중심 최상위 퀄리티",
+    imageSrc: "/images/select.png",
+    imageAlt: "프리미엄 반실사 표지풍 샘플",
+    imageContain: true,
   },
   {
     label: "추천받기",
@@ -92,87 +68,78 @@ const steps = [
 
 const packageOptions = [
   {
-    id: "cover",
+    id: "standard",
     icon: "👤",
-    title: "표지 일러스트",
-    originalPrice: "120,000원",
-    price: "84,000원",
-    amount: 84000,
+    title: "베이직 일러스트",
+    originalPrice: "115,000원",
+    price: "80,000원",
+    amount: 80000,
     subtitle: "인물 1인 표지 일러스트 단독 제작 (타이포 미포함)",
     description: "직접 타이포 작업 가능한 작가용 / 일러스트만 필요한 경우",
     bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "시안 2개 → 1개 선택 후 진행", "후보정 포함 (손·디테일 보정)", "수정 2회"],
   },
   {
-    id: "full-cover",
+    id: "deluxe",
     icon: "👤 + ✍️",
-    title: "표지 풀패키지",
-    originalPrice: "180,000원",
-    price: "125,000원",
-    amount: 125000,
+    title: "베이직 일러스트 + 타이포",
+    originalPrice: "160,000원",
+    price: "110,000원",
+    amount: 110000,
     subtitle: "인물 1인 + 타이틀 디자인까지 완성된 표지",
     description: "연재·출간·플랫폼 업로드용 완성형 표지",
-    bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 3개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
-    badge: "BEST",
+    bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 2개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
     emphasized: true,
   },
   {
-    id: "two-person-cover",
-    icon: "👥 + ✍️",
-    title: "2인 표지 풀패키지",
+    id: "premium",
+    icon: "✨ + ✍️",
+    title: "반실사 일러스트 + 타이포",
     originalPrice: "270,000원",
     price: "190,000원",
     amount: 190000,
-    subtitle: "남녀주·커플 구도 + 타이틀까지 완성된 프리미엄 표지",
-    description: "로맨스 메인 키비주얼 / 남녀주 합본 표지 / 출간용 대표 비주얼",
-    bullets: ["표지 일러스트 1장", "인물 2인 + 의상·소품·배경 디테일", "인물 간 관계성·구도 연출", "타이틀 타이포그래피 디자인", "시안 2개 → 1개 선택 후 진행", "후보정 + 색감 보정 + 수정 3회"],
-    badge: "PREMIUM",
-    note: "1인 풀패키지 대비 +65,000원 / 인물 추가 옵션보다 저렴",
+    subtitle: "극실사 톤의 반실사 일러스트 + 타이틀까지 완성. 메인 비주얼 중심 최상위 퀄리티",
+    description: "출간용 대표 비주얼 / 메인 키비주얼 / 프리미엄 표지",
+    bullets: ["표지 일러스트 1장", "인물 1인 + 의상·소품·배경 디테일", "반실사 리터칭 (수십 번의 리터치로 극실사 톤 완성)", "타이틀 타이포그래피 디자인", "표지 최종 합본 (플랫폼 사이즈별 조정 포함)", "시안 2개 → 1개 선택 후 진행", "후보정 + 색감 보정", "수정 3회"],
+    badge: "BEST",
   },
 ]
 
 const addOnOptions = [
   {
-    id: "extra-person",
-    title: "인물 추가",
-    priceLabel: "+80,000원",
-    amount: 80000,
-    detail: "서브 캐릭터, 3인 이상 구도 등",
-  },
-  {
-    id: "mood-cut",
-    title: "무드컷 / 장면컷 추가",
-    priceLabel: "+30,000원/장",
-    amount: 30000,
-    detail: "표지 외 추가 비주얼",
-  },
-  {
-    id: "character-sheet",
-    title: "캐릭터 설정 시트",
-    priceLabel: "+40,000원",
-    amount: 40000,
-    detail: "외형·의상·표정 정리 시트",
+    id: "rush",
+    icon: "⚡",
+    title: "빠른 작업",
+    priceLabel: "+20,000원",
+    amount: 20000,
+    workDays: "1~2일 단축",
+    detail: "일정이 급하실 때 우선 작업으로 처리",
   },
   {
     id: "extra-revision",
-    title: "수정 횟수 추가",
-    priceLabel: "+20,000원/회",
+    icon: "🔁",
+    title: "추가 수정 (1회당)",
+    priceLabel: "+20,000원 / 회",
     amount: 20000,
-    detail: "기본 수정 횟수 외 추가 조정",
+    workDays: "0~1일 추가",
+    detail: "패키지 기본 수정 횟수 초과 시",
   },
   {
-    id: "rush",
-    title: "러시 작업",
-    priceLabel: "+30%",
-    amount: 0,
-    percentage: 0.3,
-    detail: "3일 이내 납품",
+    id: "extra-draft",
+    icon: "🖼️",
+    title: "추가 시안 (1개당)",
+    priceLabel: "+50,000원 / 개",
+    amount: 50000,
+    workDays: "1일 추가",
+    detail: "더 많은 선택지를 받고 싶을 때",
   },
   {
-    id: "psd",
-    title: "PSD 원본 파일 제공",
+    id: "extra-person",
+    icon: "👥",
+    title: "인물 1인 추가 (2인 구성)",
     priceLabel: "+50,000원",
     amount: 50000,
-    detail: "레이어 분리된 작업 원본",
+    workDays: "1일 추가",
+    detail: "2인 표지나 커플 구성을 원하실 때",
   },
 ] as const
 
@@ -234,7 +201,7 @@ const initialTextValues = {
 }
 
 const initialSingleValues = {
-  package: "full-cover",
+  package: "deluxe",
   purpose: "",
   gender: "",
   age: "미정",
@@ -270,10 +237,7 @@ export default function CharacterRoePage() {
 
   const selectedPackage = packageOptions.find((option) => option.id === singleValues.package) ?? packageOptions[1]
   const selectedAddOnOptions = addOnOptions.filter((option) => selectedAddOns.includes(option.id))
-  const subtotalBeforeRush =
-    selectedPackage.amount + selectedAddOnOptions.reduce((sum, option) => sum + ("percentage" in option ? 0 : option.amount), 0)
-  const rushAmount = selectedAddOnOptions.some((option) => option.id === "rush") ? Math.round(subtotalBeforeRush * 0.3) : 0
-  const totalEstimate = subtotalBeforeRush + rushAmount
+  const totalEstimate = selectedPackage.amount + selectedAddOnOptions.reduce((sum, option) => sum + option.amount, 0)
   const isLastStep = activeStep === steps.length - 1
   const selectedHeroImage = heroImages[0]
 
@@ -736,7 +700,7 @@ export default function CharacterRoePage() {
                       href="https://titleroe-portfolio.piethesweetpie.workers.dev/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-[34px] items-center justify-center rounded-full border border-[#ead9cf] bg-white px-4 text-xs font-semibold text-[#934b66] shadow-[0_8px_16px_rgba(124,98,81,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] hover:bg-[#fdf8f5]"
+                      className="inline-flex min-h-[34px] items-center justify-center rounded-full border border-[#ead9cf] bg-white px-4 text-xs font-semibold text-[#934b66] transition-all hover:-translate-y-0.5 hover:border-[#c7a98c] hover:bg-[#fdf8f5]"
                     >
                       스타일 확인하기 ↗
                     </Link>
@@ -757,16 +721,25 @@ export default function CharacterRoePage() {
                           {option.imageSrc ? (
                             <>
                               <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[22px]">
-                                <img
-                                  src={option.imageSrc}
-                                  alt={option.imageAlt}
-                                  loading="lazy"
-                                  className="h-full w-full object-cover"
-                                  style={{
-                                    objectPosition: option.imagePosition ?? "50% 50%",
-                                    transform: "translateX(26%)",
-                                  }}
-                                />
+                                {"imageContain" in option && option.imageContain ? (
+                                  <img
+                                    src={option.imageSrc}
+                                    alt={option.imageAlt}
+                                    loading="lazy"
+                                    className="absolute right-0 top-0 h-full w-auto"
+                                  />
+                                ) : (
+                                  <img
+                                    src={option.imageSrc}
+                                    alt={option.imageAlt}
+                                    loading="lazy"
+                                    className="h-full w-full object-cover"
+                                    style={{
+                                      objectPosition: "imagePosition" in option ? (option.imagePosition as string) : "50% 50%",
+                                      transform: "translateX(26%)",
+                                    }}
+                                  />
+                                )}
                               </span>
                               <span
                                 className="pointer-events-none absolute inset-0"
@@ -839,9 +812,6 @@ export default function CharacterRoePage() {
                               </div>
                               <p className={`mt-2 font-skin-serif text-[31px] leading-tight lg:text-4xl ${active ? "text-[#2c2c2c]" : "text-[#3c322f]"}`}>{option.price}</p>
                               <p className={`mt-3 text-sm leading-6 ${active ? "text-[#5f4c45]" : "text-[#6f6159]"}`}>{option.subtitle}</p>
-                              {option.note ? (
-                                <p className="mt-3 rounded-[16px] bg-white/75 px-3 py-2 text-xs leading-5 text-[#8b475d]">{option.note}</p>
-                              ) : null}
                             </div>
                             <ul className="space-y-3">
                               {option.bullets.map((bullet) => (
@@ -864,33 +834,43 @@ export default function CharacterRoePage() {
                         className="flex min-h-[44px] w-full items-center justify-between gap-4 text-left text-sm font-semibold text-[#4a332d]"
                         aria-expanded={showAddOns}
                       >
-                        <span>옵션 추가하기</span>
+                        <span>추가 옵션 — 필요에 따라 선택</span>
                         <span className="text-[#8b475d]">{showAddOns ? "닫기" : "열기"}</span>
                       </button>
 
                       {showAddOns ? (
-                        <div className="mt-4 grid gap-3 md:grid-cols-2">
-                          {addOnOptions.map((option) => {
-                            const active = selectedAddOns.includes(option.id)
-                            return (
-                              <button
-                                key={option.id}
-                                type="button"
-                                onClick={() => toggleAddOn(option.id)}
-                                aria-pressed={active}
-                                className={`min-h-[76px] rounded-[20px] border px-4 py-3 text-left transition-all ${
-                                  active ? "border-[#8b475d] bg-[#f7e7eb] shadow-[0_12px_24px_rgba(139,71,93,0.12)]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
-                                }`}
-                              >
-                                <span className="flex items-center justify-between gap-4 text-sm font-semibold text-[#2c2c2c]">
-                                  <span>{option.title}</span>
-                                  <span className="shrink-0 text-[#8b475d]">{option.priceLabel}</span>
-                                </span>
-                                <span className="mt-1 block text-sm leading-6 text-[#6b6b6b]">{option.detail}</span>
-                              </button>
-                            )
-                          })}
-                        </div>
+                        <>
+                          <div className="mt-4 grid gap-3 md:grid-cols-2">
+                            {addOnOptions.map((option) => {
+                              const active = selectedAddOns.includes(option.id)
+                              return (
+                                <button
+                                  key={option.id}
+                                  type="button"
+                                  onClick={() => toggleAddOn(option.id)}
+                                  aria-pressed={active}
+                                  className={`min-h-[76px] rounded-[20px] border px-4 py-3 text-left transition-all ${
+                                    active ? "border-[#8b475d] bg-[#f7e7eb] shadow-[0_12px_24px_rgba(139,71,93,0.12)]" : "border-[#ead9cf] bg-white hover:border-[#d9b8a6]"
+                                  }`}
+                                >
+                                  <span className="flex items-center justify-between gap-4 text-sm font-semibold text-[#2c2c2c]">
+                                    <span className="flex items-center gap-2">
+                                      <span aria-hidden="true">{option.icon}</span>
+                                      <span>{option.title}</span>
+                                    </span>
+                                    <span className="shrink-0 text-[#8b475d]">{option.priceLabel}</span>
+                                  </span>
+                                  <span className="mt-1 block text-sm leading-6 text-[#6b6b6b]">{option.detail}</span>
+                                  <span className="mt-1 block text-xs text-[#8a6c5b]">작업일 {option.workDays}</span>
+                                </button>
+                              )
+                            })}
+                          </div>
+                          <div className="mt-4 space-y-1 text-xs leading-6 text-[#8a6c5b]">
+                            <p>※ 옵션은 의뢰 단계에서 자유롭게 추가하실 수 있습니다.</p>
+                            <p>※ 결제가 확인되면 작업이 시작됩니다.</p>
+                          </div>
+                        </>
                       ) : null}
                     </div>
                   </div>
@@ -977,10 +957,9 @@ export default function CharacterRoePage() {
                   <div className="text-left md:text-right">
                     <div className="mb-3 space-y-1 text-sm text-[#6b6b6b]">
                       <p>패키지 {formatWon(selectedPackage.amount)}</p>
-                      {selectedAddOnOptions.filter((option) => option.id !== "rush").length ? (
-                        <p>추가 옵션 {formatWon(subtotalBeforeRush - selectedPackage.amount)}</p>
+                      {selectedAddOnOptions.length > 0 ? (
+                        <p>추가 옵션 {formatWon(selectedAddOnOptions.reduce((sum, o) => sum + o.amount, 0))}</p>
                       ) : null}
-                      {rushAmount > 0 ? <p className="font-semibold text-[#8b475d]">러시 작업 +30% {formatWon(rushAmount)}</p> : null}
                     </div>
                     <p className="font-skin-serif text-[30px] leading-none text-[#2c2c2c]">{formatWon(totalEstimate)}</p>
                     <p className="mt-2 text-xs text-[#8a6c5b]">옵션 선택 시 합계 금액이 실시간 업데이트됩니다.</p>
