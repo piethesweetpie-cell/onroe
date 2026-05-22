@@ -82,8 +82,8 @@ const packageOptionsByTrack: Record<
     {
       id: "standard",
       title: "STANDARD",
-      price: "59,000원",
-      priceValue: 59000,
+      price: "89,000원",
+      priceValue: 89000,
       description: "4컷 구성",
       bullets: [
         "1차. 컬러가 다른 시안 2종 제공, 이후 선택한 컬러로 4컷 제공",
@@ -92,9 +92,9 @@ const packageOptionsByTrack: Record<
     },
     {
       id: "brand-set",
-      title: "BRAND SET",
-      price: "110,000원",
-      priceValue: 110000,
+      title: "PREMIUM",
+      price: "180,000원",
+      priceValue: 180000,
       description: "10컷",
       bullets: [
         "1차. 스타일이 다른 컨셉 2종 시안 제공, 택 1",
@@ -114,16 +114,16 @@ const packageOptionsByTrack: Record<
     {
       id: "editorial",
       title: "EDITORIAL",
-      price: "79,000원",
-      priceValue: 79000,
+      price: "120,000원",
+      priceValue: 120000,
       description: "인물 3컷, 연출컷 포함, 스타일링 제안",
       bullets: ["인물 3컷", "연출컷 포함", "스타일링 제안"],
     },
     {
       id: "campaign",
       title: "CAMPAIGN",
-      price: "129,000원",
-      priceValue: 129000,
+      price: "220,000원",
+      priceValue: 220000,
       description: "5컷 + 제품 혼합 컷, 광고 소재 활용 가능",
       bullets: ["인물 5컷", "제품 혼합 컷", "광고 소재 활용"],
     },
