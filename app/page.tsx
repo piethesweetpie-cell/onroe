@@ -147,10 +147,10 @@ export default function HubPage() {
             <div className={s("hero-copy reveal")}>
               <h1>
                 <span className={s("hero-title-main")}>ONROE</span>
-                <span className={s("hero-title-sub")}>AI Studio</span>
+                <span className={s("hero-title-sub")}>AI 비주얼 스튜디오</span>
               </h1>
               <p>
-                상품 이미지부터 캐릭터 시안, 웹소설 표지까지.
+                AI 제품사진, 캐릭터 시안, 웹소설 표지까지 제작하는 AI 비주얼 스튜디오.
               </p>
               <div className={s("featured-categories")}>
                 <div className={s("fc-header")}>

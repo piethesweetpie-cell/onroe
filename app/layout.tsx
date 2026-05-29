@@ -26,13 +26,57 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
 })
 
+const siteDescription =
+  "ONROE는 AI 제품사진, 상세페이지 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다."
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "ONROE",
+  url: "https://onroe.space",
+  logo: "https://onroe.space/images/logo.png",
+  description: siteDescription,
+  email: "onroeway@gmail.com",
+  areaServed: "KR",
+  serviceType: [
+    "AI 제품사진 제작",
+    "상세페이지 이미지 제작",
+    "AI 캐릭터 시안 제작",
+    "웹소설 표지 일러스트 제작",
+  ],
+  sameAs: ["https://onroe.space"],
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://onroe.space"),
   title: {
-    default: "ONROE - AI Studio for Brand & Story",
+    default: "ONROE - AI 제품사진·캐릭터·웹소설 표지 전문 스튜디오",
     template: "%s | ONROE",
   },
-  description: "ONROE는 상품 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다.",
+  description: siteDescription,
+  keywords: [
+    "AI 제품사진",
+    "AI 상품 이미지",
+    "상세페이지 이미지",
+    "AI 캐릭터 제작",
+    "웹소설 표지",
+    "AI 비주얼 스튜디오",
+    "ONROE",
+  ],
+  applicationName: "ONROE",
+  creator: "ONROE",
+  publisher: "ONROE",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: "/images/logo.png",
     apple: "/images/logo.png",
@@ -43,25 +87,21 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "ONROE",
-    title: "ONROE - AI Studio for Brand & Story",
-    description: "ONROE는 상품 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다.",
+    title: "ONROE - AI 제품사진·캐릭터·웹소설 표지 전문 스튜디오",
+    description: siteDescription,
     url: "https://onroe.space",
     locale: "ko_KR",
     images: [{ url: "/images/logo.png" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ONROE - AI Studio for Brand & Story",
-    description: "ONROE는 상품 이미지, 캐릭터 시안, 웹소설 표지를 제작하는 AI 비주얼 스튜디오입니다.",
+    title: "ONROE - AI 제품사진·캐릭터·웹소설 표지 전문 스튜디오",
+    description: siteDescription,
     images: ["/images/logo.png"],
   },
-  // 사이트 소유 확인용 verification 코드 자리.
-  // 발급받은 코드를 아래 따옴표 안에 넣으세요. (현재는 빈 값이라 태그가 출력되지 않습니다)
   verification: {
-    // 구글 서치 콘솔: HTML 태그 방식에서 content 값만 입력
-    google: "",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
     other: {
-      // 네이버 서치 어드바이저: 사이트 소유 확인 > HTML 태그의 content 값만 입력
       "naver-site-verification": "d09ad68ee22005e31f6e42a9b7c966cb76df31e0",
     },
   },
@@ -77,6 +117,10 @@ export default function RootLayout({
       <body
         className={`${plusJakartaSans.variable} ${notoSansKR.variable} ${playfairDisplay.variable} ${inter.variable} bg-background font-body text-on-surface antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
       </body>
     </html>

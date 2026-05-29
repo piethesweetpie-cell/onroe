@@ -209,7 +209,7 @@ export default function TitleRoePortfolioPage() {
               </span>
             </div>
             <h1 className="font-skin-serif text-4xl leading-tight tracking-[0] text-[#2c2c2c] md:text-5xl">
-              TITLE ROE
+              AI 웹소설 표지
               <br />
               <span className="bg-gradient-to-r from-[#934b66] to-[#c7a98c] bg-clip-text text-transparent">PORTFOLIO</span>
             </h1>

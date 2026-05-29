@@ -593,7 +593,7 @@ export default function StudioRoePage() {
 
                   <div className="relative pt-[60px] text-center hero-copy-enter hero-copy-enter-delay-2 md:pt-0">
                     <h1 className="font-skin-serif text-[54px] leading-[0.88] tracking-[-0.05em] text-[#2a2a2a] md:text-[84px] lg:text-[112px]">
-                      AI Studio
+                      AI 제품사진 제작
                     </h1>
                     <p className="mt-[-6px] font-skin-serif text-[44px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-14px] md:text-[70px] lg:text-[92px]">
                       Request Form
