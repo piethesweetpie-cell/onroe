@@ -2,10 +2,12 @@
   "name": "onroe",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.1.1",
   "scripts": {
     "predev": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\"",
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -20,15 +22,22 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^4.4.1",
-    "tailwind-merge": "^2.5.2"
+    "tailwind-merge": "2.5.5"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "22.7.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.20",
+    "next-sitemap": "^4.2.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "undici-types": "6.19.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "undici-types": "6.19.2"
+    }
   }
 }
