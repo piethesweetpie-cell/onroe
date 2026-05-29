@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     images: ["/images/logo.png"],
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
+    google: "ZyiOPvG5BmsfnV-MZUBmJ3W46-3vTnWiXwIN5vMvsxk",
     other: {
       "naver-site-verification": "d09ad68ee22005e31f6e42a9b7c966cb76df31e0",
     },
