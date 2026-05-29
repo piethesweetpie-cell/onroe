@@ -613,7 +613,7 @@ export default function CharacterRoePage() {
 
                 <div className="relative z-[90] text-center hero-copy-enter hero-copy-enter-delay-2 md:pt-[16px] md:text-left">
                   <h1 className="font-skin-serif text-[50px] leading-[0.88] tracking-[-0.05em] text-[#252525] md:text-[78px] lg:text-[100px]">
-                    AI 웹소설 표지 제작
+                    TitleRoe
                   </h1>
                   <p className="mt-[-4px] font-skin-serif text-[40px] italic leading-none tracking-[-0.05em] text-[#c7a98c] md:mt-[-10px] md:text-[62px] lg:text-[78px]">
                     Request Form
