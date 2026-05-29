@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     google: "",
     other: {
       // 네이버 서치 어드바이저: 사이트 소유 확인 > HTML 태그의 content 값만 입력
-      "naver-site-verification": "",
+      "naver-site-verification": "d09ad68ee22005e31f6e42a9b7c966cb76df31e0",
     },
   },
 }
